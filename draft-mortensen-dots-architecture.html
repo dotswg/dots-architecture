@@ -376,6 +376,8 @@
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Terminology"/>
+<link href="#rfc.section.1.1.1" rel="Chapter" title="1.1.1 Key Words"/>
+<link href="#rfc.section.1.1.2" rel="Chapter" title="1.1.2 Definition of Terms"/>
 <link href="#rfc.section.1.2" rel="Chapter" title="1.2 Scope"/>
 <link href="#rfc.section.1.3" rel="Chapter" title="1.3 Assumptions"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Architecture"/>
@@ -472,7 +474,9 @@
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
 <ul><li>1.1.   <a href="#rfc.section.1.1">Terminology</a></li>
-<li>1.2.   <a href="#rfc.section.1.2">Scope</a></li>
+<ul><li>1.1.1.   <a href="#rfc.section.1.1.1">Key Words</a></li>
+<li>1.1.2.   <a href="#rfc.section.1.1.2">Definition of Terms</a></li>
+</ul><li>1.2.   <a href="#rfc.section.1.2">Scope</a></li>
 <li>1.3.   <a href="#rfc.section.1.3">Assumptions</a></li>
 </ul><li>2.   <a href="#rfc.section.2">Architecture</a></li>
 <ul><li>2.1.   <a href="#rfc.section.2.1">Concepts</a></li>
@@ -490,7 +494,50 @@
 <p id="rfc.section.1.p.1">Signaling the need for help defending against an active distributed denial of service (DDoS) attack requires a common understanding of mechanisms and roles among the parties coordinating attack response. The proposed signaling layer and supplementary messaging is the focus of DDoS Open Threat Signaling (DDoS). DOTS proposes to standardize a method of coordinating defensive measures among willing peers to mitigate attacks quickly and efficiently.</p>
 <p id="rfc.section.1.p.2">This document describes an architecture used in establishing, maintaining or terminating a DOTS relationship in a network or between networks. DOTS enables hybrid attack responses, coordinated locally at or near the target of an active attack, as well as closer to attack sources in the network path.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#terminology" id="terminology">Terminology</a></h1>
-<p id="rfc.section.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
+<h1 id="rfc.section.1.1.1"><a href="#rfc.section.1.1.1">1.1.1.</a> <a href="#key-words" id="key-words">Key Words</a></h1>
+<p id="rfc.section.1.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
+<h1 id="rfc.section.1.1.2"><a href="#rfc.section.1.1.2">1.1.2.</a> <a href="#definition-of-terms" id="definition-of-terms">Definition of Terms</a></h1>
+<p id="rfc.section.1.1.2.p.1">The following terms are used to define relationships between elements, the data they exchange, and methods of communication among them:</p>
+<p/>
+
+<dl>
+  <dt>DDoS:</dt>
+  <dd style="margin-left: 8">A distributed denial-of-service attack. DDoS attacks are intended to cause a negative impact on the availability of servers, services, applications, and/or other functionality of an attack target.</dd>
+  <dt>attack target:</dt>
+  <dd style="margin-left: 8">a service, application, server, or some collection thereof, on which a DDoS attack is focused.</dd>
+  <dt>attack telemetry:</dt>
+  <dd style="margin-left: 8">collected network traffic characteristics enabling detection, classification and possible traceback of a DDoS attack.</dd>
+  <dt>countermeasure:</dt>
+  <dd style="margin-left: 8">An action or series of actions undertaken to distinguish and filter out DDoS attack traffic from valid traffic destined for an attack target.</dd>
+  <dt>mitigation:</dt>
+  <dd style="margin-left: 8">A defensive response against a detected DDoS attack, performed by an entity in the network path between attack sources and the attack target, either through inline deployment or some form of traffic diversion, consisting of one or more countermeasures. The form mitigation takes is out of scope for this document.</dd>
+  <dt>mitigator:</dt>
+  <dd style="margin-left: 8">A network element capable of performing mitigation of a detected DDoS attack.</dd>
+  <dt>DOTS client:</dt>
+  <dd style="margin-left: 8">A DOTS-aware network element requesting attack response coordination with another DOTS-aware element, with the expectation that the remote element is capable of helping fend off the attack against the client.</dd>
+  <dt>DOTS server:</dt>
+  <dd style="margin-left: 8">A DOTS-aware network element handling and responding to messages from a DOTS client. The DOTS server MAY enable mitigation on behalf of the DOTS client, if requested, by communicating the DOTS client&#8217;s request to the mitigator and relaying any mitigator feedback to the client. A DOTS server may also be a mitigator.</dd>
+  <dt>DOTS relay:</dt>
+  <dd style="margin-left: 8">A DOTS-aware network element positioned between a DOTS server and a DOTS client. A DOTS relay receives messages from a DOTS client and relays them to a DOTS server, and similarly passes messages from the DOTS server to the DOTS client.</dd>
+  <dt>DOTS agents:</dt>
+  <dd style="margin-left: 8">A collective term for DOTS clients, servers and relays.</dd>
+  <dt>signal channel:</dt>
+  <dd style="margin-left: 8">A bidirectional, mutually authenticated communication layer between DOTS agents characterized by resilience even in conditions leading to severe packet loss, such as a volumetric DDoS attack causing network congestion.</dd>
+  <dt>DOTS signal:</dt>
+  <dd style="margin-left: 8">A concise authenticated status/control message transmitted between DOTS agents, used to indicate client&#8217;s need for mitigation, as well as to convey the status of any requested mitigation.</dd>
+  <dt>heartbeat:</dt>
+  <dd style="margin-left: 8">A keep-alive message transmitted between DOTS agents over the signal channel, used to measure peer health. Heartbeat functionality is not required to be distinct from signal.</dd>
+  <dt>client signal:</dt>
+  <dd style="margin-left: 8">A message sent from a DOTS client to a DOTS server over the signal channel, possibly traversing a DOTS relay, indicating the DOTS client&#8217;s need for mitigation, as well as the scope of any requested mitigation, optionally including detected attack telemetry to supplement server-initiated mitigation.</dd>
+  <dt>server signal:</dt>
+  <dd style="margin-left: 8">A message sent from a DOTS server to a DOTS client over the signal channel.  Note that a server signal is not a response to client signal, but a DOTS server-initiated status message sent to the DOTS client, containing information about the status of any requested mitigation and its efficacy.</dd>
+  <dt>data channel:</dt>
+  <dd style="margin-left: 8">A secure communication layer between client and server used for infrequent bulk exchange of data not easily or appropriately communicated through the signal channel under attack conditions.</dd>
+  <dt>blacklist:</dt>
+  <dd style="margin-left: 8">a list of source addresses or prefixes from which traffic should be blocked.</dd>
+  <dt>whitelist:</dt>
+  <dd style="margin-left: 8">a list of source addresses or prefixes from which traffic should always be allowed, regardless of contradictory data gleaned in a detected attack.</dd>
+</dl>
 <h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#scope" id="scope">Scope</a></h1>
 <p id="rfc.section.1.2.p.1">This document defines an architecture for the proposed DOTS standard in the IETF.</p>
 <p id="rfc.section.1.2.p.2">In this architecture, DOTS clients and servers communicate using the signaling mechanism established in the proposed DOTS standard. As a result of signals from a DOTS client, the DOTS server may modify the network path of traffic destined for the attack target or targets, for example by diverting traffic to a scrubbing center. Packets deemed part of an active attack may be dropped.</p>

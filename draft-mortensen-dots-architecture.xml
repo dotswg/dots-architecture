@@ -106,10 +106,92 @@ an active attack, as well as closer to attack sources in the network path.</t>
 
 <section anchor="terminology" title="Terminology">
 
+<section anchor="key-words" title="Key Words">
+
 <t>The key words &ldquo;MUST&rdquo;, &ldquo;MUST NOT&rdquo;, &ldquo;REQUIRED&rdquo;, &ldquo;SHALL&rdquo;, &ldquo;SHALL NOT&rdquo;,
 &ldquo;SHOULD&rdquo;, &ldquo;SHOULD NOT&rdquo;, &ldquo;RECOMMENDED&rdquo;, &ldquo;MAY&rdquo;, and &ldquo;OPTIONAL&rdquo; in this
 document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 
+</section>
+<section anchor="definition-of-terms" title="Definition of Terms">
+
+<t>The following terms are used to define relationships between elements,
+the data they exchange, and methods of communication among them:</t>
+
+<t><list style="hanging">
+  <t hangText='DDoS:'>
+  A distributed denial-of-service attack. DDoS attacks are intended to cause
+a negative impact on the availability of servers, services, applications,
+and/or other functionality of an attack target.</t>
+  <t hangText='attack target:'>
+  a service, application, server, or some collection thereof, on which a DDoS
+attack is focused.</t>
+  <t hangText='attack telemetry:'>
+  collected network traffic characteristics enabling detection, classification
+and possible traceback of a DDoS attack.</t>
+  <t hangText='countermeasure:'>
+  An action or series of actions undertaken to distinguish and filter out
+DDoS attack traffic from valid traffic destined for an attack target.</t>
+  <t hangText='mitigation:'>
+  A defensive response against a detected DDoS attack, performed by an entity
+in the network path between attack sources and the attack target, either
+through inline deployment or some form of traffic diversion, consisting of
+one or more countermeasures. The form mitigation takes is out of scope for
+this document.</t>
+  <t hangText='mitigator:'>
+  A network element capable of performing mitigation of a detected DDoS attack.</t>
+  <t hangText='DOTS client:'>
+  A DOTS-aware network element requesting attack response coordination with
+another DOTS-aware element, with the expectation that the remote element is
+capable of helping fend off the attack against the client.</t>
+  <t hangText='DOTS server:'>
+  A DOTS-aware network element handling and responding to messages from a
+DOTS client. The DOTS server MAY enable mitigation on behalf of the DOTS
+client, if requested, by communicating the DOTS client&rsquo;s request to the
+mitigator and relaying any mitigator feedback to the client. A DOTS server
+may also be a mitigator.</t>
+  <t hangText='DOTS relay:'>
+  A DOTS-aware network element positioned between a DOTS server and a DOTS
+client. A DOTS relay receives messages from a DOTS client and relays them
+to a DOTS server, and similarly passes messages from the DOTS server to the
+DOTS client.</t>
+  <t hangText='DOTS agents:'>
+  A collective term for DOTS clients, servers and relays.</t>
+  <t hangText='signal channel:'>
+  A bidirectional, mutually authenticated communication layer between DOTS
+agents characterized by resilience even in conditions leading to severe
+packet loss, such as a volumetric DDoS attack causing network congestion.</t>
+  <t hangText='DOTS signal:'>
+  A concise authenticated status/control message transmitted between DOTS
+agents, used to indicate client&rsquo;s need for mitigation, as well as to convey
+the status of any requested mitigation.</t>
+  <t hangText='heartbeat:'>
+  A keep-alive message transmitted between DOTS agents over the signal channel,
+used to measure peer health. Heartbeat functionality is not required to be
+distinct from signal.</t>
+  <t hangText='client signal:'>
+  A message sent from a DOTS client to a DOTS server over the signal channel,
+possibly traversing a DOTS relay, indicating the DOTS client&rsquo;s need for
+mitigation, as well as the scope of any requested mitigation, optionally
+including detected attack telemetry to supplement server-initiated
+mitigation.</t>
+  <t hangText='server signal:'>
+  A message sent from a DOTS server to a DOTS client over the signal channel.
+Note that a server signal is not a response to client signal, but a DOTS
+server-initiated status message sent to the DOTS client, containing
+information about the status of any requested mitigation and its efficacy.</t>
+  <t hangText='data channel:'>
+  A secure communication layer between client and server used for infrequent
+bulk exchange of data not easily or appropriately communicated through the
+signal channel under attack conditions.</t>
+  <t hangText='blacklist:'>
+  a list of source addresses or prefixes from which traffic should be blocked.</t>
+  <t hangText='whitelist:'>
+  a list of source addresses or prefixes from which traffic should always be
+allowed, regardless of contradictory data gleaned in a detected attack.</t>
+</list></t>
+
+</section>
 </section>
 <section anchor="scope" title="Scope">
 
