@@ -1,7 +1,7 @@
 ---
-title: DDoS Open Threat Signaling Requirements
-docname: draft-ietf-dots-requirements-00
-date: 2015-10-19
+title: DDoS Open Threat Signaling Architecture
+docname: draft-mortensen-dots-architecture-00
+date: 2016-02-02
 
 area: Security
 wg: DOTS
@@ -65,6 +65,8 @@ normative:
   RFC2119:
 
 informative:
+  I-D.ietf-dots-requirements:
+  I-D.ietf-dots-use-cases:
 
 --- abstract
 

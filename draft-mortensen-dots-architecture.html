@@ -5,7 +5,7 @@
 <head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 
-  <title>DDoS Open Threat Signaling Requirements</title>
+  <title>DDoS Open Threat Signaling Architecture</title>
 
   <style type="text/css" title="Xml2Rfc (sans serif)">
   /*<![CDATA[*/
@@ -386,7 +386,9 @@
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 Obstacles"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Security Considerations"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Change Log"/>
-<link href="#rfc.references" rel="Chapter" title="5 Normative References"/>
+<link href="#rfc.references" rel="Chapter" title="5 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="5.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="5.2 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -394,8 +396,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Mortensen, A., Andreasen, F., Gray, C., and N. Teague" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-requirements-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-10-19" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-mortensen-dots-architecture-00" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-2-02" />
   <meta name="dct.abstract" content="This document describes an architecture for establishing and maintaining DDoS Open Threat Signaling (DOTS) within and between networks. The document makes no attempt to suggest protocols or protocol extensions, instead focusing on architectural relationships, components and concepts used in a DOTS deployment, as well as obstacles confronting a network operator looking to enable DOTS." />
   <meta name="description" content="This document describes an architecture for establishing and maintaining DDoS Open Threat Signaling (DOTS) within and between networks. The document makes no attempt to suggest protocols or protocol extensions, instead focusing on architectural relationships, components and concepts used in a DOTS deployment, as well as obstacles confronting a network operator looking to enable DOTS." />
 
@@ -419,7 +421,7 @@
   <td class="right">F. Andreasen</td>
 </tr>
 <tr>
-  <td class="left">Expires: April 21, 2016</td>
+  <td class="left">Expires: August 5, 2016</td>
   <td class="right">Cisco Systems, Inc.</td>
 </tr>
 <tr>
@@ -440,15 +442,15 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">October 19, 2015</td>
+  <td class="right">February 02, 2016</td>
 </tr>
 
     	
     </tbody>
   </table>
 
-  <p class="title">DDoS Open Threat Signaling Requirements<br />
-  <span class="filename">draft-ietf-dots-requirements-00</span></p>
+  <p class="title">DDoS Open Threat Signaling Architecture<br />
+  <span class="filename">draft-mortensen-dots-architecture-00</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -460,11 +462,11 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on April 21, 2016.</p>
+<p>This Internet-Draft will expire on August 5, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
-<p>Copyright (c) 2015 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>Copyright (c) 2016 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
 
   
@@ -484,8 +486,10 @@
 <li>2.3.   <a href="#rfc.section.2.3">Obstacles</a></li>
 </ul><li>3.   <a href="#rfc.section.3">Security Considerations</a></li>
 <li>4.   <a href="#rfc.section.4">Change Log</a></li>
-<li>5.   <a href="#rfc.references">Normative References</a></li>
-<li><a href="#rfc.authors">Authors' Addresses</a></li>
+<li>5.   <a href="#rfc.references">References</a></li>
+<ul><li>5.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>5.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
   </ul>
@@ -565,7 +569,8 @@
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.3.p.1">TBD</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#change-log" id="change-log">Change Log</a></h1>
-<h1 id="rfc.references"><a href="#rfc.references">5.</a> Normative References</h1>
+<h1 id="rfc.references"><a href="#rfc.references">5.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">5.1.</a> Normative References</h1>
 <table>
   <tbody>
     <tr>
@@ -573,6 +578,23 @@
         <b id="RFC2119">[RFC2119]</b>
       </td>
       <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">5.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</b>
+      </td>
+      <td class="top"><a>Mortensen, A.</a>, <a>Moskowitz, R.</a> and <a>T. Reddy</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dots-requirements-00">DDoS Open Threat Signaling Requirements</a>", Internet-Draft draft-ietf-dots-requirements-00, October 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-dots-use-cases">[I-D.ietf-dots-use-cases]</b>
+      </td>
+      <td class="top"><a>Dobbins, R.</a>, <a>Fouant, S.</a>, <a>Migault, D.</a>, <a>Moskowitz, R.</a>, <a>Teague, N.</a> and <a>L. Xia</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dots-use-cases-00">Use cases for DDoS Open Threat Signaling</a>", Internet-Draft draft-ietf-dots-use-cases-00, October 2015.</td>
     </tr>
   </tbody>
 </table>

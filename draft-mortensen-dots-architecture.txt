@@ -5,16 +5,16 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                      Arbor Networks, Inc.
 Intended status: Informational                              F. Andreasen
-Expires: April 21, 2016                              Cisco Systems, Inc.
+Expires: August 5, 2016                              Cisco Systems, Inc.
                                                                  C. Gray
                                                            Comcast, Inc.
                                                                N. Teague
                                                           Verisign, Inc.
-                                                        October 19, 2015
+                                                       February 02, 2016
 
 
-                DDoS Open Threat Signaling Requirements
-                    draft-ietf-dots-requirements-00
+                DDoS Open Threat Signaling Architecture
+                  draft-mortensen-dots-architecture-00
 
 Abstract
 
@@ -40,11 +40,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 21, 2016.
+   This Internet-Draft will expire on August 5, 2016.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2016 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Mortensen, et al.        Expires April 21, 2016                 [Page 1]
+Mortensen, et al.        Expires August 5, 2016                 [Page 1]
 
-Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
    publication of this document.  Please review these documents
@@ -69,9 +69,9 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   2
-       1.1.1.  Key Words . . . . . . . . . . . . . . . . . . . . . .   2
+       1.1.1.  Key Words . . . . . . . . . . . . . . . . . . . . . .   3
        1.1.2.  Definition of Terms . . . . . . . . . . . . . . . . .   3
-     1.2.  Scope . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     1.2.  Scope . . . . . . . . . . . . . . . . . . . . . . . . . .   5
      1.3.  Assumptions . . . . . . . . . . . . . . . . . . . . . . .   5
    2.  Architecture  . . . . . . . . . . . . . . . . . . . . . . . .   6
      2.1.  Concepts  . . . . . . . . . . . . . . . . . . . . . . . .   6
@@ -79,8 +79,10 @@ Table of Contents
      2.3.  Obstacles . . . . . . . . . . . . . . . . . . . . . . . .   6
    3.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    4.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
+   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     5.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
+     5.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -100,19 +102,23 @@ Table of Contents
 
 1.1.  Terminology
 
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 5, 2016                 [Page 2]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
 1.1.1.  Key Words
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [RFC2119].
-
-
-
-
-Mortensen, et al.        Expires April 21, 2016                 [Page 2]
-
-Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
-
 
 1.1.2.  Definition of Terms
 
@@ -155,6 +161,15 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
       messages from a DOTS client.  The DOTS server MAY enable
       mitigation on behalf of the DOTS client, if requested, by
       communicating the DOTS client's request to the mitigator and
+
+
+
+
+Mortensen, et al.        Expires August 5, 2016                 [Page 3]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
       relaying any mitigator feedback to the client.  A DOTS server may
       also be a mitigator.
 
@@ -162,13 +177,6 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
       server and a DOTS client.  A DOTS relay receives messages from a
       DOTS client and relays them to a DOTS server, and similarly passes
       messages from the DOTS server to the DOTS client.
-
-
-
-Mortensen, et al.        Expires April 21, 2016                 [Page 3]
-
-Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
-
 
    DOTS agents:  A collective term for DOTS clients, servers and relays.
 
@@ -210,6 +218,14 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
       should always be allowed, regardless of contradictory data gleaned
       in a detected attack.
 
+
+
+
+Mortensen, et al.        Expires August 5, 2016                 [Page 4]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
 1.2.  Scope
 
    This document defines an architecture for the proposed DOTS standard
@@ -218,14 +234,6 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
    In this architecture, DOTS clients and servers communicate using the
    signaling mechanism established in the proposed DOTS standard.  As a
    result of signals from a DOTS client, the DOTS server may modify the
-
-
-
-Mortensen, et al.        Expires April 21, 2016                 [Page 4]
-
-Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
-
-
    network path of traffic destined for the attack target or targets,
    for example by diverting traffic to a scrubbing center.  Packets
    deemed part of an active attack may be dropped.
@@ -266,6 +274,14 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
    o  DOTS client and server signals, as well as messages sent through
       the data channel, are sent across any transit networks with the
       same probability of delivery of any other traffic between the DOTS
+
+
+
+Mortensen, et al.        Expires August 5, 2016                 [Page 5]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
       client network and the DOTS server network.  Any encapsulation
       required for successful delivery is left untouched by transit
       network elements.
@@ -274,13 +290,6 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
       Quality of Service (QoS) policy agreements between DOTS-enabled
       peer networks aimed at ensuring delivery of DOTS signals between
       DOTS agents.
-
-
-
-Mortensen, et al.        Expires April 21, 2016                 [Page 5]
-
-Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
-
 
 2.  Architecture
 
@@ -304,12 +313,36 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
 
 4.  Change Log
 
-5.  Normative References
+5.  References
+
+5.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
               RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
+
+5.2.  Informative References
+
+   [I-D.ietf-dots-requirements]
+              Mortensen, A., Moskowitz, R., and T. Reddy, "DDoS Open
+              Threat Signaling Requirements", draft-ietf-dots-
+              requirements-00 (work in progress), October 2015.
+
+
+
+
+
+Mortensen, et al.        Expires August 5, 2016                 [Page 6]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
+   [I-D.ietf-dots-use-cases]
+              Dobbins, R., Fouant, S., Migault, D., Moskowitz, R.,
+              Teague, N., and L. Xia, "Use cases for DDoS Open Threat
+              Signaling", draft-ietf-dots-use-cases-00 (work in
+              progress), October 2015.
 
 Authors' Addresses
 
@@ -327,15 +360,6 @@ Authors' Addresses
    United States
 
    Email: fandreas@cisco.com
-
-
-
-
-
-
-Mortensen, et al.        Expires April 21, 2016                 [Page 6]
-
-Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
 
 
    Christopher Gray
@@ -365,28 +389,4 @@ Internet-Draft   DDoS Open Threat Signaling Requirements    October 2015
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Mortensen, et al.        Expires April 21, 2016                 [Page 7]
+Mortensen, et al.        Expires August 5, 2016                 [Page 7]
