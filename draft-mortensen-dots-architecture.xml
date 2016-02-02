@@ -120,12 +120,13 @@ the data they exchange, and methods of communication among them:</t>
 
 <t><list style="hanging">
   <t hangText='DDoS:'>
-  A distributed denial-of-service attack. DDoS attacks are intended to cause
-a negative impact on the availability of servers, services, applications,
+  A distributed denial-of-service attack, in which attack traffic originates
+from widely distributed sources. DDoS attacks are intended to cause ai
+negative impact on the availability of servers, services, applications,
 and/or other functionality of an attack target.</t>
   <t hangText='attack target:'>
-  a service, application, server, or some collection thereof, on which a DDoS
-attack is focused.</t>
+  the network-enabled service, application, server, or some collection thereof,
+on which a DDoS attack is focused.</t>
   <t hangText='attack telemetry:'>
   collected network traffic characteristics enabling detection, classification
 and possible traceback of a DDoS attack.</t>
@@ -214,7 +215,33 @@ network domains, but single domain scenarios are worth investigating elsewhere.<
 </section>
 <section anchor="assumptions" title="Assumptions">
 
-<t>TBD</t>
+<t>This document makes the following assumptions:</t>
+
+<t><list style="symbols">
+  <t>The network or networks in which DOTS is deployed are assumed to offer
+the required connectivity between DOTS agents and any intermediary network
+elements, but the architecture imposes no additional limitations on the
+form of connectivity.</t>
+  <t>There is no universal DDoS attack scale threshold triggering a coordinated
+response across network administrative domains. A network domain
+administrator, or service or application owner may arbitrarily set attack
+scale threshold triggers, or manually send requests for mitigation.</t>
+  <t>The mitigation capacity of networks requesting [AM: need def] coordinated
+attack response is opaque to any network receiving and potentially agreeing
+to intervene.</t>
+  <t>The mitigation capacity of networks receiving requests for coordinated
+attack response is opaque to the network sending the request. The network
+receiving the DOTS client signal may or may not have sufficient capacity to
+filter all or even the majority of DDoS attack traffic directed at a target.</t>
+  <t>DOTS client and server signals, as well as messages sent through the data
+channel, are sent across any transit networks with the same probability of
+delivery of any other traffic between the DOTS client network and the DOTS
+server network. Any encapsulation required for successful delivery is left
+untouched by transit network elements.</t>
+  <t>The architecture allows for, but does not assume, the presence of Quality of
+Service (QoS) policy agreements between DOTS-enabled peer networks aimed at
+ensuring delivery of DOTS signals between DOTS agents.</t>
+</list></t>
 
 </section>
 </section>

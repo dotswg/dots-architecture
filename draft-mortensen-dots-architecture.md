@@ -221,6 +221,36 @@ network domains, but single domain scenarios are worth investigating elsewhere.
 Assumptions     {#assumptions}
 -----------
 
+This document makes the following assumptions:
+
+* The network or networks in which DOTS is deployed are assumed to offer
+  the required connectivity between DOTS agents and any intermediary network
+  elements, but the architecture imposes no additional limitations on the
+  form of connectivity.
+
+* There is no universal DDoS attack scale threshold triggering a coordinated
+  response across network administrative domains. A network domain
+  administrator, or service or application owner may arbitrarily set attack
+  scale threshold triggers, or manually send requests for mitigation.
+
+* The mitigation capacity of networks requesting [AM: need def] coordinated
+  attack response is opaque to any network receiving and potentially agreeing
+  to intervene.
+
+* The mitigation capacity of networks receiving requests for coordinated
+  attack response is opaque to the network sending the request. The network
+  receiving the DOTS client signal may or may not have sufficient capacity to
+  filter all or even the majority of DDoS attack traffic directed at a target.
+
+* DOTS client and server signals, as well as messages sent through the data
+  channel, are sent across any transit networks with the same probability of
+  delivery of any other traffic between the DOTS client network and the DOTS
+  server network. Any encapsulation required for successful delivery is left
+  untouched by transit network elements.
+
+* The architecture allows for, but does not assume, the presence of Quality of
+  Service (QoS) policy agreements between DOTS-enabled peer networks aimed at
+  ensuring delivery of DOTS signals between DOTS agents.
 
 
 Architecture

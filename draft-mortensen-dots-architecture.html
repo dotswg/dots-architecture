@@ -502,9 +502,9 @@
 
 <dl>
   <dt>DDoS:</dt>
-  <dd style="margin-left: 8">A distributed denial-of-service attack. DDoS attacks are intended to cause a negative impact on the availability of servers, services, applications, and/or other functionality of an attack target.</dd>
+  <dd style="margin-left: 8">A distributed denial-of-service attack, in which attack traffic originates from widely distributed sources. DDoS attacks are intended to cause ai negative impact on the availability of servers, services, applications, and/or other functionality of an attack target.</dd>
   <dt>attack target:</dt>
-  <dd style="margin-left: 8">a service, application, server, or some collection thereof, on which a DDoS attack is focused.</dd>
+  <dd style="margin-left: 8">the network-enabled service, application, server, or some collection thereof, on which a DDoS attack is focused.</dd>
   <dt>attack telemetry:</dt>
   <dd style="margin-left: 8">collected network traffic characteristics enabling detection, classification and possible traceback of a DDoS attack.</dd>
   <dt>countermeasure:</dt>
@@ -543,7 +543,17 @@
 <p id="rfc.section.1.2.p.2">In this architecture, DOTS clients and servers communicate using the signaling mechanism established in the proposed DOTS standard. As a result of signals from a DOTS client, the DOTS server may modify the network path of traffic destined for the attack target or targets, for example by diverting traffic to a scrubbing center. Packets deemed part of an active attack may be dropped.</p>
 <p id="rfc.section.1.2.p.3">The architecture presented here is assumed to be applicable across network administrative domains&#8211;as, for example, between an enterprise domain and the domain of a third-party attack scrubbing service&#8211;as well as to a single administrative domain. DOTS is generally assumed to be most effective when aiding coordination of attack response between two or more participating network domains, but single domain scenarios are worth investigating elsewhere.</p>
 <h1 id="rfc.section.1.3"><a href="#rfc.section.1.3">1.3.</a> <a href="#assumptions" id="assumptions">Assumptions</a></h1>
-<p id="rfc.section.1.3.p.1">TBD</p>
+<p id="rfc.section.1.3.p.1">This document makes the following assumptions:</p>
+<p/>
+
+<ul>
+  <li>The network or networks in which DOTS is deployed are assumed to offer the required connectivity between DOTS agents and any intermediary network elements, but the architecture imposes no additional limitations on the form of connectivity.</li>
+  <li>There is no universal DDoS attack scale threshold triggering a coordinated response across network administrative domains. A network domain administrator, or service or application owner may arbitrarily set attack scale threshold triggers, or manually send requests for mitigation.</li>
+  <li>The mitigation capacity of networks requesting [AM: need def] coordinated attack response is opaque to any network receiving and potentially agreeing to intervene.</li>
+  <li>The mitigation capacity of networks receiving requests for coordinated attack response is opaque to the network sending the request. The network receiving the DOTS client signal may or may not have sufficient capacity to filter all or even the majority of DDoS attack traffic directed at a target.</li>
+  <li>DOTS client and server signals, as well as messages sent through the data channel, are sent across any transit networks with the same probability of delivery of any other traffic between the DOTS client network and the DOTS server network. Any encapsulation required for successful delivery is left untouched by transit network elements.</li>
+  <li>The architecture allows for, but does not assume, the presence of Quality of Service (QoS) policy agreements between DOTS-enabled peer networks aimed at ensuring delivery of DOTS signals between DOTS agents.</li>
+</ul>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#architecture" id="architecture">Architecture</a></h1>
 <p id="rfc.section.2.p.1">TBD</p>
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#concepts" id="concepts">Concepts</a></h1>
