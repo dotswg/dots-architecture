@@ -5,12 +5,12 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                      Arbor Networks, Inc.
 Intended status: Informational                              F. Andreasen
-Expires: August 5, 2016                              Cisco Systems, Inc.
+Expires: August 14, 2016                             Cisco Systems, Inc.
                                                                  C. Gray
                                                            Comcast, Inc.
                                                                N. Teague
                                                           Verisign, Inc.
-                                                       February 02, 2016
+                                                       February 11, 2016
 
 
                 DDoS Open Threat Signaling Architecture
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 5, 2016.
+   This Internet-Draft will expire on August 14, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 1]
+Mortensen, et al.        Expires August 14, 2016                [Page 1]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 2]
+Mortensen, et al.        Expires August 14, 2016                [Page 2]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -130,7 +130,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    DDoS:  A distributed denial-of-service attack, in which attack
       traffic originates from widely distributed sources.  DDoS attacks
-      are intended to cause a negative impact on the availability of
+      are intended to cause ai negative impact on the availability of
       servers, services, applications, and/or other functionality of an
       attack target.
 
@@ -165,7 +165,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 3]
+Mortensen, et al.        Expires August 14, 2016                [Page 3]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -221,7 +221,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 4]
+Mortensen, et al.        Expires August 14, 2016                [Page 4]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -277,7 +277,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 5]
+Mortensen, et al.        Expires August 14, 2016                [Page 5]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -298,15 +298,15 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    DDoS attack.  The basic high-level DOTS reference architecture is
    illustrated in Figure X1
 
-     Mitigator ~~~~~~~~~~ DOTS Server
-                            |     |
-                            |     +---+
-                            |         |
-                            |       DOTS Relay
-                            |         |
-                            |     +---+
-                            |     |
-    Attack Target ~~~~~~~ DOTS Client
+         Mitigator ~~~~~~~~~~ DOTS Server
+                                |     |
+                                |     +---+
+                                |         |
+                                |       DOTS Relay
+                                |         |
+                                |     +---+
+                                |     |
+        Attack Target ~~~~~~~ DOTS Client
 
    A simple example instantiation of the DOTS architecture could be an
    enterprise as the attack target for a volumetric DDoS attack, and an
@@ -333,7 +333,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 6]
+Mortensen, et al.        Expires August 14, 2016                [Page 6]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -349,11 +349,11 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    As illustrated in Figure X2, there are two interfaces between the
    DOTS Server and the DOTS Client (and possibly the DOTS Relay).
 
-   +----------------+                                 +----------------+
-   |                | <------- Signal Channel ------> |                |
-   |   DOTS Client  |                                 |  DOTS Server   |
-   |                | <=======  Data Channel  ======> |                |
-   +----------------+                                 +----------------+
+    +----------------+                                 +----------------+
+    |                | <------- Signal Channel ------> |                |
+    |   DOTS Client  |                                 |  DOTS Server   |
+    |                | <=======  Data Channel  ======> |                |
+    +----------------+                                 +----------------+
 
    The primary purpose of the signal channel is for the DOTS client to
    ask the DOTS server for help in mitigating an attack, and for the
@@ -389,7 +389,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 7]
+Mortensen, et al.        Expires August 14, 2016                [Page 7]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -445,7 +445,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 8]
+Mortensen, et al.        Expires August 14, 2016                [Page 8]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -501,7 +501,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 5, 2016                 [Page 9]
+Mortensen, et al.        Expires August 14, 2016                [Page 9]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -557,4 +557,4 @@ Authors' Addresses
 
 
 
-Mortensen, et al.        Expires August 5, 2016                [Page 10]
+Mortensen, et al.        Expires August 14, 2016               [Page 10]

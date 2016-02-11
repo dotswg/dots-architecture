@@ -66,7 +66,7 @@
       </address>
     </author>
 
-    <date year="2016" month="February" day="02"/>
+    <date year="2016" month="February" day="11"/>
 
     <area>Security</area>
     <workgroup>DOTS</workgroup>
@@ -75,8 +75,12 @@
     <abstract>
 
 
-<t>This document describes an architecture for establishing and maintaining DDoS Open Threat Signaling (DOTS) within and between networks. The document makes no attempt to suggest protocols or protocol extensions, instead focusing on architectural relationships, components and concepts used in a DOTS
-deployment, as well as obstacles confronting a network operator looking to enable DOTS.</t>
+<t>This document describes an architecture for establishing and maintaining
+DDoS Open Threat Signaling (DOTS) within and between networks. The document
+makes no attempt to suggest protocols or protocol extensions, instead focusing
+on architectural relationships, components and concepts used in a DOTS
+deployment, as well as obstacles confronting a network operator looking to
+enable DOTS.</t>
 
 
 
@@ -90,69 +94,125 @@ deployment, as well as obstacles confronting a network operator looking to enabl
 
 <section anchor="introduction" title="Introduction">
 
-<t>Signaling the need for help defending against an active distributed denial of service (DDoS) attack requires a common understanding of mechanisms and roles among the parties coordinating attack response. The proposed signaling layer and supplementary messaging is the focus of DDoS Open Threat Signaling (DDoS). DOTS proposes to standardize a method of coordinating defensive measures among willing peers to mitigate attacks quickly and efficiently.</t>
+<t>Signaling the need for help defending against an active distributed denial
+of service (DDoS) attack requires a common understanding of mechanisms and
+roles among the parties coordinating attack response. The proposed signaling
+layer and supplementary messaging is the focus of DDoS Open Threat Signaling
+(DDoS). DOTS proposes to standardize a method of coordinating defensive
+measures among willing peers to mitigate attacks quickly and efficiently.</t>
 
-<t>This document describes an architecture used in establishing, maintaining or terminating a DOTS relationship in a network or between networks. DOTS enables hybrid attack responses, coordinated locally at or near the target of an active attack, as well as closer to attack sources in the network path.</t>
+<t>This document describes an architecture used in establishing, maintaining or
+terminating a DOTS relationship in a network or between networks. DOTS
+enables hybrid attack responses, coordinated locally at or near the target of
+an active attack, as well as closer to attack sources in the network path.</t>
 
 <section anchor="terminology" title="Terminology">
 
 <section anchor="key-words" title="Key Words">
 
-<t>The key words &ldquo;MUST&rdquo;, &ldquo;MUST NOT&rdquo;, &ldquo;REQUIRED&rdquo;, &ldquo;SHALL&rdquo;, &ldquo;SHALL NOT&rdquo;, &ldquo;SHOULD&rdquo;, &ldquo;SHOULD NOT&rdquo;, &ldquo;RECOMMENDED&rdquo;, &ldquo;MAY&rdquo;, and &ldquo;OPTIONAL&rdquo; in this document are to be interpreted as described in <xref target="RFC2119"/>.</t>
+<t>The key words &ldquo;MUST&rdquo;, &ldquo;MUST NOT&rdquo;, &ldquo;REQUIRED&rdquo;, &ldquo;SHALL&rdquo;, &ldquo;SHALL NOT&rdquo;,
+&ldquo;SHOULD&rdquo;, &ldquo;SHOULD NOT&rdquo;, &ldquo;RECOMMENDED&rdquo;, &ldquo;MAY&rdquo;, and &ldquo;OPTIONAL&rdquo; in this
+document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 
 </section>
 <section anchor="definition-of-terms" title="Definition of Terms">
 
-<t>The following terms are used to define relationships between elements, the data they exchange, and methods of communication among them:</t>
+<t>The following terms are used to define relationships between elements,
+the data they exchange, and methods of communication among them:</t>
 
 <t><list style="hanging">
   <t hangText='DDoS:'>
-  A distributed denial-of-service attack, in which attack traffic originates from widely distributed sources. DDoS attacks are intended to cause a negative impact on the availability of servers, services, applications, and/or other functionality of an attack target.</t>
+  A distributed denial-of-service attack, in which attack traffic originates
+from widely distributed sources. DDoS attacks are intended to cause ai
+negative impact on the availability of servers, services, applications,
+and/or other functionality of an attack target.</t>
   <t hangText='attack target:'>
-  the network-enabled service, application, server, or some collection thereof, on which a DDoS attack is focused.</t>
+  the network-enabled service, application, server, or some collection thereof,
+on which a DDoS attack is focused.</t>
   <t hangText='attack telemetry:'>
-  collected network traffic characteristics enabling detection, classification and possible traceback of a DDoS attack.</t>
+  collected network traffic characteristics enabling detection, classification
+and possible traceback of a DDoS attack.</t>
   <t hangText='countermeasure:'>
-  An action or series of actions undertaken to distinguish and filter out DDoS attack traffic from valid traffic destined for an attack target.</t>
+  An action or series of actions undertaken to distinguish and filter out
+DDoS attack traffic from valid traffic destined for an attack target.</t>
   <t hangText='mitigation:'>
-  A defensive response against a detected DDoS attack, performed by an entity in the network path between attack sources and the attack target, either through inline deployment or some form of traffic diversion, consisting of one or more countermeasures. The form mitigation takes is out of scope for this document.</t>
+  A defensive response against a detected DDoS attack, performed by an entity
+in the network path between attack sources and the attack target, either
+through inline deployment or some form of traffic diversion, consisting of
+one or more countermeasures. The form mitigation takes is out of scope for
+this document.</t>
   <t hangText='mitigator:'>
   A network element capable of performing mitigation of a detected DDoS attack.</t>
   <t hangText='DOTS client:'>
-  A DOTS-aware network element requesting attack response coordination with another DOTS-aware element, with the expectation that the remote element is capable of helping fend off the attack against the client.</t>
+  A DOTS-aware network element requesting attack response coordination with
+another DOTS-aware element, with the expectation that the remote element is
+capable of helping fend off the attack against the client.</t>
   <t hangText='DOTS server:'>
-  A DOTS-aware network element handling and responding to messages from a DOTS client. The DOTS server MAY enable mitigation on behalf of the DOTS client, if requested, by communicating the DOTS client&rsquo;s request to the mitigator and relaying any mitigator feedback to the client. A DOTS server may also be a mitigator.</t>
+  A DOTS-aware network element handling and responding to messages from a
+DOTS client. The DOTS server MAY enable mitigation on behalf of the DOTS
+client, if requested, by communicating the DOTS client&rsquo;s request to the
+mitigator and relaying any mitigator feedback to the client. A DOTS server
+may also be a mitigator.</t>
   <t hangText='DOTS relay:'>
-  A DOTS-aware network element positioned between a DOTS server and a DOTS client. A DOTS relay receives messages from a DOTS client and relays them to a DOTS server, and similarly passes messages from the DOTS server to the DOTS client.</t>
+  A DOTS-aware network element positioned between a DOTS server and a DOTS
+client. A DOTS relay receives messages from a DOTS client and relays them
+to a DOTS server, and similarly passes messages from the DOTS server to the
+DOTS client.</t>
   <t hangText='DOTS agents:'>
   A collective term for DOTS clients, servers and relays.</t>
   <t hangText='signal channel:'>
-  A bidirectional, mutually authenticated communication layer between DOTS agents characterized by resilience even in conditions leading to severe packet loss, such as a volumetric DDoS attack causing network congestion.</t>
+  A bidirectional, mutually authenticated communication layer between DOTS
+agents characterized by resilience even in conditions leading to severe
+packet loss, such as a volumetric DDoS attack causing network congestion.</t>
   <t hangText='DOTS signal:'>
-  A concise authenticated status/control message transmitted between DOTS agents, used to indicate client&rsquo;s need for mitigation, as well as to convey the status of any requested mitigation.</t>
+  A concise authenticated status/control message transmitted between DOTS
+agents, used to indicate client&rsquo;s need for mitigation, as well as to convey
+the status of any requested mitigation.</t>
   <t hangText='heartbeat:'>
-  A keep-alive message transmitted between DOTS agents over the signal channel, used to measure peer health. Heartbeat functionality is not required to be distinct from signal.</t>
+  A keep-alive message transmitted between DOTS agents over the signal channel,
+used to measure peer health. Heartbeat functionality is not required to be
+distinct from signal.</t>
   <t hangText='client signal:'>
-  A message sent from a DOTS client to a DOTS server over the signal channel, possibly traversing a DOTS relay, indicating the DOTS client&rsquo;s need for mitigation, as well as the scope of any requested mitigation, optionally including detected attack telemetry to supplement server-initiated mitigation.</t>
+  A message sent from a DOTS client to a DOTS server over the signal channel,
+possibly traversing a DOTS relay, indicating the DOTS client&rsquo;s need for
+mitigation, as well as the scope of any requested mitigation, optionally
+including detected attack telemetry to supplement server-initiated
+mitigation.</t>
   <t hangText='server signal:'>
-  A message sent from a DOTS server to a DOTS client over the signal channel. Note that a server signal is not a response to client signal, but a DOTS server-initiated status message sent to the DOTS client, containing information about the status of any requested mitigation and its efficacy.</t>
+  A message sent from a DOTS server to a DOTS client over the signal channel.
+Note that a server signal is not a response to client signal, but a DOTS
+server-initiated status message sent to the DOTS client, containing
+information about the status of any requested mitigation and its efficacy.</t>
   <t hangText='data channel:'>
-  A secure communication layer between client and server used for infrequent bulk exchange of data not easily or appropriately communicated through the signal channel under attack conditions.</t>
+  A secure communication layer between client and server used for infrequent
+bulk exchange of data not easily or appropriately communicated through the
+signal channel under attack conditions.</t>
   <t hangText='blacklist:'>
   a list of source addresses or prefixes from which traffic should be blocked.</t>
   <t hangText='whitelist:'>
-  a list of source addresses or prefixes from which traffic should always be allowed, regardless of contradictory data gleaned in a detected attack.</t>
+  a list of source addresses or prefixes from which traffic should always be
+allowed, regardless of contradictory data gleaned in a detected attack.</t>
 </list></t>
 
 </section>
 </section>
 <section anchor="scope" title="Scope">
 
-<t>This document defines an architecture for the proposed DOTS standard in the IETF.</t>
+<t>This document defines an architecture for the proposed DOTS standard in the
+IETF.</t>
 
-<t>In this architecture, DOTS clients and servers communicate using the signaling mechanism established in the proposed DOTS standard. As a result of signals from a DOTS client, the DOTS server may modify the network path of traffic destined for the attack target or targets, for example by diverting traffic to a scrubbing center. Packets deemed part of an active attack may be dropped.</t>
+<t>In this architecture, DOTS clients and servers communicate using the signaling
+mechanism established in the proposed DOTS standard. As a result of signals
+from a DOTS client, the DOTS server may modify the network path of traffic
+destined for the attack target or targets, for example by diverting traffic
+to a scrubbing center. Packets deemed part of an active attack may be dropped.</t>
 
-<t>The architecture presented here is assumed to be applicable across network administrative domains&ndash;as, for example, between an enterprise domain and the domain of a third-party attack scrubbing service&ndash;as well as to a single administrative domain. DOTS is generally assumed to be most effective when aiding coordination of attack response between two or more participating network domains, but single domain scenarios are worth investigating elsewhere.</t>
+<t>The architecture presented here is assumed to be applicable across network
+administrative domains&ndash;as, for example, between an enterprise domain and
+the domain of a third-party attack scrubbing service&ndash;as well as to a single
+administrative domain. DOTS is generally assumed to be most effective when
+aiding coordination of attack response between two or more participating
+network domains, but single domain scenarios are worth investigating elsewhere.</t>
 
 </section>
 <section anchor="assumptions" title="Assumptions">
@@ -160,12 +220,29 @@ deployment, as well as obstacles confronting a network operator looking to enabl
 <t>This document makes the following assumptions:</t>
 
 <t><list style="symbols">
-  <t>The network or networks in which DOTS is deployed are assumed to offer the required connectivity between DOTS agents and any intermediary network elements, but the architecture imposes no additional limitations on the form of connectivity.</t>
-  <t>There is no universal DDoS attack scale threshold triggering a coordinated response across network administrative domains. A network domain administrator, or service or application owner may arbitrarily set attack scale threshold triggers, or manually send requests for mitigation.</t>
-  <t>The mitigation capacity of networks requesting [AM: need def] coordinated attack response is opaque to any network receiving and potentially agreeing to intervene.</t>
-  <t>The mitigation capacity of networks receiving requests for coordinated attack response is opaque to the network sending the request. The network receiving the DOTS client signal may or may not have sufficient capacity to filter all or even the majority of DDoS attack traffic directed at a target.</t>
-  <t>DOTS client and server signals, as well as messages sent through the data channel, are sent across any transit networks with the same probability of delivery of any other traffic between the DOTS client network and the DOTS server network. Any encapsulation required for successful delivery is left untouched by transit network elements.</t>
-  <t>The architecture allows for, but does not assume, the presence of Quality of Service (QoS) policy agreements between DOTS-enabled peer networks aimed at ensuring delivery of DOTS signals between DOTS agents.</t>
+  <t>The network or networks in which DOTS is deployed are assumed to offer the
+required connectivity between DOTS agents and any intermediary network
+elements, but the architecture imposes no additional limitations on the form
+of connectivity.</t>
+  <t>There is no universal DDoS attack scale threshold triggering a coordinated
+response across network administrative domains. A network domain
+administrator, or service or application owner may arbitrarily set attack
+scale threshold triggers, or manually send requests for mitigation.</t>
+  <t>The mitigation capacity of networks requesting [AM: need def] coordinated
+attack response is opaque to any network receiving and potentially agreeing
+to intervene.</t>
+  <t>The mitigation capacity of networks receiving requests for coordinated
+attack response is opaque to the network sending the request. The network
+receiving the DOTS client signal may or may not have sufficient capacity to
+filter all or even the majority of DDoS attack traffic directed at a target.</t>
+  <t>DOTS client and server signals, as well as messages sent through the data
+channel, are sent across any transit networks with the same probability of
+delivery of any other traffic between the DOTS client network and the DOTS
+server network. Any encapsulation required for successful delivery is left
+untouched by transit network elements.</t>
+  <t>The architecture allows for, but does not assume, the presence of Quality of
+Service (QoS) policy agreements between DOTS-enabled peer networks aimed at
+ensuring delivery of DOTS signals between DOTS agents.</t>
 </list></t>
 
 </section>
@@ -174,15 +251,15 @@ deployment, as well as obstacles confronting a network operator looking to enabl
 <t>DOTS enables a target that is under a Distributed Denial-of-Service (DDoS) attack to signal another entity for help in mitigating the DDoS attack. The basic high-level DOTS reference architecture is illustrated in Figure X1</t>
 
 <figure><artwork><![CDATA[
-  Mitigator ~~~~~~~~~~ DOTS Server
-                         |     |
-                         |     +---+
-                         |         |
-                         |       DOTS Relay
-                         |         |
-                         |     +---+
-                         |     |
- Attack Target ~~~~~~~ DOTS Client
+      Mitigator ~~~~~~~~~~ DOTS Server
+                             |     |
+                             |     +---+
+                             |         |
+                             |       DOTS Relay
+                             |         |
+                             |     +---+
+                             |     |
+     Attack Target ~~~~~~~ DOTS Client
 ]]></artwork></figure>
 
 <t>A simple example instantiation of the DOTS architecture could be an enterprise as the attack target for a volumetric DDoS attack, and an upstream DDoS mitigation service as the Mitigator. The enterprise (attack target) is connected to the Internet via a link that is getting saturated, and the enterprise suspects it is under DDoS attack. The enterprise has a DOTS client, which obtains information about the DDoS attack, and signals the DOTS server for help in mitigating the attack. The communication may be direct from the DOTS client to the DOTS Server, or it may traverse one or more DOTS Relays, which act as intermediaries. The DOTS Server in turn invokes one or more mitigators, which are tasked with mitigating the actual DDoS attack, and hence aim to suppress the attack traffic while allowing valid traffic to reach the attack target.</t>
@@ -194,11 +271,11 @@ deployment, as well as obstacles confronting a network operator looking to enabl
 <t>As illustrated in Figure X2, there are two interfaces between the DOTS Server and the DOTS Client (and possibly the DOTS Relay).</t>
 
 <figure><artwork><![CDATA[
-+----------------+                                 +----------------+
-|                | <------- Signal Channel ------> |                |
-|   DOTS Client  |                                 |  DOTS Server   |
-|                | <=======  Data Channel  ======> |                |
-+----------------+                                 +----------------+
+    +----------------+                                 +----------------+
+    |                | <------- Signal Channel ------> |                |
+    |   DOTS Client  |                                 |  DOTS Server   |
+    |                | <=======  Data Channel  ======> |                |
+    +----------------+                                 +----------------+
 ]]></artwork></figure>
 
 <t>The primary purpose of the signal channel is for the DOTS client to ask the DOTS server for help in mitigating an attack, and for the DOTS server to inform the DOTS client about the status of such mitigation. The DOTS client does this by sending a client signal, which contains information about the attack target. The client signal may also include telemetry information about the attack, if the DOTS client has such information available. The DOTS Server in turn sends a server signal to inform the DOTS client of whether it will honor the mitigation request. Assuming it will, the DOTS Server initiates attack mitigation, and periodically informs the DOTS client about the status of the mitigation. Similarly, the DOTS client periodically informs the DOTS server about the client&rsquo;s status, which at a minimum provides client (attack target) health information, but it may also include telemetry information about the attack as it is now seen by the client. At some point, the DOTS client or the server may decide to terminate the server-side attack mitigation, which it indicates to the DOTS peer agent (DOTS client or server) over the signal channel. Note that the signal channel may need to operate over a link that is experiencing a DDoS attack and hence is subject to very severe packet loss.</t>
