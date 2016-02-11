@@ -111,10 +111,11 @@ The following terms are used to define relationships between elements,
 the data they exchange, and methods of communication among them:
 
 DDoS:
-: A distributed denial-of-service attack, in which attack traffic originates
-  from widely distributed sources. DDoS attacks are intended to cause ai
-  negative impact on the availability of servers, services, applications,
-  and/or other functionality of an attack target.
+: A distributed denial-of-service attack, in which high levels of traffic
+  originating from widely distributed sources is directed at a target or
+  collection of targets. DDoS attacks are intended to diminish or prevent the
+  availability of servers, services, applications, and/or other functionality
+  of an attack target.
 
 attack target:
 : the network-enabled service, application, server, or some collection thereof,
@@ -328,11 +329,23 @@ attack and hence is subject to very severe packet loss.
 
 [**FSA**: *Requirements document talks about having an always-on signal channel with on-going status messages - discuss further*]
 
+[**AM**:] I don't believe the -00 req draft does, but the -01 draft will mention
+it. I think there's a distinction being lost here, though. Although it will be
+possible, and possibly desirable in certain situations, in my view the signal
+channel should be more or less always on regardless: it reduces the likelihood
+of transport-layer crypto handshakes in attack conditions, should minimize NAT
+binding timeout incidence, and simplifies distinguishing between an inactive
+DOTS agent and one that is unavailable (e.g., unresponsive during attack). The
+"always-on" I've been referring to is "always-on" mitigation: the DOTS client
+maintains an signal channel session with the DOTS server, but also maintains
+its request for help scrubbing traffic bound for a certain client-owned
+network address space, regardless of the presence of attack traffic.
+
 While DOTS is able to function with just the signal channel, the addition of
 the DOTS data channel provides for additional and more efficient capabilities.
 The primary purpose of the data channel is to support DOTS related
-configuration and policy information between the DOTS client and the DOTS
-server. Examples of such information include
+configuration and policy information [AM: exchange] between the DOTS client and
+the DOTS server. Examples of such information include
 
 * Defining names or aliases for attack targets (resources). Those names can be
   used in subsequent signal channel exchanges to more efficiently refer to the
@@ -390,15 +403,144 @@ associated with the use of DOTS.
 
 TBD
 
-Concepts
---------
+Concepts and Components
+=======================
 
-TBD
+In this section, we describe core DOTS concepts and introduce the basic
+components involved in a DOTS signaling session.
+
+
+Signaling Sessions
+------------------
+
+In order for DOTS to be effective as a vehicle for DDoS mitigation requests,
+one or more DOTS clients must establish ongoing communication with one or more
+DOTS servers. While the preconditions for enabling DOTS in or among network
+domains may also involve business relationships, service level agreements, or
+other formal or informal understandings between network operators, such
+considerations are out of scope for this document.
+
+An established communication layer between DOTS agents is a Signaling Session.
+At its most basic, for a DOTS signaling session to exist both signal channel and
+data channel must be functioning between DOTS agents. That is, under nominal
+network conditions, signals actively sent from a DOTS client are received by the
+specific DOTS server intended by the client, and vice versa.
+
+
+### Direct Signaling ###
+
+A signaling session may take the form of direct signaling between the DOTS
+clients and servers, as shown in Figure N below:
+
+~~~~~
+        +-------------+                            +-------------+
+        | DOTS client |<------signal channel------>| DOTS server |
+        +-------------+                            +-------------+
+~~~~~
+
+In the above figure, the signaling session is active while the DOTS client
+sends client signals to the DOTS server, if and only if the DOTS server is
+also sending server signals to the client in reaction to the client's signals.
+
+
+### Relayed Signaling ###
+
+A signaling session may also include one or more DOTS relays in the signaling
+path between the clients and servers, as show in Figure N:
+
+~~~~~
+        +-------------+                            +-------------+
+        | DOTS client |                            | DOTS server |
+        +-------------+                            +-------------+
+               ^                                         ^
+               |            +---------------+            |
+               \----------->| DOTS relay(s) |<-----------/
+                            +---------------+
+~~~~~
+
+At its most basic, such a signaling session is logically identical to the
+following, Figure N:
+
+~~~~~
+        +-------------+                            +-------------+
+        | DOTS client |                            | DOTS server |
+        +-------------+                            +-------------+
+               ^                                         ^
+               |    +-------------------------------+    |
+               \--->| DOTS server |<->| DOTS client |<---/
+                    +-------------------------------+
+~~~~~
+
+The DOTS relay receives DOTS client signals in the role of a DOTS server, and
+relays the signals from the originating DOTS client to the DOTS server in the
+role of a DOTS client.
+
+
+### Redirected Signaling ###
+
+In certain circumstances, a DOTS server may want to redirect a DOTS client to
+an alternative DOTS server for a signaling session. Such circumstances include
+but are not limited to:
+
+* Mitigation capacity exhaustion in the Mitigator with which the
+  specific DOTS server is communicating;
+
+* Mitigator outage or other downtime, such as scheduled maintenance;
+
+* Scheduled DOTS server maintenance;
+
+* Scheduled modifications to the network path between DOTS server and DOTS
+  client.
+
+The DOTS architecture does not require the DOTS server to justify the decision
+to redirect the signaling session to another DOTS server.
+
+When receiving a DOTS server redirection in the server signal, the DOTS client
+terminates the active signaling session, and establishes a new signaling
+session with the DOTS server to which the client is being redirected.
+
+A basic redirected signaling session involves the following steps, as shown
+in Figure N:
+
+~~~~~
+        +-------------+                            +---------------+
+        |             |<=(1)== signal session ====>|               |
+        |             |                            |               |
+        | DOTS client |<-(2)-- redirect to B ------| DOTS server A |
+        |             |                            |               |
+        |             |X=(3)== signal session ====>|               |
+        |             |                            |               |
+        |             |X=(4)== signal session ====X|               |
+        +-------------+                            +---------------+
+               ^
+               |
+              (5)
+               |
+               v
+        +---------------+
+        | DOTS server B |
+        +---------------+
+~~~~~
+
+TODO: describe steps.
+
+On receiving a redirection request from a DOTS server, the DOTS client MUST
+terminate its end of the signaling session with the redirecting DOTS server
+within the time frame defined by the protocol.
+
+The DOTS client MAY subsequently establish a new session with the DOTS server to
+which it was redirected, but is not required to do so. Local policy on DOTS
+server redirection is left to DOTS client operators.
 
 Components
 ----------
 
-TBD
+### DOTS client ###
+
+### DOTS server ###
+
+### DOTS relay ###
+
 
 Obstacles
 ---------
