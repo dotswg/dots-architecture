@@ -248,7 +248,9 @@ ensuring delivery of DOTS signals between DOTS agents.</t>
 </section>
 </section>
 <section anchor="architecture" title="Architecture">
-<t>DOTS enables a target that is under a Distributed Denial-of-Service (DDoS) attack to signal another entity for help in mitigating the DDoS attack. The basic high-level DOTS reference architecture is illustrated in Figure X1</t>
+<t>DOTS enables a target that is under a Distributed Denial-of-Service (DDoS)
+attack to signal another entity for help in mitigating the DDoS attack. The
+basic high-level DOTS reference architecture is illustrated in Figure X1</t>
 
 <figure><artwork><![CDATA[
       Mitigator ~~~~~~~~~~ DOTS Server
@@ -262,32 +264,80 @@ ensuring delivery of DOTS signals between DOTS agents.</t>
      Attack Target ~~~~~~~ DOTS Client
 ]]></artwork></figure>
 
-<t>A simple example instantiation of the DOTS architecture could be an enterprise as the attack target for a volumetric DDoS attack, and an upstream DDoS mitigation service as the Mitigator. The enterprise (attack target) is connected to the Internet via a link that is getting saturated, and the enterprise suspects it is under DDoS attack. The enterprise has a DOTS client, which obtains information about the DDoS attack, and signals the DOTS server for help in mitigating the attack. The communication may be direct from the DOTS client to the DOTS Server, or it may traverse one or more DOTS Relays, which act as intermediaries. The DOTS Server in turn invokes one or more mitigators, which are tasked with mitigating the actual DDoS attack, and hence aim to suppress the attack traffic while allowing valid traffic to reach the attack target.</t>
+<t>A simple example instantiation of the DOTS architecture could be an enterprise
+as the attack target for a volumetric DDoS attack, and an upstream DDoS
+mitigation service as the Mitigator. The enterprise (attack target) is
+connected to the Internet via a link that is getting saturated, and the
+enterprise suspects it is under DDoS attack. The enterprise has a DOTS client,
+which obtains information about the DDoS attack, and signals the DOTS server
+for help in mitigating the attack. The communication may be direct from the
+DOTS client to the DOTS Server, or it may traverse one or more DOTS Relays,
+which act as intermediaries. The DOTS Server in turn invokes one or more
+mitigators, which are tasked with mitigating the actual DDoS attack, and hence
+aim to suppress the attack traffic while allowing valid traffic to reach the
+attack target.</t>
 
-<t>The scope of the DOTS specifications is the interface(s) between the DOTS client, DOTS server, and DOTS relay. The interface(s) to the attack target and the mitigator are out of scope of DOTS. Similarly, the operation of both the attack target and the mitigator are out of scope of DOTS. Thus, DOTS neither speficies how an attack target decides it is under DDoS attack, nor does DOTS specify how a mitigator may actually mitigate it.</t>
+<t>The scope of the DOTS specifications is the interface(s) between the DOTS
+client, DOTS server, and DOTS relay. The interface(s) to the attack target and
+the mitigator are out of scope of DOTS. Similarly, the operation of both the
+attack target and the mitigator are out of scope of DOTS. Thus, DOTS neither
+speficies how an attack target decides it is under DDoS attack, nor does DOTS
+specify how a mitigator may actually mitigate it.</t>
 
 <t>[<spanx style="strong">FSA</spanx>: <spanx style="emph">However, should we say something about operational considerations nevertheless. In particular, I&rsquo;m thinking about M:N relationships, which doesn&rsquo;t necessarily seem wise. Also, since we may be getting involved in traffic redirection, is there something to say about authorization of such requests - should a DOTS server just blindly redirect traffic for mitigation purposes, etc. based on what any DOTS client tells it ?</spanx>]</t>
 
-<t>As illustrated in Figure X2, there are two interfaces between the DOTS Server and the DOTS Client (and possibly the DOTS Relay).</t>
+<t>As illustrated in Figure X2, there are two interfaces between the DOTS Server
+and the DOTS Client (and possibly the DOTS Relay).</t>
 
 <figure><artwork><![CDATA[
-    +----------------+                                 +----------------+
-    |                | <------- Signal Channel ------> |                |
-    |   DOTS Client  |                                 |  DOTS Server   |
-    |                | <=======  Data Channel  ======> |                |
-    +----------------+                                 +----------------+
+    +---------------+                                 +---------------+
+    |               | <------- Signal Channel ------> |               |
+    |  DOTS Client  |                                 |  DOTS Server  |
+    |               | <=======  Data Channel  ======> |               |
+    +---------------+                                 +---------------+
 ]]></artwork></figure>
 
-<t>The primary purpose of the signal channel is for the DOTS client to ask the DOTS server for help in mitigating an attack, and for the DOTS server to inform the DOTS client about the status of such mitigation. The DOTS client does this by sending a client signal, which contains information about the attack target. The client signal may also include telemetry information about the attack, if the DOTS client has such information available. The DOTS Server in turn sends a server signal to inform the DOTS client of whether it will honor the mitigation request. Assuming it will, the DOTS Server initiates attack mitigation, and periodically informs the DOTS client about the status of the mitigation. Similarly, the DOTS client periodically informs the DOTS server about the client&rsquo;s status, which at a minimum provides client (attack target) health information, but it may also include telemetry information about the attack as it is now seen by the client. At some point, the DOTS client or the server may decide to terminate the server-side attack mitigation, which it indicates to the DOTS peer agent (DOTS client or server) over the signal channel. Note that the signal channel may need to operate over a link that is experiencing a DDoS attack and hence is subject to very severe packet loss.</t>
+<t>The primary purpose of the signal channel is for the DOTS client to ask the
+DOTS server for help in mitigating an attack, and for the DOTS server to inform
+the DOTS client about the status of such mitigation. The DOTS client does this
+by sending a client signal, which contains information about the attack target.
+The client signal may also include telemetry information about the attack, if
+the DOTS client has such information available. The DOTS Server in turn sends a
+server signal to inform the DOTS client of whether it will honor the mitigation
+request. Assuming it will, the DOTS Server initiates attack mitigation, and
+periodically informs the DOTS client about the status of the mitigation.
+Similarly, the DOTS client periodically informs the DOTS server about the
+client&rsquo;s status, which at a minimum provides client (attack target) health
+information, but it may also include telemetry information about the attack as
+it is now seen by the client. At some point, the DOTS client or the server may
+decide to terminate the server-side attack mitigation, which it indicates to
+the DOTS peer agent (DOTS client or server) over the signal channel. Note that
+the signal channel may need to operate over a link that is experiencing a DDoS
+attack and hence is subject to very severe packet loss.</t>
 
 <t>[<spanx style="strong">FSA</spanx>: <spanx style="emph">Requirements document talks about having an always-on signal channel with on-going status messages - discuss further</spanx>]</t>
 
-<t>While DOTS is able to function with just the signal channel, the addition of the DOTS data channel provides for additional and more efficient capabilities. The primary purpose of the data channel is to support DOTS related configuration and policy information between the DOTS client and the DOTS server. Examples of such information include
-* Defining names or aliases for attack targets (resources). Those names can be used in subsequent signal channel exchanges to more efficiently refer to the resources (attack targets) in question. 
-* Black-list management, which enables a DOTS client to inform the DOTS server about sources to suppress. 
-* White-list, which enables a DOTS client to inform the DOTS server about sources that should always be accepted.</t>
+<t>While DOTS is able to function with just the signal channel, the addition of
+the DOTS data channel provides for additional and more efficient capabilities.
+The primary purpose of the data channel is to support DOTS related
+configuration and policy information between the DOTS client and the DOTS
+server. Examples of such information include</t>
 
-<t>Note that while it is possible to exchange the above information before, during or after a DDoS attack, DOTS requires reliable delivery of the above information and does not provide any special means for ensuring timely delivery of it during an attack. In practice, this means that DOTS entities SHOULD NOT rely on such information being exchanged during a DDoS attack.</t>
+<t><list style="symbols">
+  <t>Defining names or aliases for attack targets (resources). Those names can be
+used in subsequent signal channel exchanges to more efficiently refer to the
+resources (attack targets) in question.</t>
+  <t>Black-list management, which enables a DOTS client to inform the DOTS server
+about sources to suppress.</t>
+  <t>White-list, which enables a DOTS client to inform the DOTS server about
+sources that should always be accepted.</t>
+</list></t>
+
+<t>Note that while it is possible to exchange the above information before, during
+or after a DDoS attack, DOTS requires reliable delivery of the above
+information and does not provide any special means for ensuring timely delivery
+of it during an attack. In practice, this means that DOTS entities SHOULD NOT
+rely on such information being exchanged during a DDoS attack.</t>
 
 <section anchor="relationships" title="Relationships">
 <t><spanx style="strong">[FSA: For discussion]</spanx></t>
@@ -306,7 +356,10 @@ ensuring delivery of DOTS signals between DOTS agents.</t>
 </section>
 <section anchor="dots-operational-process" title="DOTS Operational Process">
 <t><spanx style="strong">[FSA: For discussion]</spanx>
-Although the scope of DOTS is focused on the signaling and data exchange between the DOTS client, DOTS server and (possibly) the DOTS relay, DOTS is specified with some underlying assumptions around the operational process associated with the use of DOTS.</t>
+Although the scope of DOTS is focused on the signaling and data exchange
+between the DOTS client, DOTS server and (possibly) the DOTS relay, DOTS is
+specified with some underlying assumptions around the operational process
+associated with the use of DOTS.</t>
 
 <t><list style="numbers">
   <t>Before a DOTS client can signal a DOTS server, a relationship needs to be established between the two.</t>

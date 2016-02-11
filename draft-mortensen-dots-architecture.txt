@@ -130,7 +130,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    DDoS:  A distributed denial-of-service attack, in which attack
       traffic originates from widely distributed sources.  DDoS attacks
-      are intended to cause ai negative impact on the availability of
+      are intended to cause a negative impact on the availability of
       servers, services, applications, and/or other functionality of an
       attack target.
 
@@ -349,11 +349,11 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    As illustrated in Figure X2, there are two interfaces between the
    DOTS Server and the DOTS Client (and possibly the DOTS Relay).
 
-    +----------------+                                 +----------------+
-    |                | <------- Signal Channel ------> |                |
-    |   DOTS Client  |                                 |  DOTS Server   |
-    |                | <=======  Data Channel  ======> |                |
-    +----------------+                                 +----------------+
+     +---------------+                                 +---------------+
+     |               | <------- Signal Channel ------> |               |
+     |  DOTS Client  |                                 |  DOTS Server  |
+     |               | <=======  Data Channel  ======> |               |
+     +---------------+                                 +---------------+
 
    The primary purpose of the signal channel is for the DOTS client to
    ask the DOTS server for help in mitigating an attack, and for the
@@ -384,8 +384,8 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    efficient capabilities.  The primary purpose of the data channel is
    to support DOTS related configuration and policy information between
    the DOTS client and the DOTS server.  Examples of such information
-   include * Defining names or aliases for attack targets (resources).
-   Those names can be used in subsequent signal channel exchanges to
+   include
+
 
 
 
@@ -394,11 +394,15 @@ Mortensen, et al.        Expires August 14, 2016                [Page 7]
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
-   more efficiently refer to the resources (attack targets) in question.
-   * Black-list management, which enables a DOTS client to inform the
-   DOTS server about sources to suppress.  * White-list, which enables a
-   DOTS client to inform the DOTS server about sources that should
-   always be accepted.
+   o  Defining names or aliases for attack targets (resources).  Those
+      names can be used in subsequent signal channel exchanges to more
+      efficiently refer to the resources (attack targets) in question.
+
+   o  Black-list management, which enables a DOTS client to inform the
+      DOTS server about sources to suppress.
+
+   o  White-list, which enables a DOTS client to inform the DOTS server
+      about sources that should always be accepted.
 
    Note that while it is possible to exchange the above information
    before, during or after a DDoS attack, DOTS requires reliable
@@ -439,16 +443,15 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    assumptions around the operational process associated with the use of
    DOTS.
 
-   1.  Before a DOTS client can signal a DOTS server, a relationship
-       needs to be established between the two.
-
-
 
 
 Mortensen, et al.        Expires August 14, 2016                [Page 8]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
+
+   1.  Before a DOTS client can signal a DOTS server, a relationship
+       needs to be established between the two.
 
    o  The relationship involves establishing credentials for mutual
       authentication.
@@ -492,11 +495,8 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
               Threat Signaling Requirements", draft-ietf-dots-
               requirements-00 (work in progress), October 2015.
 
-   [I-D.ietf-dots-use-cases]
-              Dobbins, R., Fouant, S., Migault, D., Moskowitz, R.,
-              Teague, N., and L. Xia, "Use cases for DDoS Open Threat
-              Signaling", draft-ietf-dots-use-cases-00 (work in
-              progress), October 2015.
+
+
 
 
 
@@ -505,6 +505,12 @@ Mortensen, et al.        Expires August 14, 2016                [Page 9]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
+
+   [I-D.ietf-dots-use-cases]
+              Dobbins, R., Fouant, S., Migault, D., Moskowitz, R.,
+              Teague, N., and L. Xia, "Use cases for DDoS Open Threat
+              Signaling", draft-ietf-dots-use-cases-00 (work in
+              progress), October 2015.
 
 Authors' Addresses
 
@@ -536,12 +542,6 @@ Authors' Addresses
    United States
 
    Email: nteague@verisign.com
-
-
-
-
-
-
 
 
 
