@@ -381,9 +381,11 @@
 <link href="#rfc.section.1.2" rel="Chapter" title="1.2 Scope"/>
 <link href="#rfc.section.1.3" rel="Chapter" title="1.3 Assumptions"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Architecture"/>
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Concepts"/>
-<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Components"/>
-<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Obstacles"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Relationships"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 DOTS Operational Process"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Concepts"/>
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 Components"/>
+<link href="#rfc.section.2.5" rel="Chapter" title="2.5 Obstacles"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Security Considerations"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Change Log"/>
 <link href="#rfc.references" rel="Chapter" title="5 References"/>
@@ -481,9 +483,11 @@
 </ul><li>1.2.   <a href="#rfc.section.1.2">Scope</a></li>
 <li>1.3.   <a href="#rfc.section.1.3">Assumptions</a></li>
 </ul><li>2.   <a href="#rfc.section.2">Architecture</a></li>
-<ul><li>2.1.   <a href="#rfc.section.2.1">Concepts</a></li>
-<li>2.2.   <a href="#rfc.section.2.2">Components</a></li>
-<li>2.3.   <a href="#rfc.section.2.3">Obstacles</a></li>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Relationships</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">DOTS Operational Process</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">Concepts</a></li>
+<li>2.4.   <a href="#rfc.section.2.4">Components</a></li>
+<li>2.5.   <a href="#rfc.section.2.5">Obstacles</a></li>
 </ul><li>3.   <a href="#rfc.section.3">Security Considerations</a></li>
 <li>4.   <a href="#rfc.section.4">Change Log</a></li>
 <li>5.   <a href="#rfc.references">References</a></li>
@@ -506,7 +510,7 @@
 
 <dl>
   <dt>DDoS:</dt>
-  <dd style="margin-left: 8">A distributed denial-of-service attack, in which attack traffic originates from widely distributed sources. DDoS attacks are intended to cause ai negative impact on the availability of servers, services, applications, and/or other functionality of an attack target.</dd>
+  <dd style="margin-left: 8">A distributed denial-of-service attack, in which attack traffic originates from widely distributed sources. DDoS attacks are intended to cause a negative impact on the availability of servers, services, applications, and/or other functionality of an attack target.</dd>
   <dt>attack target:</dt>
   <dd style="margin-left: 8">the network-enabled service, application, server, or some collection thereof, on which a DDoS attack is focused.</dd>
   <dt>attack telemetry:</dt>
@@ -534,7 +538,7 @@
   <dt>client signal:</dt>
   <dd style="margin-left: 8">A message sent from a DOTS client to a DOTS server over the signal channel, possibly traversing a DOTS relay, indicating the DOTS client&#8217;s need for mitigation, as well as the scope of any requested mitigation, optionally including detected attack telemetry to supplement server-initiated mitigation.</dd>
   <dt>server signal:</dt>
-  <dd style="margin-left: 8">A message sent from a DOTS server to a DOTS client over the signal channel.  Note that a server signal is not a response to client signal, but a DOTS server-initiated status message sent to the DOTS client, containing information about the status of any requested mitigation and its efficacy.</dd>
+  <dd style="margin-left: 8">A message sent from a DOTS server to a DOTS client over the signal channel. Note that a server signal is not a response to client signal, but a DOTS server-initiated status message sent to the DOTS client, containing information about the status of any requested mitigation and its efficacy.</dd>
   <dt>data channel:</dt>
   <dd style="margin-left: 8">A secure communication layer between client and server used for infrequent bulk exchange of data not easily or appropriately communicated through the signal channel under attack conditions.</dd>
   <dt>blacklist:</dt>
@@ -559,13 +563,71 @@
   <li>The architecture allows for, but does not assume, the presence of Quality of Service (QoS) policy agreements between DOTS-enabled peer networks aimed at ensuring delivery of DOTS signals between DOTS agents.</li>
 </ul>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#architecture" id="architecture">Architecture</a></h1>
-<p id="rfc.section.2.p.1">TBD</p>
-<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#concepts" id="concepts">Concepts</a></h1>
-<p id="rfc.section.2.1.p.1">TBD</p>
-<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#components" id="components">Components</a></h1>
-<p id="rfc.section.2.2.p.1">TBD</p>
-<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#obstacles" id="obstacles">Obstacles</a></h1>
+<p id="rfc.section.2.p.1">DOTS enables a target that is under a Distributed Denial-of-Service (DDoS) attack to signal another entity for help in mitigating the DDoS attack. The basic high-level DOTS reference architecture is illustrated in Figure X1</p>
+<pre>
+  Mitigator ~~~~~~~~~~ DOTS Server
+                         |     |
+                         |     +---+
+                         |         |
+                         |       DOTS Relay
+                         |         |
+                         |     +---+
+                         |     |
+ Attack Target ~~~~~~~ DOTS Client
+</pre>
+<p id="rfc.section.2.p.2">A simple example instantiation of the DOTS architecture could be an enterprise as the attack target for a volumetric DDoS attack, and an upstream DDoS mitigation service as the Mitigator. The enterprise (attack target) is connected to the Internet via a link that is getting saturated, and the enterprise suspects it is under DDoS attack. The enterprise has a DOTS client, which obtains information about the DDoS attack, and signals the DOTS server for help in mitigating the attack. The communication may be direct from the DOTS client to the DOTS Server, or it may traverse one or more DOTS Relays, which act as intermediaries. The DOTS Server in turn invokes one or more mitigators, which are tasked with mitigating the actual DDoS attack, and hence aim to suppress the attack traffic while allowing valid traffic to reach the attack target.</p>
+<p id="rfc.section.2.p.3">The scope of the DOTS specifications is the interface(s) between the DOTS client, DOTS server, and DOTS relay. The interface(s) to the attack target and the mitigator are out of scope of DOTS. Similarly, the operation of both the attack target and the mitigator are out of scope of DOTS. Thus, DOTS neither speficies how an attack target decides it is under DDoS attack, nor does DOTS specify how a mitigator may actually mitigate it.</p>
+<p id="rfc.section.2.p.4">[<strong>FSA</strong>: <em>However, should we say something about operational considerations nevertheless. In particular, I&#8217;m thinking about M:N relationships, which doesn&#8217;t necessarily seem wise. Also, since we may be getting involved in traffic redirection, is there something to say about authorization of such requests - should a DOTS server just blindly redirect traffic for mitigation purposes, etc. based on what any DOTS client tells it ?</em>]</p>
+<p id="rfc.section.2.p.5">As illustrated in Figure X2, there are two interfaces between the DOTS Server and the DOTS Client (and possibly the DOTS Relay).</p>
+<pre>
++----------------+                                 +----------------+
+|                | &lt;------- Signal Channel ------&gt; |                |
+|   DOTS Client  |                                 |  DOTS Server   |
+|                | &lt;=======  Data Channel  ======&gt; |                |
++----------------+                                 +----------------+
+</pre>
+<p id="rfc.section.2.p.6">The primary purpose of the signal channel is for the DOTS client to ask the DOTS server for help in mitigating an attack, and for the DOTS server to inform the DOTS client about the status of such mitigation. The DOTS client does this by sending a client signal, which contains information about the attack target. The client signal may also include telemetry information about the attack, if the DOTS client has such information available. The DOTS Server in turn sends a server signal to inform the DOTS client of whether it will honor the mitigation request. Assuming it will, the DOTS Server initiates attack mitigation, and periodically informs the DOTS client about the status of the mitigation. Similarly, the DOTS client periodically informs the DOTS server about the client&#8217;s status, which at a minimum provides client (attack target) health information, but it may also include telemetry information about the attack as it is now seen by the client. At some point, the DOTS client or the server may decide to terminate the server-side attack mitigation, which it indicates to the DOTS peer agent (DOTS client or server) over the signal channel. Note that the signal channel may need to operate over a link that is experiencing a DDoS attack and hence is subject to very severe packet loss.</p>
+<p id="rfc.section.2.p.7">[<strong>FSA</strong>: <em>Requirements document talks about having an always-on signal channel with on-going status messages - discuss further</em>]</p>
+<p id="rfc.section.2.p.8">While DOTS is able to function with just the signal channel, the addition of the DOTS data channel provides for additional and more efficient capabilities. The primary purpose of the data channel is to support DOTS related configuration and policy information between the DOTS client and the DOTS server. Examples of such information include * Defining names or aliases for attack targets (resources). Those names can be used in subsequent signal channel exchanges to more efficiently refer to the resources (attack targets) in question.  * Black-list management, which enables a DOTS client to inform the DOTS server about sources to suppress.  * White-list, which enables a DOTS client to inform the DOTS server about sources that should always be accepted.</p>
+<p id="rfc.section.2.p.9">Note that while it is possible to exchange the above information before, during or after a DDoS attack, DOTS requires reliable delivery of the above information and does not provide any special means for ensuring timely delivery of it during an attack. In practice, this means that DOTS entities SHOULD NOT rely on such information being exchanged during a DDoS attack.</p>
+<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#relationships" id="relationships">Relationships</a></h1>
+<p>
+  <strong>[FSA: For discussion]</strong>
+</p>
+<p/>
+
+<ul>
+  <li>A DOTS Client is associated with one or more DOTS Servers (?)</li>
+  <li>A DOTS Client is associated with one or more DOTS Relays (?)</li>
+  <li>A DOTS Relay is assocaited with one or more DOTS Clients</li>
+  <li>A DOTS Relay is associated with one or more DOTS Servers</li>
+  <li>A DOTS Relay is associated with one or more DOTS Relays (graph/hierarchy ?)</li>
+  <li>A DOTS Relay logically consists of a DOTS Server and a DOTS Client (?)</li>
+  <li>Can a DOTS Client tell if it is talking to a DOTS Server or a DOTS Relay ?</li>
+  <li>Can a DOTS Server tell if it is talking to a DOTS Client or a DOTS Relay ?</li>
+</ul>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#dots-operational-process" id="dots-operational-process">DOTS Operational Process</a></h1>
+<p><strong>[FSA: For discussion]</strong> Although the scope of DOTS is focused on the signaling and data exchange between the DOTS client, DOTS server and (possibly) the DOTS relay, DOTS is specified with some underlying assumptions around the operational process associated with the use of DOTS.</p>
+<p/>
+
+<ol>
+  <li>Before a DOTS client can signal a DOTS server, a relationship needs to be established between the two.</li>
+</ol>
+<p/>
+
+<ul>
+  <li>The relationship involves establishing credentials for mutual authentication.</li>
+  <li>
+    <em>What about authorization, e.g. in terms of resources we want to protect and hence potentially may be redirecting traffic for ?</em>
+  </li>
+</ul>
+<p id="rfc.section.2.2.p.4">TBD</p>
+<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#concepts" id="concepts">Concepts</a></h1>
 <p id="rfc.section.2.3.p.1">TBD</p>
+<h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#components" id="components">Components</a></h1>
+<p id="rfc.section.2.4.p.1">TBD</p>
+<h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> <a href="#obstacles" id="obstacles">Obstacles</a></h1>
+<p id="rfc.section.2.5.p.1">TBD</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.3.p.1">TBD</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#change-log" id="change-log">Change Log</a></h1>
