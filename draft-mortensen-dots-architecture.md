@@ -1,7 +1,7 @@
 ---
 title: DDoS Open Threat Signaling Architecture
 docname: draft-mortensen-dots-architecture-00
-date: 2016-02-02
+date: 2016-02-11
 
 area: Security
 wg: DOTS
@@ -225,38 +225,98 @@ Assumptions     {#assumptions}
 
 This document makes the following assumptions:
 
-* The network or networks in which DOTS is deployed are assumed to offer
-  the required connectivity between DOTS agents and any intermediary network
-  elements, but the architecture imposes no additional limitations on the
-  form of connectivity.
+* The network or networks in which DOTS is deployed are assumed to offer the required connectivity between DOTS agents and any intermediary network elements, but the architecture imposes no additional limitations on the form of connectivity.
 
-* There is no universal DDoS attack scale threshold triggering a coordinated
-  response across network administrative domains. A network domain
-  administrator, or service or application owner may arbitrarily set attack
-  scale threshold triggers, or manually send requests for mitigation.
+* There is no universal DDoS attack scale threshold triggering a coordinated response across network administrative domains. A network domain administrator, or service or application owner may arbitrarily set attack scale threshold triggers, or manually send requests for mitigation.
 
-* The mitigation capacity of networks requesting [AM: need def] coordinated
-  attack response is opaque to any network receiving and potentially agreeing
-  to intervene.
+* The mitigation capacity of networks requesting [AM: need def] coordinated attack response is opaque to any network receiving and potentially agreeing to intervene.
 
-* The mitigation capacity of networks receiving requests for coordinated
-  attack response is opaque to the network sending the request. The network
-  receiving the DOTS client signal may or may not have sufficient capacity to
-  filter all or even the majority of DDoS attack traffic directed at a target.
+* The mitigation capacity of networks receiving requests for coordinated attack response is opaque to the network sending the request. The network receiving the DOTS client signal may or may not have sufficient capacity to filter all or even the majority of DDoS attack traffic directed at a target.
 
-* DOTS client and server signals, as well as messages sent through the data
-  channel, are sent across any transit networks with the same probability of
-  delivery of any other traffic between the DOTS client network and the DOTS
-  server network. Any encapsulation required for successful delivery is left
-  untouched by transit network elements.
+* DOTS client and server signals, as well as messages sent through the data channel, are sent across any transit networks with the same probability of delivery of any other traffic between the DOTS client network and the DOTS server network. Any encapsulation required for successful delivery is left untouched by transit network elements.
 
-* The architecture allows for, but does not assume, the presence of Quality of
-  Service (QoS) policy agreements between DOTS-enabled peer networks aimed at
-  ensuring delivery of DOTS signals between DOTS agents.
+* The architecture allows for, but does not assume, the presence of Quality of Service (QoS) policy agreements between DOTS-enabled peer networks aimed at ensuring delivery of DOTS signals between DOTS agents.
 
 
 Architecture
 ============
+DOTS enables a target that is under a Distributed Denial-of-Service (DDoS) attack to signal another entity for help in mitigating the DDoS attack. The basic high-level DOTS reference architecture is illustrated in Figure X1
+
+
+~~~~~
+      Mitigator ~~~~~~~~~~ DOTS Server
+                             |     |
+                             |     +---+
+                             |         |
+                             |       DOTS Relay
+                             |         |
+                             |     +---+
+                             |     |
+     Attack Target ~~~~~~~ DOTS Client
+~~~~~
+
+
+A simple example instantiation of the DOTS architecture could be an enterprise as the attack target for a volumetric DDoS attack, and an upstream DDoS mitigation service as the Mitigator. The enterprise (attack target) is connected to the Internet via a link that is getting saturated, and the enterprise suspects it is under DDoS attack. The enterprise has a DOTS client, which obtains information about the DDoS attack, and signals the DOTS server for help in mitigating the attack. The communication may be direct from the DOTS client to the DOTS Server, or it may traverse one or more DOTS Relays, which act as intermediaries. The DOTS Server in turn invokes one or more mitigators, which are tasked with mitigating the actual DDoS attack, and hence aim to suppress the attack traffic while allowing valid traffic to reach the attack target. 
+
+The scope of the DOTS specifications is the interface(s) between the DOTS client, DOTS server, and DOTS relay. The interface(s) to the attack target and the mitigator are out of scope of DOTS. Similarly, the operation of both the attack target and the mitigator are out of scope of DOTS. Thus, DOTS neither speficies how an attack target decides it is under DDoS attack, nor does DOTS specify how a mitigator may actually mitigate it. 
+
+[**FSA**: *However, should we say something about operational considerations nevertheless. In particular, I'm thinking about M:N relationships, which doesn't necessarily seem wise. Also, since we may be getting involved in traffic redirection, is there something to say about authorization of such requests - should a DOTS server just blindly redirect traffic for mitigation purposes, etc. based on what any DOTS client tells it ?*]
+
+As illustrated in Figure X2, there are two interfaces between the DOTS Server and the DOTS Client (and possibly the DOTS Relay). 
+
+~~~~~
+    +----------------+                                 +----------------+
+    |                | <------- Signal Channel ------> |                |
+    |   DOTS Client  |                                 |  DOTS Server   |
+    |                | <=======  Data Channel  ======> |                |
+    +----------------+                                 +----------------+
+~~~~~
+
+The primary purpose of the signal channel is for the DOTS client to ask the DOTS server for help in mitigating an attack, and for the DOTS server to inform the DOTS client about the status of such mitigation. The DOTS client does this by sending a client signal, which contains information about the attack target. The client signal may also include telemetry information about the attack, if the DOTS client has such information available. The DOTS Server in turn sends a server signal to inform the DOTS client of whether it will honor the mitigation request. Assuming it will, the DOTS Server initiates attack mitigation, and periodically informs the DOTS client about the status of the mitigation. Similarly, the DOTS client periodically informs the DOTS server about the client's status, which at a minimum provides client (attack target) health information, but it may also include telemetry information about the attack as it is now seen by the client. At some point, the DOTS client or the server may decide to terminate the server-side attack mitigation, which it indicates to the DOTS peer agent (DOTS client or server) over the signal channel. Note that the signal channel may need to operate over a link that is experiencing a DDoS attack and hence is subject to very severe packet loss.  
+
+[**FSA**: *Requirements document talks about having an always-on signal channel with on-going status messages - discuss further*]
+
+While DOTS is able to function with just the signal channel, the addition of the DOTS data channel provides for additional and more efficient capabilities. The primary purpose of the data channel is to support DOTS related configuration and policy information between the DOTS client and the DOTS server. Examples of such information include
+* Defining names or aliases for attack targets (resources). Those names can be used in subsequent signal channel exchanges to more efficiently refer to the resources (attack targets) in question. 
+* Black-list management, which enables a DOTS client to inform the DOTS server about sources to suppress. 
+* White-list, which enables a DOTS client to inform the DOTS server about sources that should always be accepted.  
+
+Note that while it is possible to exchange the above information before, during or after a DDoS attack, DOTS requires reliable delivery of the above information and does not provide any special means for ensuring timely delivery of it during an attack. In practice, this means that DOTS entities SHOULD NOT rely on such information being exchanged during a DDoS attack. 
+
+
+Relationships 
+--------------
+**[FSA: For discussion]**
+
+* A DOTS Client is associated with one or more DOTS Servers (?)
+
+* A DOTS Client is associated with one or more DOTS Relays (?)
+
+* A DOTS Relay is assocaited with one or more DOTS Clients
+
+* A DOTS Relay is associated with one or more DOTS Servers
+
+* A DOTS Relay is associated with one or more DOTS Relays (graph/hierarchy ?)
+
+* A DOTS Relay logically consists of a DOTS Server and a DOTS Client (?)
+
+* Can a DOTS Client tell if it is talking to a DOTS Server or a DOTS Relay ?
+
+* Can a DOTS Server tell if it is talking to a DOTS Client or a DOTS Relay ?
+
+
+
+DOTS Operational Process
+------------------------
+**[FSA: For discussion]**
+Although the scope of DOTS is focused on the signaling and data exchange between the DOTS client, DOTS server and (possibly) the DOTS relay, DOTS is specified with some underlying assumptions around the operational process associated with the use of DOTS. 
+
+1. Before a DOTS client can signal a DOTS server, a relationship needs to be established between the two.
+
+* The relationship involves establishing credentials for mutual authentication. 
+
+* *What about authorization, e.g. in terms of resources we want to protect and hence potentially may be redirecting traffic for ?*
+
 
 TBD
 
