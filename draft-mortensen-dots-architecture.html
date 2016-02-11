@@ -565,16 +565,18 @@
 <p id="rfc.section.1.2.p.2">In this architecture, DOTS clients and servers communicate using the signaling mechanism established in the proposed DOTS standard. As a result of signals from a DOTS client, the DOTS server may modify the network path of traffic destined for the attack target or targets, for example by diverting traffic to a scrubbing center. Packets deemed part of an active attack may be dropped.</p>
 <p id="rfc.section.1.2.p.3">The architecture presented here is assumed to be applicable across network administrative domains&#8211;as, for example, between an enterprise domain and the domain of a third-party attack scrubbing service&#8211;as well as to a single administrative domain. DOTS is generally assumed to be most effective when aiding coordination of attack response between two or more participating network domains, but single domain scenarios are worth investigating elsewhere.</p>
 <h1 id="rfc.section.1.3"><a href="#rfc.section.1.3">1.3.</a> <a href="#assumptions" id="assumptions">Assumptions</a></h1>
-<p id="rfc.section.1.3.p.1">This document makes the following assumptions:</p>
+<p id="rfc.section.1.3.p.1">This document makes the following assumptions: [NT: rough but growing list]</p>
 <p/>
 
 <ul>
+  <li>The existence of agreed DOTS data model(s) and protocol definitions.</li>
   <li>The network or networks in which DOTS is deployed are assumed to offer the required connectivity between DOTS agents and any intermediary network elements, but the architecture imposes no additional limitations on the form of connectivity.</li>
+  <li>Congestion and resource exhaustion are intended outcomes of a DDoS attack.  Some operators may utilize non-impacted paths or networks for DOTS, however, it should be assumed that, in the large majority of instances, conditions will be hostile and that signaling SHOULD function in all circumstances.</li>
   <li>There is no universal DDoS attack scale threshold triggering a coordinated response across network administrative domains. A network domain administrator, or service or application owner may arbitrarily set attack scale threshold triggers, or manually send requests for mitigation.</li>
-  <li>The mitigation capacity of networks requesting [AM: need def] coordinated attack response is opaque to any network receiving and potentially agreeing to intervene.</li>
-  <li>The mitigation capacity of networks receiving requests for coordinated attack response is opaque to the network sending the request. The network receiving the DOTS client signal may or may not have sufficient capacity to filter all or even the majority of DDoS attack traffic directed at a target.</li>
+  <li>The mitigation capacity and/or capability of networks receiving requests for coordinated attack response is opaque to the network sending the request. The network receiving the DOTS client signal may or may not have sufficient capacity or capability to filter any or all DDoS attack traffic directed at a target.</li>
   <li>DOTS client and server signals, as well as messages sent through the data channel, are sent across any transit networks with the same probability of delivery of any other traffic between the DOTS client network and the DOTS server network. Any encapsulation required for successful delivery is left untouched by transit network elements.</li>
-  <li>The architecture allows for, but does not assume, the presence of Quality of Service (QoS) policy agreements between DOTS-enabled peer networks aimed at ensuring delivery of DOTS signals between DOTS agents.</li>
+  <li>The architecture allows for, but does not assume, the presence of Quality of Service (QoS) policy agreements between DOTS-enabled peer networks or local QoS prioritization aimed at ensuring delivery of DOTS signals between DOTS agents.</li>
+  <li>There is no assumption that the signal channel and the data channel should terminate on the same server and these may be loosely coupled.  [NT: Redirection may occur within the signal channel but the data channel should also allocate signaller and default to the same server if not present?]</li>
 </ul>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#architecture" id="architecture">Architecture</a></h1>
 <p id="rfc.section.2.p.1">DOTS enables a target that is under a Distributed Denial-of-Service (DDoS) attack to signal another entity for help in mitigating the DDoS attack. The basic high-level DOTS reference architecture is illustrated in Figure X1</p>
