@@ -385,9 +385,10 @@
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 DOTS Operational Process"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Concepts and Components"/>
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Signaling Sessions"/>
-<link href="#rfc.section.3.1.1" rel="Chapter" title="3.1.1 Direct Signaling"/>
-<link href="#rfc.section.3.1.2" rel="Chapter" title="3.1.2 Relayed Signaling"/>
-<link href="#rfc.section.3.1.3" rel="Chapter" title="3.1.3 Redirected Signaling"/>
+<link href="#rfc.section.3.1.1" rel="Chapter" title="3.1.1 Establishing the Signaling Session"/>
+<link href="#rfc.section.3.1.2" rel="Chapter" title="3.1.2 Direct Signaling"/>
+<link href="#rfc.section.3.1.3" rel="Chapter" title="3.1.3 Relayed Signaling"/>
+<link href="#rfc.section.3.1.4" rel="Chapter" title="3.1.4 Redirected Signaling"/>
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Components"/>
 <link href="#rfc.section.3.2.1" rel="Chapter" title="3.2.1 DOTS client"/>
 <link href="#rfc.section.3.2.2" rel="Chapter" title="3.2.2 DOTS server"/>
@@ -494,9 +495,10 @@
 <li>2.2.   <a href="#rfc.section.2.2">DOTS Operational Process</a></li>
 </ul><li>3.   <a href="#rfc.section.3">Concepts and Components</a></li>
 <ul><li>3.1.   <a href="#rfc.section.3.1">Signaling Sessions</a></li>
-<ul><li>3.1.1.   <a href="#rfc.section.3.1.1">Direct Signaling</a></li>
-<li>3.1.2.   <a href="#rfc.section.3.1.2">Relayed Signaling</a></li>
-<li>3.1.3.   <a href="#rfc.section.3.1.3">Redirected Signaling</a></li>
+<ul><li>3.1.1.   <a href="#rfc.section.3.1.1">Establishing the Signaling Session</a></li>
+<li>3.1.2.   <a href="#rfc.section.3.1.2">Direct Signaling</a></li>
+<li>3.1.3.   <a href="#rfc.section.3.1.3">Relayed Signaling</a></li>
+<li>3.1.4.   <a href="#rfc.section.3.1.4">Redirected Signaling</a></li>
 </ul><li>3.2.   <a href="#rfc.section.3.2">Components</a></li>
 <ul><li>3.2.1.   <a href="#rfc.section.3.2.1">DOTS client</a></li>
 <li>3.2.2.   <a href="#rfc.section.3.2.2">DOTS server</a></li>
@@ -651,16 +653,18 @@
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#signaling-sessions" id="signaling-sessions">Signaling Sessions</a></h1>
 <p id="rfc.section.3.1.p.1">In order for DOTS to be effective as a vehicle for DDoS mitigation requests, one or more DOTS clients must establish ongoing communication with one or more DOTS servers. While the preconditions for enabling DOTS in or among network domains may also involve business relationships, service level agreements, or other formal or informal understandings between network operators, such considerations are out of scope for this document.</p>
 <p id="rfc.section.3.1.p.2">An established communication layer between DOTS agents is a Signaling Session.  At its most basic, for a DOTS signaling session to exist both signal channel and data channel must be functioning between DOTS agents. That is, under nominal network conditions, signals actively sent from a DOTS client are received by the specific DOTS server intended by the client, and vice versa.</p>
-<h1 id="rfc.section.3.1.1"><a href="#rfc.section.3.1.1">3.1.1.</a> <a href="#direct-signaling" id="direct-signaling">Direct Signaling</a></h1>
-<p id="rfc.section.3.1.1.p.1">A signaling session may take the form of direct signaling between the DOTS clients and servers, as shown in Figure N below:</p>
+<h1 id="rfc.section.3.1.1"><a href="#rfc.section.3.1.1">3.1.1.</a> <a href="#establishing-the-signaling-session" id="establishing-the-signaling-session">Establishing the Signaling Session</a></h1>
+<p id="rfc.section.3.1.1.p.1">TBD</p>
+<h1 id="rfc.section.3.1.2"><a href="#rfc.section.3.1.2">3.1.2.</a> <a href="#direct-signaling" id="direct-signaling">Direct Signaling</a></h1>
+<p id="rfc.section.3.1.2.p.1">A signaling session may take the form of direct signaling between the DOTS clients and servers, as shown in Figure N below:</p>
 <pre>
         +-------------+                            +-------------+
         | DOTS client |&lt;------signal channel------&gt;| DOTS server |
         +-------------+                            +-------------+
 </pre>
-<p id="rfc.section.3.1.1.p.2">In the above figure, the signaling session is active while the DOTS client sends client signals to the DOTS server, if and only if the DOTS server is also sending server signals to the client in reaction to the client&#8217;s signals.</p>
-<h1 id="rfc.section.3.1.2"><a href="#rfc.section.3.1.2">3.1.2.</a> <a href="#relayed-signaling" id="relayed-signaling">Relayed Signaling</a></h1>
-<p id="rfc.section.3.1.2.p.1">A signaling session may also include one or more DOTS relays in the signaling path between the clients and servers, as show in Figure N:</p>
+<p id="rfc.section.3.1.2.p.2">In the above figure, the signaling session is active while the DOTS client sends client signals to the DOTS server, if and only if the DOTS server is also sending server signals to the client in reaction to the client&#8217;s signals.</p>
+<h1 id="rfc.section.3.1.3"><a href="#rfc.section.3.1.3">3.1.3.</a> <a href="#relayed-signaling" id="relayed-signaling">Relayed Signaling</a></h1>
+<p id="rfc.section.3.1.3.p.1">A signaling session may also include one or more DOTS relays in the signaling path between the clients and servers, as show in Figure N:</p>
 <pre>
         +-------------+                            +-------------+
         | DOTS client |                            | DOTS server |
@@ -670,7 +674,7 @@
                \-----------&gt;| DOTS relay(s) |&lt;-----------/
                             +---------------+
 </pre>
-<p id="rfc.section.3.1.2.p.2">At its most basic, such a signaling session is logically identical to the following, Figure N:</p>
+<p id="rfc.section.3.1.3.p.2">At its most basic, such a signaling session is logically identical to the following, Figure N:</p>
 <pre>
         +-------------+                            +-------------+
         | DOTS client |                            | DOTS server |
@@ -680,42 +684,55 @@
                \---&gt;| DOTS server |&lt;-&gt;| DOTS client |&lt;---/
                     +-------------------------------+
 </pre>
-<p id="rfc.section.3.1.2.p.3">The DOTS relay receives DOTS client signals in the role of a DOTS server, and relays the signals from the originating DOTS client to the DOTS server in the role of a DOTS client.</p>
-<h1 id="rfc.section.3.1.3"><a href="#rfc.section.3.1.3">3.1.3.</a> <a href="#redirected-signaling" id="redirected-signaling">Redirected Signaling</a></h1>
-<p id="rfc.section.3.1.3.p.1">In certain circumstances, a DOTS server may want to redirect a DOTS client to an alternative DOTS server for a signaling session. Such circumstances include but are not limited to:</p>
+<p id="rfc.section.3.1.3.p.3">The DOTS relay receives DOTS client signals in the role of a DOTS server, and relays the signals from the originating DOTS client to the DOTS server in the role of a DOTS client.</p>
+<h1 id="rfc.section.3.1.4"><a href="#rfc.section.3.1.4">3.1.4.</a> <a href="#redirected-signaling" id="redirected-signaling">Redirected Signaling</a></h1>
+<p id="rfc.section.3.1.4.p.1">In certain circumstances, a DOTS server may want to redirect a DOTS client to an alternative DOTS server for a signaling session. Such circumstances include but are not limited to:</p>
 <p/>
 
 <ul>
+  <li>Maximum number of signaling sessions with clients has been reached;</li>
   <li>Mitigation capacity exhaustion in the Mitigator with which the specific DOTS server is communicating;</li>
   <li>Mitigator outage or other downtime, such as scheduled maintenance;</li>
   <li>Scheduled DOTS server maintenance;</li>
   <li>Scheduled modifications to the network path between DOTS server and DOTS client.</li>
 </ul>
-<p id="rfc.section.3.1.3.p.3">The DOTS architecture does not require the DOTS server to justify the decision to redirect the signaling session to another DOTS server.</p>
-<p id="rfc.section.3.1.3.p.4">When receiving a DOTS server redirection in the server signal, the DOTS client terminates the active signaling session, and establishes a new signaling session with the DOTS server to which the client is being redirected.</p>
-<p id="rfc.section.3.1.3.p.5">A basic redirected signaling session involves the following steps, as shown in Figure N:</p>
+<p id="rfc.section.3.1.4.p.3">The DOTS architecture does not require the DOTS server to justify the decision to redirect the signaling session to another DOTS server.</p>
+<p id="rfc.section.3.1.4.p.4">After sending a redirect signal over the signal channel to the DOTS client, the DOTS server MAY cease sending server signals to the DOTS client at any point in the timeframe allowed by the protocol. A redirecting DOTS server MUST cease sending server signals to the DOTS client before reaching the end of that timeframe.</p>
+<p id="rfc.section.3.1.4.p.5">The DOTS server MAY send redundant redirect signals in order to increase the probability that the DOTS client receives them. The DOTS client MUST treat the first redirect signal it receives from the DOTS server as authoritative, and ignore any subsequent redirect signals from that DOTS server.</p>
+<p id="rfc.section.3.1.4.p.6">On receiving a redirection request from a DOTS server, the DOTS client MUST terminate its end of the signaling session with the redirecting DOTS server within the time frame defined by the protocol.</p>
+<p id="rfc.section.3.1.4.p.7">The DOTS client MAY subsequently establish a new session with the DOTS server to which it was redirected, but is not required to do so. Local policy on DOTS server redirection is left to DOTS client operators.</p>
+<p id="rfc.section.3.1.4.p.8">A basic redirected signaling session involves the following steps, as shown in Figure N:</p>
 <pre>
         +-------------+                            +---------------+
-        |             |&lt;=(1)== signal session ====&gt;|               |
+        |             |&lt;-(1)-- signal session A --&gt;|               |
         |             |                            |               |
-        | DOTS client |&lt;-(2)-- redirect to B ------| DOTS server A |
+        |             |&lt;=(2)== REDIRECT to B ======|               |
+        | DOTS client |                            | DOTS server A |
+        |             |X-(4)-- signal session A --&gt;|               |
         |             |                            |               |
-        |             |X=(3)== signal session ====&gt;|               |
-        |             |                            |               |
-        |             |X=(4)== signal session ====X|               |
+        |             |X-(5)-- signal session A --X|               |
         +-------------+                            +---------------+
                ^
                |
-              (5)
+              (3) signal session B
                |
                v
         +---------------+
         | DOTS server B |
         +---------------+
 </pre>
-<p id="rfc.section.3.1.3.p.6">TODO: describe steps.</p>
-<p id="rfc.section.3.1.3.p.7">On receiving a redirection request from a DOTS server, the DOTS client MUST terminate its end of the signaling session with the redirecting DOTS server within the time frame defined by the protocol.</p>
-<p id="rfc.section.3.1.3.p.8">The DOTS client MAY subsequently establish a new session with the DOTS server to which it was redirected, but is not required to do so. Local policy on DOTS server redirection is left to DOTS client operators.</p>
+<p id="rfc.section.3.1.4.p.9">[AM: does this interaction need a best-effort ACK from the client?]</p>
+<p/>
+
+<ol>
+  <li>An existing signaling session exists between a DOTS client and DOTS server with address A. The signaling session was established as described in section n.m above, Establishing Signaling Session.</li>
+  <li>DOTS server A sends a server signal containing a REDIRECT over the signal channel to the DOTS client. The REDIRECT asks the client to migrate the signaling session to DOTS server B.</li>
+  <li>The DOTS client extracts the redirect target from the server signal, and checks its redirection policy. The redirection policy permits following redirection to DOTS server B. If the DOTS client does not already have a separate signaling session with the redirection target, the DOTS client initiates and establishes a signaling session with DOTS server B as described in section TBD above.</li>
+  <li>Having sent the REDIRECT signal to the DOTS client, DOTS server A ceases sending server signals, leaving the signal channel half-closed. [AM: should the DOTS server leave active any mitigations currently running on behalf of the client? It&#8217;s entirely possible that DOTS server A &amp; B are connected to the same Mitigator in e.g. the max client session limit case above]</li>
+  <li>Having processed the REDIRECT from DOTS Server A, the DOTS client ceases sending client signals to DOTS Server A. With both halves of the signaling session now closed, the signaling session between the DOTS client and DOTS server A is considered terminated.</li>
+</ol>
+<p id="rfc.section.3.1.4.p.11">[AM: should following go in security considerations?]</p>
+<p id="rfc.section.3.1.4.p.12">Due to the increased probability of inbound packet loss during a DDoS attack, it is RECOMMENDED that DOTS servers avoid sending redirects during active attacks.  The method by which the DOTS server measures an active attack is not in scope, but might include available metrics from the Mitigator and server signal lossiness as reported in the client signal.</p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#components" id="components">Components</a></h1>
 <h1 id="rfc.section.3.2.1"><a href="#rfc.section.3.2.1">3.2.1.</a> <a href="#dots-client" id="dots-client">DOTS client</a></h1>
 <h1 id="rfc.section.3.2.2"><a href="#rfc.section.3.2.2">3.2.2.</a> <a href="#dots-server" id="dots-server">DOTS server</a></h1>

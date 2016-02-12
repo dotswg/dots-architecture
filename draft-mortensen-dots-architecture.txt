@@ -78,20 +78,21 @@ Table of Contents
      2.2.  DOTS Operational Process  . . . . . . . . . . . . . . . .   9
    3.  Concepts and Components . . . . . . . . . . . . . . . . . . .   9
      3.1.  Signaling Sessions  . . . . . . . . . . . . . . . . . . .  10
-       3.1.1.  Direct Signaling  . . . . . . . . . . . . . . . . . .  10
-       3.1.2.  Relayed Signaling . . . . . . . . . . . . . . . . . .  10
-       3.1.3.  Redirected Signaling  . . . . . . . . . . . . . . . .  11
-     3.2.  Components  . . . . . . . . . . . . . . . . . . . . . . .  12
-       3.2.1.  DOTS client . . . . . . . . . . . . . . . . . . . . .  12
-       3.2.2.  DOTS server . . . . . . . . . . . . . . . . . . . . .  12
-       3.2.3.  DOTS relay  . . . . . . . . . . . . . . . . . . . . .  12
-     3.3.  Obstacles . . . . . . . . . . . . . . . . . . . . . . . .  12
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
+       3.1.1.  Establishing the Signaling Session  . . . . . . . . .  10
+       3.1.2.  Direct Signaling  . . . . . . . . . . . . . . . . . .  10
+       3.1.3.  Relayed Signaling . . . . . . . . . . . . . . . . . .  10
+       3.1.4.  Redirected Signaling  . . . . . . . . . . . . . . . .  11
+     3.2.  Components  . . . . . . . . . . . . . . . . . . . . . . .  13
+       3.2.1.  DOTS client . . . . . . . . . . . . . . . . . . . . .  13
+       3.2.2.  DOTS server . . . . . . . . . . . . . . . . . . . . .  13
+       3.2.3.  DOTS relay  . . . . . . . . . . . . . . . . . . . . .  13
+     3.3.  Obstacles . . . . . . . . . . . . . . . . . . . . . . . .  13
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
    5.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  13
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .  13
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .  13
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .  14
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
@@ -105,7 +106,6 @@ Table of Contents
 
    This document describes an architecture used in establishing,
    maintaining or terminating a DOTS relationship in a network or
-   between networks.  DOTS enables hybrid attack responses, coordinated
 
 
 
@@ -114,6 +114,7 @@ Mortensen, et al.        Expires August 14, 2016                [Page 2]
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
+   between networks.  DOTS enables hybrid attack responses, coordinated
    locally at or near the target of an active attack, as well as closer
    to attack sources in the network path.
 
@@ -161,7 +162,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
       coordination with another DOTS-aware element, with the expectation
       that the remote element is capable of helping fend off the attack
       against the client.
-
 
 
 
@@ -523,7 +523,11 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    sent from a DOTS client are received by the specific DOTS server
    intended by the client, and vice versa.
 
-3.1.1.  Direct Signaling
+3.1.1.  Establishing the Signaling Session
+
+   TBD
+
+3.1.2.  Direct Signaling
 
    A signaling session may take the form of direct signaling between the
    DOTS clients and servers, as shown in Figure N below:
@@ -537,7 +541,7 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    DOTS server is also sending server signals to the client in reaction
    to the client's signals.
 
-3.1.2.  Relayed Signaling
+3.1.3.  Relayed Signaling
 
    A signaling session may also include one or more DOTS relays in the
    signaling path between the clients and servers, as show in Figure N:
@@ -550,10 +554,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
                   \----------->| DOTS relay(s) |<-----------/
                                +---------------+
 
-   At its most basic, such a signaling session is logically identical to
-   the following, Figure N:
-
-
 
 
 
@@ -561,6 +561,9 @@ Mortensen, et al.        Expires August 14, 2016               [Page 10]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
+
+   At its most basic, such a signaling session is logically identical to
+   the following, Figure N:
 
            +-------------+                            +-------------+
            | DOTS client |                            | DOTS server |
@@ -574,11 +577,14 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    server, and relays the signals from the originating DOTS client to
    the DOTS server in the role of a DOTS client.
 
-3.1.3.  Redirected Signaling
+3.1.4.  Redirected Signaling
 
    In certain circumstances, a DOTS server may want to redirect a DOTS
    client to an alternative DOTS server for a signaling session.  Such
    circumstances include but are not limited to:
+
+   o  Maximum number of signaling sessions with clients has been
+      reached;
 
    o  Mitigation capacity exhaustion in the Mitigator with which the
       specific DOTS server is communicating;
@@ -593,23 +599,17 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    The DOTS architecture does not require the DOTS server to justify the
    decision to redirect the signaling session to another DOTS server.
 
-   When receiving a DOTS server redirection in the server signal, the
-   DOTS client terminates the active signaling session, and establishes
-   a new signaling session with the DOTS server to which the client is
-   being redirected.
+   After sending a redirect signal over the signal channel to the DOTS
+   client, the DOTS server MAY cease sending server signals to the DOTS
+   client at any point in the timeframe allowed by the protocol.  A
+   redirecting DOTS server MUST cease sending server signals to the DOTS
+   client before reaching the end of that timeframe.
 
-   A basic redirected signaling session involves the following steps, as
-   shown in Figure N:
-
-
-
-
-
-
-
-
-
-
+   The DOTS server MAY send redundant redirect signals in order to
+   increase the probability that the DOTS client receives them.  The
+   DOTS client MUST treat the first redirect signal it receives from the
+   DOTS server as authoritative, and ignore any subsequent redirect
+   signals from that DOTS server.
 
 
 
@@ -617,26 +617,6 @@ Mortensen, et al.        Expires August 14, 2016               [Page 11]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
-
-           +-------------+                            +---------------+
-           |             |<=(1)== signal session ====>|               |
-           |             |                            |               |
-           | DOTS client |<-(2)-- redirect to B ------| DOTS server A |
-           |             |                            |               |
-           |             |X=(3)== signal session ====>|               |
-           |             |                            |               |
-           |             |X=(4)== signal session ====X|               |
-           +-------------+                            +---------------+
-                  ^
-                  |
-                 (5)
-                  |
-                  v
-           +---------------+
-           | DOTS server B |
-           +---------------+
-
-   TODO: describe steps.
 
    On receiving a redirection request from a DOTS server, the DOTS
    client MUST terminate its end of the signaling session with the
@@ -647,6 +627,77 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    DOTS server to which it was redirected, but is not required to do so.
    Local policy on DOTS server redirection is left to DOTS client
    operators.
+
+   A basic redirected signaling session involves the following steps, as
+   shown in Figure N:
+
+           +-------------+                            +---------------+
+           |             |<-(1)-- signal session A -->|               |
+           |             |                            |               |
+           |             |<=(2)== REDIRECT to B ======|               |
+           | DOTS client |                            | DOTS server A |
+           |             |X-(4)-- signal session A -->|               |
+           |             |                            |               |
+           |             |X-(5)-- signal session A --X|               |
+           +-------------+                            +---------------+
+                  ^
+                  |
+                 (3) signal session B
+                  |
+                  v
+           +---------------+
+           | DOTS server B |
+           +---------------+
+
+   [AM: does this interaction need a best-effort ACK from the client?]
+
+   1.  An existing signaling session exists between a DOTS client and
+       DOTS server with address A.  The signaling session was
+       established as described in section n.m above, Establishing
+       Signaling Session.
+
+   2.  DOTS server A sends a server signal containing a REDIRECT over
+       the signal channel to the DOTS client.  The REDIRECT asks the
+       client to migrate the signaling session to DOTS server B.
+
+   3.  The DOTS client extracts the redirect target from the server
+       signal, and checks its redirection policy.  The redirection
+       policy permits following redirection to DOTS server B.  If the
+       DOTS client does not already have a separate signaling session
+       with the redirection target, the DOTS client initiates and
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 12]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
+       establishes a signaling session with DOTS server B as described
+       in section TBD above.
+
+   4.  Having sent the REDIRECT signal to the DOTS client, DOTS server A
+       ceases sending server signals, leaving the signal channel half-
+       closed.  [AM: should the DOTS server leave active any mitigations
+       currently running on behalf of the client?  It's entirely
+       possible that DOTS server A & B are connected to the same
+       Mitigator in e.g. the max client session limit case above]
+
+   5.  Having processed the REDIRECT from DOTS Server A, the DOTS client
+       ceases sending client signals to DOTS Server A.  With both halves
+       of the signaling session now closed, the signaling session
+       between the DOTS client and DOTS server A is considered
+       terminated.
+
+   [AM: should following go in security considerations?]
+
+   Due to the increased probability of inbound packet loss during a DDoS
+   attack, it is RECOMMENDED that DOTS servers avoid sending redirects
+   during active attacks.  The method by which the DOTS server measures
+   an active attack is not in scope, but might include available metrics
+   from the Mitigator and server signal lossiness as reported in the
+   client signal.
 
 3.2.  Components
 
@@ -664,19 +715,20 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    TBD
 
-
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 12]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
 5.  Change Log
 
 6.  References
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 13]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
 6.1.  Normative References
 
@@ -725,7 +777,11 @@ Authors' Addresses
 
 
 
-Mortensen, et al.        Expires August 14, 2016               [Page 13]
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 14]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
@@ -781,4 +837,4 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 
 
-Mortensen, et al.        Expires August 14, 2016               [Page 14]
+Mortensen, et al.        Expires August 14, 2016               [Page 15]

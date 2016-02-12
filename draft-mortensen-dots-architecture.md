@@ -437,6 +437,10 @@ data channel must be functioning between DOTS agents. That is, under nominal
 network conditions, signals actively sent from a DOTS client are received by the
 specific DOTS server intended by the client, and vice versa.
 
+### Establishing the Signaling Session ###
+
+TBD
+
 
 ### Direct Signaling ###
 
@@ -493,6 +497,8 @@ In certain circumstances, a DOTS server may want to redirect a DOTS client to
 an alternative DOTS server for a signaling session. Such circumstances include
 but are not limited to:
 
+* Maximum number of signaling sessions with clients has been reached;
+
 * Mitigation capacity exhaustion in the Mitigator with which the
   specific DOTS server is communicating;
 
@@ -506,34 +512,16 @@ but are not limited to:
 The DOTS architecture does not require the DOTS server to justify the decision
 to redirect the signaling session to another DOTS server.
 
-When receiving a DOTS server redirection in the server signal, the DOTS client
-terminates the active signaling session, and establishes a new signaling
-session with the DOTS server to which the client is being redirected.
+After sending a redirect signal over the signal channel to the DOTS client, the
+DOTS server MAY cease sending server signals to the DOTS client at any point in
+the timeframe allowed by the protocol. A redirecting DOTS server MUST cease
+sending server signals to the DOTS client before reaching the end of that
+timeframe.
 
-A basic redirected signaling session involves the following steps, as shown
-in Figure N:
-
-~~~~~
-        +-------------+                            +---------------+
-        |             |<=(1)== signal session ====>|               |
-        |             |                            |               |
-        | DOTS client |<-(2)-- redirect to B ------| DOTS server A |
-        |             |                            |               |
-        |             |X=(3)== signal session ====>|               |
-        |             |                            |               |
-        |             |X=(4)== signal session ====X|               |
-        +-------------+                            +---------------+
-               ^
-               |
-              (5)
-               |
-               v
-        +---------------+
-        | DOTS server B |
-        +---------------+
-~~~~~
-
-TODO: describe steps.
+The DOTS server MAY send redundant redirect signals in order to increase the
+probability that the DOTS client receives them. The DOTS client MUST treat the
+first redirect signal it receives from the DOTS server as authoritative, and
+ignore any subsequent redirect signals from that DOTS server.
 
 On receiving a redirection request from a DOTS server, the DOTS client MUST
 terminate its end of the signaling session with the redirecting DOTS server
@@ -542,6 +530,66 @@ within the time frame defined by the protocol.
 The DOTS client MAY subsequently establish a new session with the DOTS server to
 which it was redirected, but is not required to do so. Local policy on DOTS
 server redirection is left to DOTS client operators.
+
+A basic redirected signaling session involves the following steps, as shown
+in Figure N:
+
+~~~~~
+        +-------------+                            +---------------+
+        |             |<-(1)-- signal session A -->|               |
+        |             |                            |               |
+        |             |<=(2)== REDIRECT to B ======|               |
+        | DOTS client |                            | DOTS server A |
+        |             |X-(4)-- signal session A -->|               |
+        |             |                            |               |
+        |             |X-(5)-- signal session A --X|               |
+        +-------------+                            +---------------+
+               ^
+               |
+              (3) signal session B
+               |
+               v
+        +---------------+
+        | DOTS server B |
+        +---------------+
+~~~~~
+
+[AM: does this interaction need a best-effort ACK from the client?]
+
+1. An existing signaling session exists between a DOTS client and DOTS server
+   with address A. The signaling session was established as described in section
+   n.m above, Establishing Signaling Session.
+
+1. DOTS server A sends a server signal containing a REDIRECT over the signal
+   channel to the DOTS client. The REDIRECT asks the client to migrate the
+   signaling session to DOTS server B.
+
+1. The DOTS client extracts the redirect target from the server signal, and
+   checks its redirection policy. The redirection policy permits following
+   redirection to DOTS server B. If the DOTS client does not already have a
+   separate signaling session with the redirection target, the DOTS client
+   initiates and establishes a signaling session with DOTS server B as described
+   in section TBD above.
+
+1. Having sent the REDIRECT signal to the DOTS client, DOTS server A ceases
+   sending server signals, leaving the signal channel half-closed. [AM: should
+   the DOTS server leave active any mitigations currently running on behalf of
+   the client? It's entirely possible that DOTS server A & B are connected to
+   the same Mitigator in e.g. the max client session limit case above]
+
+1. Having processed the REDIRECT from DOTS Server A, the DOTS client ceases
+   sending client signals to DOTS Server A. With both halves of the signaling
+   session now closed, the signaling session between the DOTS client and DOTS
+   server A is considered terminated.
+
+[AM: should following go in security considerations?]
+
+Due to the increased probability of inbound packet loss during a DDoS attack, it
+is RECOMMENDED that DOTS servers avoid sending redirects during active attacks.
+The method by which the DOTS server measures an active attack is not in scope,
+but might include available metrics from the Mitigator and server signal
+lossiness as reported in the client signal.
+
 
 Components
 ----------
