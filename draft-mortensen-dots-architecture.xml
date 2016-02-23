@@ -209,11 +209,11 @@ destined for the attack target or targets, for example by diverting traffic
 to a scrubbing center. Packets deemed part of an active attack may be dropped.</t>
 
 <t>The architecture presented here is assumed to be applicable across network
-administrative domains&ndash;as, for example, between an enterprise domain and
-the domain of a third-party attack scrubbing service&ndash;as well as to a single
+administrative domains &ndash; for example, between an enterprise domain and
+the domain of a third-party attack scrubbing service &ndash; as well as to a single
 administrative domain. DOTS is generally assumed to be most effective when
 aiding coordination of attack response between two or more participating
-network domains, but single domain scenarios are worth investigating elsewhere.</t>
+network domains, but single domain scenarios are worth investigating elsewhere. [<spanx style="strong">FSA</spanx>: What do we mean by &ldquo;elsewhere&rdquo; ?}</t>
 
 </section>
 <section anchor="assumptions" title="Assumptions">
@@ -222,7 +222,7 @@ network domains, but single domain scenarios are worth investigating elsewhere.<
 [NT: rough but growing list]</t>
 
 <t><list style="symbols">
-  <t>The existence of agreed DOTS data model(s) and protocol definitions.</t>
+  <t>The existence of agreed DOTS data model(s) and protocol definitions.[<spanx style="strong">FSA</spanx>: Not sure I follow - why is this an assumption ?]</t>
   <t>The network or networks in which DOTS is deployed are assumed to offer the
 required connectivity between DOTS agents and any intermediary network
 elements, but the architecture imposes no additional limitations on the form
@@ -230,7 +230,7 @@ of connectivity.</t>
   <t>Congestion and resource exhaustion are intended outcomes of a DDoS attack.
 Some operators may utilize non-impacted paths or networks for DOTS, however,
 it should be assumed that, in the large majority of instances, conditions will
-be hostile and that signaling SHOULD function in all circumstances.</t>
+be hostile and that signaling SHOULD function in all circumstances.[<spanx style="strong">FSA</spanx>: Maybe rephrase to &ldquo;that DOTS must be able to function in all circumstances, including when the signaling path is significantly impaired&rdquo;</t>
   <t>There is no universal DDoS attack scale threshold triggering a coordinated
 response across network administrative domains. A network domain
 administrator, or service or application owner may arbitrarily set attack
@@ -239,20 +239,20 @@ scale threshold triggers, or manually send requests for mitigation.</t>
 coordinated attack response is opaque to the network sending the request. The
 network receiving the DOTS client signal may or may not have sufficient
 capacity or capability to filter any or all DDoS attack traffic directed at
-a target.</t>
+a target.[<spanx style="strong">FSA</spanx>: The term &ldquo;network&rdquo; is too restrictive - we need another term to use throughout]</t>
   <t>DOTS client and server signals, as well as messages sent through the data
 channel, are sent across any transit networks with the same probability of
-delivery of any other traffic between the DOTS client network and the DOTS
+delivery as any other traffic between the DOTS client network and the DOTS
 server network. Any encapsulation required for successful delivery is left
-untouched by transit network elements.</t>
+untouched by transit network elements.[<spanx style="strong">FSA</spanx>: Maybe re-write this one to say something like &ldquo;cannot assume any preferential treatment&hellip;&rdquo;, since the next one does open up the door for higher probability delivery]</t>
   <t>The architecture allows for, but does not assume, the presence of Quality of
 Service (QoS) policy agreements between DOTS-enabled peer networks or local
 QoS prioritization aimed at ensuring delivery of DOTS signals between DOTS
-agents.</t>
+agents.[<spanx style="strong">FSA</spanx>: Only DOTS signals or also DOTS data ?]</t>
   <t>There is no assumption that the signal channel and the data channel should
 terminate on the same server and these may be loosely coupled.
 [NT: Redirection may occur within the signal channel but the data channel
-should also allocate signaller and default to the same server if not present?]</t>
+should also allocate signaller and default to the same server if not present?][<spanx style="strong">FSA</spanx>: Not sure I understand the question]</t>
 </list></t>
 
 </section>
@@ -260,18 +260,24 @@ should also allocate signaller and default to the same server if not present?]</
 <section anchor="architecture" title="Architecture">
 <t>DOTS enables a target that is under a Distributed Denial-of-Service (DDoS)
 attack to signal another entity for help in mitigating the DDoS attack. The
-basic high-level DOTS reference architecture is illustrated in Figure X1</t>
+basic high-level DOTS architecture is illustrated in Figure X1</t>
 
 <figure><artwork><![CDATA[
-      Mitigator ~~~~~~~~~~ DOTS Server
-                             |     |
-                             |     +---+
-                             |         |
-                             |       DOTS Relay
-                             |         |
-                             |     +---+
-                             |     |
-     Attack Target ~~~~~~~ DOTS Client
+    +-----------+            +-------------+
+    | Mitigator | ~~~~~~~~~~ | DOTS Server |
+    +-----------+            +-------------+
+                               |         |
+                               |         |
+                               |         |
+                               |    +------------+
+                               |    | DOTS Relay |
+                               |    +------------+
+                               |         |
+                               |         |
+                               |         |
+   +---------------+         +-------------+
+   | Attack Target | ~~~~~~~ | DOTS Client |
+   +---------------+         +-------------+
 ]]></artwork></figure>
 
 <t>A simple example instantiation of the DOTS architecture could be an enterprise
@@ -287,14 +293,12 @@ mitigators, which are tasked with mitigating the actual DDoS attack, and hence
 aim to suppress the attack traffic while allowing valid traffic to reach the
 attack target.</t>
 
-<t>The scope of the DOTS specifications is the interface(s) between the DOTS
-client, DOTS server, and DOTS relay. The interface(s) to the attack target and
+<t>The scope of the DOTS specifications is the interfaces between the DOTS
+client, DOTS server, and DOTS relay. The interfaces to the attack target and
 the mitigator are out of scope of DOTS. Similarly, the operation of both the
 attack target and the mitigator are out of scope of DOTS. Thus, DOTS neither
 speficies how an attack target decides it is under DDoS attack, nor does DOTS
-specify how a mitigator may actually mitigate it.</t>
-
-<t>[<spanx style="strong">FSA</spanx>: <spanx style="emph">However, should we say something about operational considerations nevertheless. In particular, I&rsquo;m thinking about M:N relationships, which doesn&rsquo;t necessarily seem wise. Also, since we may be getting involved in traffic redirection, is there something to say about authorization of such requests - should a DOTS server just blindly redirect traffic for mitigation purposes, etc. based on what any DOTS client tells it ?</spanx>]</t>
+specify how a mitigator may actually mitigate such an attack.</t>
 
 <t>As illustrated in Figure X2, there are two interfaces between the DOTS Server
 and the DOTS Client (and possibly the DOTS Relay).</t>
@@ -314,35 +318,21 @@ by sending a client signal, which contains information about the attack target.
 The client signal may also include telemetry information about the attack, if
 the DOTS client has such information available. The DOTS Server in turn sends a
 server signal to inform the DOTS client of whether it will honor the mitigation
-request. Assuming it will, the DOTS Server initiates attack mitigation, and
+request. Assuming it will, the DOTS Server initiates attack mitigation (by means outside of DOTS), and
 periodically informs the DOTS client about the status of the mitigation.
 Similarly, the DOTS client periodically informs the DOTS server about the
 client&rsquo;s status, which at a minimum provides client (attack target) health
 information, but it may also include telemetry information about the attack as
-it is now seen by the client. At some point, the DOTS client or the server may
+it is now seen by the client. At some point, the DOTS client or the DOTS server may
 decide to terminate the server-side attack mitigation, which it indicates to
 the DOTS peer agent (DOTS client or server) over the signal channel. Note that
 the signal channel may need to operate over a link that is experiencing a DDoS
 attack and hence is subject to very severe packet loss.</t>
 
-<t>[<spanx style="strong">FSA</spanx>: <spanx style="emph">Requirements document talks about having an always-on signal channel with on-going status messages - discuss further</spanx>]</t>
-
-<t>[<spanx style="strong">AM</spanx>:] I don&rsquo;t believe the -00 req draft does, but the -01 draft will mention
-it. I think there&rsquo;s a distinction being lost here, though. Although it will be
-possible, and possibly desirable in certain situations, in my view the signal
-channel should be more or less always on regardless: it reduces the likelihood
-of transport-layer crypto handshakes in attack conditions, should minimize NAT
-binding timeout incidence, and simplifies distinguishing between an inactive
-DOTS agent and one that is unavailable (e.g., unresponsive during attack). The
-&ldquo;always-on&rdquo; I&rsquo;ve been referring to is &ldquo;always-on&rdquo; mitigation: the DOTS client
-maintains an signal channel session with the DOTS server, but also maintains
-its request for help scrubbing traffic bound for a certain client-owned
-network address space, regardless of the presence of attack traffic.</t>
-
 <t>While DOTS is able to function with just the signal channel, the addition of
 the DOTS data channel provides for additional and more efficient capabilities.
 The primary purpose of the data channel is to support DOTS related
-configuration and policy information [AM: exchange] between the DOTS client and
+configuration and policy information exchange between the DOTS client and
 the DOTS server. Examples of such information include</t>
 
 <t><list style="symbols">
@@ -361,35 +351,43 @@ information and does not provide any special means for ensuring timely delivery
 of it during an attack. In practice, this means that DOTS entities SHOULD NOT
 rely on such information being exchanged during a DDoS attack.</t>
 
-<section anchor="relationships" title="Relationships">
-<t><spanx style="strong">[FSA: For discussion]</spanx></t>
+<section anchor="dots-operations" title="DOTS Operations">
+<t>The scope of DOTS is focused on the signaling and data exchange
+between the DOTS client, DOTS server and (possibly) the DOTS relay. DOTS does not prescribe any specific deployment models, however DOTS is designed with some specific requirements around the different DOTS agents and their relationships.</t>
+
+<t>First of all, a DOTS agent belongs to an entity, and that entity has an identity which can be authenticated. DOTS agents communicate with each other over a mutually authenticated signal channel, however before they can do so, a service relationship needs to be established between them.  The details and means by which this is done is outside the scope of DOTS, however an example would be for an enterprise A (DOTS client) to sign up for DDoS service from provider B (DOTS server). This would establish a (service) relationship between the two that enables enterprise A&rsquo;s DOTS client to establish a signal channel with provider B&rsquo;s DOTS server. A and B will authenticate each other, and B can verify that A is authorized for its service. A and B may each have one or more DOTS relays in front of their DOTS client and DOTS server [<spanx style="strong">FSA</spanx>: <spanx style="emph">I don&rsquo;t recall what we said here in terms of e2e connectivitiy and authentication</spanx>].</t>
+
+<t>From an operational and design point of view, DOTS assumes that the above relationship is established prior to a request for DDoS attack mitigation. In particular, it is assumed that bi-directional communication is possible at this time between the DOTS client and DOTS server. Furthermore, it as assumed that additional service provisioning and information exchange can be performed by use of the data channel, if so desired. It is not until this point that the mitigation service is available for use.</t>
+
+<t>Once the mutually authenticated signal channel has been established, it will remain in place. This is done to increase the likelihood that the DOTS client can signal the DOTS server for help when the the attack target is being flooded. This does not necessarily imply that the attack target and the DOTS client have to be co-located, but it is expected to be a common scenario.</t>
+
+<t>DDoS mitigiation service with the help of an upstream mitigator will often involve some form of traffic redirection whereby traffic destined for the attack target is diverted towards the mitigator, e.g. by use of BGP or DNS. The mitigator in turn inspects and scrubs the traffic, and forwards the resulting (hopefully non-attack) traffic to the attack target, e.g. via a GRE tunnel. Thus, when a DOTS server receives an attack mitigation request from a DOTS client, it can be viewed as a way of causing traffic redirection for the attack target indicated. Note that DOTS does not consider any authorization aspects around who should be allowed to issue such requests for what attack targets. Instead, DOTS merely relies on the mutual authentication and the pre-established (service) relationship between the entity owning the DOTS client and the entity owning the DOTS server. The entity owning the DOTS server may consider limiting the attack targets that a particular DOTS client can request mitigation for as part of establising this relationship.</t>
+
+</section>
+<section anchor="dots-agent-relationships" title="DOTS Agent Relationships">
+<t>So far, we have only considered a relatively simple scenario of a single DOTS client associated with a single DOTS server, however DOTS supports more advanced relationships as follows:</t>
+
+<t>A DOTS server may be associated with one or more DOTS clients, and those DOTS clients may belong to different entities. An example scenario is a mitigation provider serving multiple attack targets.</t>
+
+<t>A DOTS client may be associated with one or more DOTS servers, and those DOTS servers may belong to different entities. An example scenario is for an enterprise to have DDoS mitigation service from multiple providers. [<spanx style="strong">FSA</spanx>: <spanx style="emph">I don&rsquo;t remember if we said that the client should be able to ask for mitigation for a given attack target from different entities - discuss again</spanx>]</t>
+
+<t>[<spanx style="strong">FSA</spanx>: <spanx style="emph">When talking about DOTS relays, I&rsquo;m finding a need to distinguish between server-side relays and client-side relays - or at least I think so&hellip;.</spanx>]</t>
+
+<t>DOTS Relays may be either server-side or client-side. A DOTS server-side relay is associated with the same entity</t>
+
+<t>[<spanx style="strong">FSA</spanx>: <spanx style="emph">I need some more text from somebody on how these DOTS relays actually work and how the work on the client side, server side and in-between (if there is something like that) - I&rsquo;m having DIAMETER flashbacks here and I&rsquo;m not liking it&hellip;..</spanx>]</t>
+
+<t>[<spanx style="strong">FSA</spanx>: Old for discussion
+* A DOTS Client is associated with one or more DOTS Servers (?)</t>
 
 <t><list style="symbols">
-  <t>A DOTS Client is associated with one or more DOTS Servers (?)</t>
   <t>A DOTS Client is associated with one or more DOTS Relays (?)</t>
   <t>A DOTS Relay is assocaited with one or more DOTS Clients</t>
   <t>A DOTS Relay is associated with one or more DOTS Servers</t>
   <t>A DOTS Relay is associated with one or more DOTS Relays (graph/hierarchy ?)</t>
   <t>A DOTS Relay logically consists of a DOTS Server and a DOTS Client (?)</t>
   <t>Can a DOTS Client tell if it is talking to a DOTS Server or a DOTS Relay ?</t>
-  <t>Can a DOTS Server tell if it is talking to a DOTS Client or a DOTS Relay ?</t>
-</list></t>
-
-</section>
-<section anchor="dots-operational-process" title="DOTS Operational Process">
-<t><spanx style="strong">[FSA: For discussion]</spanx>
-Although the scope of DOTS is focused on the signaling and data exchange
-between the DOTS client, DOTS server and (possibly) the DOTS relay, DOTS is
-specified with some underlying assumptions around the operational process
-associated with the use of DOTS.</t>
-
-<t><list style="numbers">
-  <t>Before a DOTS client can signal a DOTS server, a relationship needs to be established between the two.</t>
-</list></t>
-
-<t><list style="symbols">
-  <t>The relationship involves establishing credentials for mutual authentication.</t>
-  <t><spanx style="emph">What about authorization, e.g. in terms of resources we want to protect and hence potentially may be redirecting traffic for ?</spanx></t>
+  <t>Can a DOTS Server tell if it is talking to a DOTS Client or a DOTS Relay ?]</t>
 </list></t>
 
 <t>TBD</t>
@@ -440,7 +438,7 @@ also sending server signals to the client in reaction to the client&rsquo;s sign
 <section anchor="relayed-signaling" title="Relayed Signaling">
 
 <t>A signaling session may also include one or more DOTS relays in the signaling
-path between the clients and servers, as show in Figure N:</t>
+path between the clients and servers, as shown in Figure N:</t>
 
 <figure><artwork><![CDATA[
         +-------------+                            +-------------+
@@ -530,6 +528,7 @@ in Figure N:</t>
         | DOTS server B |
         +---------------+
 ]]></artwork></figure>
+<t>[<spanx style="strong">FSA</spanx>: I think we are beginning to get into protocol specification territory with some of this - need to determine where we draw the line]</t>
 
 <t>[AM: does this interaction need a best-effort ACK from the client?]</t>
 
