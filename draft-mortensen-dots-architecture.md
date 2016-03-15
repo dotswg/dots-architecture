@@ -37,6 +37,17 @@ author:
         country: United States
         email: fandreas@cisco.com
       -
+        ins: T. Reddy
+        name: Tirumaleswar Reddy
+        org: Cisco Systems, Inc.
+        street:
+        - Cessna Business Park, Varthur Hobli
+        - Sarjapur Marathalli Outer Ring Road
+        city: Bangalore, Karnataka
+        code: 560103
+        country: India
+        email: tireddy@cisco.com
+      -
         ins: C. Gray
         name: Christopher Gray
         org: Comcast, Inc.
@@ -68,6 +79,7 @@ informative:
   I-D.ietf-dots-requirements:
   I-D.ietf-dots-use-cases:
   RFC2782:
+  RFC4732:
   RFC6763:
 
 
@@ -77,20 +89,19 @@ This document describes an architecture for establishing and maintaining
 DDoS Open Threat Signaling (DOTS) within and between networks. The document
 makes no attempt to suggest protocols or protocol extensions, instead focusing
 on architectural relationships, components and concepts used in a DOTS
-deployment, as well as obstacles confronting a network operator looking to
-enable DOTS.
+deployment.
 
 
 --- middle
 
-Introduction
-============
+Context and Motivation
+======================
 
 Signaling the need for help defending against an active distributed denial
 of service (DDoS) attack requires a common understanding of mechanisms and
 roles among the parties coordinating attack response. The proposed signaling
 layer and supplementary messaging is the focus of DDoS Open Threat Signaling
-(DDoS). DOTS proposes to standardize a method of coordinating defensive
+(DOTS). DOTS proposes to standardize a method of coordinating defensive
 measures among willing peers to mitigate attacks quickly and efficiently.
 
 This document describes an architecture used in establishing, maintaining or
@@ -119,7 +130,8 @@ DDoS:
   originating from widely distributed sources is directed at a target or
   collection of targets. DDoS attacks are intended to diminish or prevent the
   availability of servers, services, applications, and/or other functionality
-  of an attack target.
+  of an attack target. Denial-of-service considerations are discussed in detail
+  in [RFC4732].
 
 attack target:
 : the network-enabled service, application, server, or some collection thereof,
@@ -268,7 +280,7 @@ This document makes the following assumptions:
   a DOTS architecture.
 
 * There is no assumption that the signal channel and the data channel should
-  terminate on the same server and these may be loosely coupled.
+  terminate on the same server: they may be loosely coupled.
 
 
 Architecture
@@ -619,13 +631,53 @@ the signal channel to maintain its half of the signaling session. The DOTS
 client similarly expects a heartbeat from the DOTS server, and MAY consider a
 signaling session terminated in the extended absence of a DOTS server heartbeat.
 
-TBD
-
 
 DOTS server
 -----------
 
-TBD
+A DOTS server is a DOTS agent capable of receiving, processing and possibly
+acting on requests for help coordinating attack response from one or more DOTS
+clients.  The DOTS server authenticates and authorizes DOTS clients as described
+in Signaling Sessions below, and maintains signaling session state, tracking
+requests for mitigation, reporting on the status of active mitigations, and
+terminating signaling sessions in the extended absence of a client heartbeat or
+when a session times out.
+
+Assuming the preconditions discussed below exist, a DOTS client maintaining an
+active signaling session with a DOTS server may reasonably expect some level of
+mitigation in response to a request for coordinated attack response.
+
+The DOTS server enforces authorization of DOTS clients' signals for mitigation.
+The mechanism of enforcement is not in scope for this document, but is expected
+to restrict requested mitigation scope to addresses, prefixes, and/or services
+owned by the DOTS client's administrative entity, such that a DOTS client from
+one entity is not able to influence the network path to another entity. A DOTS
+server MUST reject requests for mitigation of resources not owned by the
+requesting DOTS client's administrative entity. A DOTS server MAY also refuse a
+DOTS client's mitigation request for arbitrary reasons, within any limits
+imposed by business or service level agreements between client and server
+domains. If a DOTS server refuses a DOTS client's request for mitigation, the
+DOTS server SHOULD include the refusal reason in the server signal sent to the
+client.
+
+A DOTS server is in regular contact with one or more mitigators. If a DOTS
+server accepts a DOTS client's request for help, the DOTS server forwards a
+translated form of that request to the mitigator or mitigators responsible for
+scrubbing attack traffic. Note that the form of the translated request passed
+from the DOTS server to the mitigator is not in scope: it may be as simple as an
+alert to mitigator operators, or highly automated using vendor or open
+application programming interfaces supported by the mitigator. The DOTS server
+SHOULD report the actual scope of any mitigation enabled on behalf of a client.
+
+The DOTS server SHOULD retrieve available metrics for any mitigations activated
+on behalf of a DOTS client, and SHOULD include them in server signals sent to
+the DOTS client originating the request for mitigation.
+
+To provide a metric of signal health and distinguish an idle signaling session
+from a disconnected or defunct session, the DOTS server sends a heartbeat over
+the signal channel to maintain its half of the signaling session. The DOTS
+server similarly expects a heartbeat from the DOTS client, and MAY consider a
+signaling session terminated in the extended absence of a DOTS client heartbeat.
 
 
 Concepts
@@ -809,7 +861,7 @@ in Figure N:
 1. If the DOTS client does not already have a separate signaling session with
    the redirection target, the DOTS client initiates and establishes a signaling
    session with DOTS server B as described above. The DOTS client MAY request
-   mitigation via DOTS server B as soon as signal session 1 is established.
+   mitigation via DOTS server B as soon as signal session 2 is established.
 
 1. Having redirected the DOTS client, DOTS server A ceases sending server
    signals. The DOTS client likewise stops sending client signals to DOTS server

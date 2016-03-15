@@ -5,7 +5,8 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                      Arbor Networks, Inc.
 Intended status: Informational                              F. Andreasen
-Expires: August 14, 2016                             Cisco Systems, Inc.
+Expires: August 14, 2016                                        T. Reddy
+                                                     Cisco Systems, Inc.
                                                                  C. Gray
                                                            Comcast, Inc.
                                                                N. Teague
@@ -22,8 +23,7 @@ Abstract
    maintaining DDoS Open Threat Signaling (DOTS) within and between
    networks.  The document makes no attempt to suggest protocols or
    protocol extensions, instead focusing on architectural relationships,
-   components and concepts used in a DOTS deployment, as well as
-   obstacles confronting a network operator looking to enable DOTS.
+   components and concepts used in a DOTS deployment.
 
 Status of This Memo
 
@@ -67,40 +67,40 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   1.  Context and Motivation  . . . . . . . . . . . . . . . . . . .   2
      1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   3
        1.1.1.  Key Words . . . . . . . . . . . . . . . . . . . . . .   3
        1.1.2.  Definition of Terms . . . . . . . . . . . . . . . . .   3
      1.2.  Scope . . . . . . . . . . . . . . . . . . . . . . . . . .   5
      1.3.  Assumptions . . . . . . . . . . . . . . . . . . . . . . .   5
    2.  Architecture  . . . . . . . . . . . . . . . . . . . . . . . .   6
-     2.1.  DOTS Operations . . . . . . . . . . . . . . . . . . . . .   8
+     2.1.  DOTS Operations . . . . . . . . . . . . . . . . . . . . .   9
      2.2.  DOTS Agent Relationships  . . . . . . . . . . . . . . . .  10
-   3.  Components  . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   3.  Components  . . . . . . . . . . . . . . . . . . . . . . . . .  13
      3.1.  DOTS client . . . . . . . . . . . . . . . . . . . . . . .  13
-     3.2.  DOTS server . . . . . . . . . . . . . . . . . . . . . . .  13
-   4.  Concepts  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     4.1.  Signaling Sessions  . . . . . . . . . . . . . . . . . . .  14
-       4.1.1.  Preconditions . . . . . . . . . . . . . . . . . . . .  14
-       4.1.2.  Establishing the Signaling Session  . . . . . . . . .  14
-       4.1.3.  Maintaining the Signaling Session . . . . . . . . . .  15
-       4.1.4.  Direct Signaling  . . . . . . . . . . . . . . . . . .  15
-       4.1.5.  Relayed Signaling . . . . . . . . . . . . . . . . . .  16
-       4.1.6.  Redirected Signaling  . . . . . . . . . . . . . . . .  16
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
-   6.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  18
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  18
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .  18
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  19
+     3.2.  DOTS server . . . . . . . . . . . . . . . . . . . . . . .  14
+   4.  Concepts  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     4.1.  Signaling Sessions  . . . . . . . . . . . . . . . . . . .  15
+       4.1.1.  Preconditions . . . . . . . . . . . . . . . . . . . .  16
+       4.1.2.  Establishing the Signaling Session  . . . . . . . . .  16
+       4.1.3.  Maintaining the Signaling Session . . . . . . . . . .  17
+       4.1.4.  Direct Signaling  . . . . . . . . . . . . . . . . . .  17
+       4.1.5.  Relayed Signaling . . . . . . . . . . . . . . . . . .  17
+       4.1.6.  Redirected Signaling  . . . . . . . . . . . . . . . .  17
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  20
+   6.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  20
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .  20
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
-1.  Introduction
+1.  Context and Motivation
 
    Signaling the need for help defending against an active distributed
    denial of service (DDoS) attack requires a common understanding of
    mechanisms and roles among the parties coordinating attack response.
    The proposed signaling layer and supplementary messaging is the focus
-   of DDoS Open Threat Signaling (DDoS).  DOTS proposes to standardize a
+   of DDoS Open Threat Signaling (DOTS).  DOTS proposes to standardize a
    method of coordinating defensive measures among willing peers to
    mitigate attacks quickly and efficiently.
 
@@ -137,6 +137,8 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
       at a target or collection of targets.  DDoS attacks are intended
       to diminish or prevent the availability of servers, services,
       applications, and/or other functionality of an attack target.
+      Denial-of-service considerations are discussed in detail in
+      [RFC4732].
 
    attack target:  the network-enabled service, application, server, or
       some collection thereof, on which a DDoS attack is focused.
@@ -160,8 +162,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    DOTS client:  A DOTS-aware network element requesting attack response
       coordination with another DOTS-aware element, with the expectation
-      that the remote element is capable of helping fend off the attack
-      against the client.
 
 
 
@@ -169,6 +169,9 @@ Mortensen, et al.        Expires August 14, 2016                [Page 3]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
+
+      that the remote element is capable of helping fend off the attack
+      against the client.
 
    DOTS server:  A DOTS-aware network element handling and responding to
       messages from a DOTS client.  The DOTS server MAY enable
@@ -215,9 +218,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
       appropriately communicated through the signal channel under attack
       conditions.
 
-   blacklist:  a list of source addresses or prefixes from which traffic
-      should be blocked.
-
 
 
 
@@ -225,6 +225,9 @@ Mortensen, et al.        Expires August 14, 2016                [Page 4]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
+
+   blacklist:  a list of source addresses or prefixes from which traffic
+      should be blocked.
 
    whitelist:  a list of source addresses or prefixes from which traffic
       should always be allowed, regardless of contradictory data gleaned
@@ -271,9 +274,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    o  There is no universal DDoS attack scale threshold triggering a
       coordinated response across network administrative domains.  A
       network domain administrator, or service or application owner may
-      arbitrarily set attack scale threshold triggers, or manually send
-      requests for mitigation.
-
 
 
 
@@ -281,6 +281,9 @@ Mortensen, et al.        Expires August 14, 2016                [Page 5]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
+
+      arbitrarily set attack scale threshold triggers, or manually send
+      requests for mitigation.
 
    o  The mitigation capacity and/or capability of networks receiving
       requests for coordinated attack response is opaque to the network
@@ -304,8 +307,8 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
       architecture.
 
    o  There is no assumption that the signal channel and the data
-      channel should terminate on the same server and these may be
-      loosely coupled.
+      channel should terminate on the same server: they may be loosely
+      coupled.
 
 2.  Architecture
 
@@ -313,6 +316,27 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    (DDoS) attack to signal another entity for help in mitigating the
    DDoS attack.  The basic high-level DOTS architecture is illustrated
    in Figure X1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016                [Page 6]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
        +-----------+            +-------------+
        | Mitigator | ~~~~~~~~~~ | DOTS Server |
@@ -329,14 +353,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
       +---------------+         +-------------+
       | Attack Target | ~~~~~~~ | DOTS Client |
       +---------------+         +-------------+
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016                [Page 6]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
 
    A simple example instantiation of the DOTS architecture could be an
    enterprise as the attack target for a volumetric DDoS attack, and an
@@ -367,6 +383,17 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    As illustrated in Figure X2, there are two interfaces between the
    DOTS Server and the DOTS Client (and possibly the DOTS Relay).
 
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016                [Page 7]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
      +---------------+                                 +---------------+
      |               | <------- Signal Channel ------> |               |
      |  DOTS Client  |                                 |  DOTS Server  |
@@ -386,14 +413,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    periodically informs the DOTS client about the status of the
    mitigation.  Similarly, the DOTS client periodically informs the DOTS
    server about the client's status, which at a minimum provides client
-
-
-
-Mortensen, et al.        Expires August 14, 2016                [Page 7]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
    (attack target) health information, but it may also include telemetry
    information about the attack as it is now seen by the client.  At
    some point, the DOTS client or the DOTS server may decide to
@@ -423,6 +442,14 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    Note that while it is possible to exchange the above information
    before, during or after a DDoS attack, DOTS requires reliable
+
+
+
+Mortensen, et al.        Expires August 14, 2016                [Page 8]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
    delivery of the above information and does not provide any special
    means for ensuring timely delivery of it during an attack.  In
    practice, this means that DOTS entities SHOULD NOT rely on such
@@ -442,14 +469,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    before they can do so, a service relationship needs to be established
    between them.  The details and means by which this is done is outside
    the scope of DOTS, however an example would be for an enterprise A
-
-
-
-Mortensen, et al.        Expires August 14, 2016                [Page 8]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
    (DOTS client) to sign up for DDoS service from provider B (DOTS
    server).  This would establish a (service) relationship between the
    two that enables enterprise A's DOTS client to establish a signal
@@ -478,6 +497,15 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    and the DOTS client have to be co-located, but it is expected to be a
    common scenario.
 
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016                [Page 9]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
    DDoS mitigation service with the help of an upstream mitigator will
    often involve some form of traffic redirection whereby traffic
    destined for the attack target is diverted towards the mitigator,
@@ -494,17 +522,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    DOTS server.  The entity owning the DOTS server may consider limiting
    the attack targets that a particular DOTS client can request
    mitigation for as part of establishing this relationship.
-
-
-
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016                [Page 9]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
 
 2.2.  DOTS Agent Relationships
 
@@ -538,6 +555,13 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    considerations relating to co-ordinating multiple provider responses
    are beyond the scope of DOTS.
 
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 10]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
                           +---+
               ------------| S |
              /            +---+
@@ -554,14 +578,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    DOTS Relays may be either server-side or client-side.  A DOTS server
    side relay is associated with the same entity.  A relay will
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 10]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
    terminate multiple discrete client connections as if it were a server
    and may aggregate these into a single or multiple DOTS feeds
    depending upon locally applied policy.  A relay will function as a
@@ -591,6 +607,17 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
       example.com       example.com         example.net
       DOTS Clients      DOTS Relay          DOTS Server
 
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 11]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
       Client Side Relay (excl. aggregation)
 
       +---+
@@ -610,14 +637,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    A variation of this scenario would be a DDoS mitigation provider
    deploying relays at their perimeter to consume signals across
    multiple transports and to consolidate these into a single transport
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 11]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
    suitable for the providers deployment.  The relationship between the
    relay and its upstream peers is opaque to the relayed clients.
 
@@ -636,6 +655,24 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
       +---+
       example.com       example.net         example.net
       DOTS Clients      DOTS Relay          DOTS Server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 12]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
       Server Side Relay (excl aggregation)
 
@@ -665,15 +702,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    The architecture in this document is comprised of a few basic
    components on top of the assumed underlay network or networks
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 12]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
    described above.  When connected to one another, the components
    represent an operational DOTS architecture.
 
@@ -694,6 +722,14 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    The DOTS client requests attack response coordination from a DOTS
    server over the signal channel, including in the request the DOTS
    client's desired mitigation scoping, as described in
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 13]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
+
    [I-D.ietf-dots-requirements], and suggested countermeasures.  The
    actual mitigation scope and countermeasures used in response to the
    attack are up to the DOTS server and Mitgator operators, as the DOTS
@@ -715,20 +751,66 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    heartbeat from the DOTS server, and MAY consider a signaling session
    terminated in the extended absence of a DOTS server heartbeat.
 
-   TBD
-
 3.2.  DOTS server
 
-   TBD
+   A DOTS server is a DOTS agent capable of receiving, processing and
+   possibly acting on requests for help coordinating attack response
+   from one or more DOTS clients.  The DOTS server authenticates and
+   authorizes DOTS clients as described in Signaling Sessions below, and
+   maintains signaling session state, tracking requests for mitigation,
+   reporting on the status of active mitigations, and terminating
+   signaling sessions in the extended absence of a client heartbeat or
+   when a session times out.
+
+   Assuming the preconditions discussed below exist, a DOTS client
+   maintaining an active signaling session with a DOTS server may
+   reasonably expect some level of mitigation in response to a request
+   for coordinated attack response.
+
+   The DOTS server enforces authorization of DOTS clients' signals for
+   mitigation.  The mechanism of enforcement is not in scope for this
+   document, but is expected to restrict requested mitigation scope to
+   addresses, prefixes, and/or services owned by the DOTS client's
+   administrative entity, such that a DOTS client from one entity is not
+   able to influence the network path to another entity.  A DOTS server
+   MUST reject requests for mitigation of resources not owned by the
+   requesting DOTS client's administrative entity.  A DOTS server MAY
+   also refuse a DOTS client's mitigation request for arbitrary reasons,
+   within any limits imposed by business or service level agreements
+   between client and server domains.  If a DOTS server refuses a DOTS
 
 
 
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 13]
+Mortensen, et al.        Expires August 14, 2016               [Page 14]
 
 Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
+
+   client's request for mitigation, the DOTS server SHOULD include the
+   refusal reason in the server signal sent to the client.
+
+   A DOTS server is in regular contact with one or more mitigators.  If
+   a DOTS server accepts a DOTS client's request for help, the DOTS
+   server forwards a translated form of that request to the mitigator or
+   mitigators responsible for scrubbing attack traffic.  Note that the
+   form of the translated request passed from the DOTS server to the
+   mitigator is not in scope: it may be as simple as an alert to
+   mitigator operators, or highly automated using vendor or open
+   application programming interfaces supported by the mitigator.  The
+   DOTS server SHOULD report the actual scope of any mitigation enabled
+   on behalf of a client.
+
+   The DOTS server SHOULD retrieve available metrics for any mitigations
+   activated on behalf of a DOTS client, and SHOULD include them in
+   server signals sent to the DOTS client originating the request for
+   mitigation.
+
+   To provide a metric of signal health and distinguish an idle
+   signaling session from a disconnected or defunct session, the DOTS
+   server sends a heartbeat over the signal channel to maintain its half
+   of the signaling session.  The DOTS server similarly expects a
+   heartbeat from the DOTS client, and MAY consider a signaling session
+   terminated in the extended absence of a DOTS client heartbeat.
 
 4.  Concepts
 
@@ -748,6 +830,17 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    agents.  That is, under nominal network conditions, signals actively
    sent from a DOTS client are received by the specific DOTS server
    intended by the client, and vice versa.
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 15]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
 4.1.1.  Preconditions
 
@@ -778,14 +871,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    The DOTS client's initial message to the DOTS server is over the data
    channel.  Using data channel semantics established in the DOTS
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 14]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
    protocol, the DOTS client learns the address of the DOTS server with
    which to establish a signal channel, which may or may not be the same
    as the DOTS server operating the data channel, as well as any
@@ -801,6 +886,17 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    request, the DOTS client contacts the DOTS server over the signal
    channel.  Once the DOTS client begins receiving DOTS server signals,
    the signaling session is active.
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 16]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
 4.1.3.  Maintaining the Signaling Session
 
@@ -831,17 +927,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    signaling session is abstracted from the underlying networks or
    network elements the signals traverse.
 
-
-
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 15]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
 4.1.5.  Relayed Signaling
 
    A signaling session may also include one or more DOTS relays in the
@@ -860,6 +945,14 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    In certain circumstances, a DOTS server may want to redirect a DOTS
    client to an alternative DOTS server for a signaling session.  Such
    circumstances include but are not limited to:
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 17]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
    o  Maximum number of signaling sessions with clients has been
       reached;
@@ -889,15 +982,6 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    DOTS server as authoritative, and ignore any subsequent redirect
    signals from that DOTS server.
 
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 16]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
-
    On receiving a redirection request from a DOTS server, the DOTS
    client MUST terminate its end of the signaling session with the
    redirecting DOTS server within the time frame defined by the
@@ -910,6 +994,21 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
 
    A basic redirected signaling session involves the following steps, as
    shown in Figure N:
+
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 18]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
            +-------------+                            +---------------+
            |             |<-(1)-- signal session 1 -->|               |
@@ -939,20 +1038,12 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
        session with the redirection target, the DOTS client initiates
        and establishes a signaling session with DOTS server B as
        described above.  The DOTS client MAY request mitigation via DOTS
-       server B as soon as signal session 1 is established.
+       server B as soon as signal session 2 is established.
 
    4.  Having redirected the DOTS client, DOTS server A ceases sending
        server signals.  The DOTS client likewise stops sending client
        signals to DOTS server A.  Signal session 1 is terminated,
        severing any attack response coordination with DOTS server A.
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 17]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
 
    Following signaling session termination, the DOTS server SHOULD tear
    down mitigations activated on behalf of the DOTS client, though
@@ -967,6 +1058,13 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
    an active attack is not in scope, but is assumed include available
    metrics from the Mitigator and server signal lossiness as reported in
    the client signal.
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 19]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
 5.  Security Considerations
 
@@ -1001,20 +1099,28 @@ Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
               DOI 10.17487/RFC2782, February 2000,
               <http://www.rfc-editor.org/info/rfc2782>.
 
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 18]
-
-Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
-
+   [RFC4732]  Handley, M., Ed., Rescorla, E., Ed., and IAB, "Internet
+              Denial-of-Service Considerations", RFC 4732, DOI 10.17487/
+              RFC4732, December 2006,
+              <http://www.rfc-editor.org/info/rfc4732>.
 
    [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
               <http://www.rfc-editor.org/info/rfc6763>.
 
 Authors' Addresses
+
+
+
+
+
+
+
+
+Mortensen, et al.        Expires August 14, 2016               [Page 20]
+
+Internet-Draft   DDoS Open Threat Signaling Architecture   February 2016
+
 
    Andrew Mortensen
    Arbor Networks, Inc.
@@ -1030,6 +1136,16 @@ Authors' Addresses
    United States
 
    Email: fandreas@cisco.com
+
+
+   Tirumaleswar Reddy
+   Cisco Systems, Inc.
+   Cessna Business Park, Varthur Hobli
+   Sarjapur Marathalli Outer Ring Road
+   Bangalore, Karnataka  560103
+   India
+
+   Email: tireddy@cisco.com
 
 
    Christopher Gray
@@ -1057,8 +1173,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Mortensen, et al.        Expires August 14, 2016               [Page 19]
+Mortensen, et al.        Expires August 14, 2016               [Page 21]
