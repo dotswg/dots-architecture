@@ -396,9 +396,6 @@
 <link href="#rfc.section.4.2.2" rel="Chapter" title="4.2.2 Relayed Signaling"/>
 <link href="#rfc.section.4.2.3" rel="Chapter" title="4.2.3 Redirected Signaling"/>
 <link href="#rfc.section.4.2.4" rel="Chapter" title="4.2.4 Recursive Signaling"/>
-<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Triggering Requests for Mitigation"/>
-<link href="#rfc.section.4.3.1" rel="Chapter" title="4.3.1 Manual Mitigation Request"/>
-<link href="#rfc.section.4.3.2" rel="Chapter" title="4.3.2 Automated Threshold-Based Mitigation Request"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 Change Log"/>
 <link href="#rfc.references" rel="Chapter" title="7 References"/>
@@ -523,9 +520,6 @@
 <li>4.2.2.   <a href="#rfc.section.4.2.2">Relayed Signaling</a></li>
 <li>4.2.3.   <a href="#rfc.section.4.2.3">Redirected Signaling</a></li>
 <li>4.2.4.   <a href="#rfc.section.4.2.4">Recursive Signaling</a></li>
-</ul><li>4.3.   <a href="#rfc.section.4.3">Triggering Requests for Mitigation</a></li>
-<ul><li>4.3.1.   <a href="#rfc.section.4.3.1">Manual Mitigation Request</a></li>
-<li>4.3.2.   <a href="#rfc.section.4.3.2">Automated Threshold-Based Mitigation Request</a></li>
 </ul></ul><li>5.   <a href="#rfc.section.5">Security Considerations</a></li>
 <li>6.   <a href="#rfc.section.6">Change Log</a></li>
 <li>7.   <a href="#rfc.references">References</a></li>
@@ -879,16 +873,6 @@
 <p id="rfc.section.4.2.4.p.8">DOTS clients involved in recursive signaling MUST be able to withdraw requests for mitigation without warning or justification, per <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>.</p>
 <p id="rfc.section.4.2.4.p.9">Operators of recursing mitigators MAY maintain the recursed mitigation for a brief, protocol-defined period in the event the DOTS client originating the mitigation withdraws its request for help, as per the discussion of managing mitigation toggling in the operational requirements (<a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>).  Service or business agreements between recursing entities are not in scope for this document.</p>
 <p id="rfc.section.4.2.4.p.10">(EDITOR&#8217;S NOTE: Recursive signaling raises questions about how to authenticate and authorize the recursed request, how end-to-end signaling functions in such a scenario, and implications for operational and data privacy, as well as what level of visibility a client has into the recursed mitigation.  We ask the working group for feedback and additional discussion of these issues to help settle the way forward.)</p>
-<h2 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#triggering-requests-for-mitigation" id="triggering-requests-for-mitigation">Triggering Requests for Mitigation</a></h2>
-<p id="rfc.section.4.3.p.1">This section discusses some of the possible circumstances DOTS clients might use to trigger requests for mitigation.</p>
-<p id="rfc.section.4.3.p.2">Although one of the expected benefits of DOTS is highly automated and efficient coordinated DDoS attack response, control over mitigation requests MUST remain with DOTS client operators. Assuming the preconditions described above in <a href="#signaling-session-preconditions">Section 4.1.1</a> are in place, DOTS client operators must be confident that the relationship with the DOTS server permits them to request mitigation or withdraw mitigation requests arbitrarily, barring the operational requirements established in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>.</p>
-<p id="rfc.section.4.3.p.3">The use cases in which mitigation requests are made are described in detail in <a href="#I-D.ietf-dots-use-cases">[I-D.ietf-dots-use-cases]</a>.</p>
-<h3 id="rfc.section.4.3.1"><a href="#rfc.section.4.3.1">4.3.1.</a> <a href="#manual-mit-request" id="manual-mit-request">Manual Mitigation Request</a></h3>
-<p id="rfc.section.4.3.1.p.1">A DOTS client operator may manually prepare a request for mitigation, including scope and duration, and manually instruct the DOTS client to send the mitigation request to the DOTS server. An operator might do this, for example, in response to an alert delivered from other attack detection equipment or software, and that attack detector either lacks or is not configured to use available interfaces to translating the alert to a mitigation request.</p>
-<p id="rfc.section.4.3.1.p.2">In variation on the above scenario, the operator may have preconfigured on the DOTS client mitigation requests for various resources in the operator&#8217;s administrative domain, and, when alerted an attack is underway, manually instructs the DOTS client to send the preconfigured mitigation request best fitting the alert.</p>
-<p id="rfc.section.4.3.1.p.3">A further variant relates to recursive signaling, as described above in <a href="#recursive-signaling">Section 4.2.4</a>. As in the previous scenario, the scope and duration of the mitigation request are pre-existing, but in this case is derived from a downstream mitigation request from a downstream DOTS client, and the DOTS client manually instructed to send the mitigation request is itself a mitigator. In manually sending the derived mitigation request, the operator of the combined mitigator and DOTS client manually recurses the mitigation from the downstream DOTS client.</p>
-<p id="rfc.section.4.3.1.p.4">No limitation is placed on the circumstances in which a DOTS client&#8217;s operator may request mitigation manually, nor is justification required, per <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>.</p>
-<h3 id="rfc.section.4.3.2"><a href="#rfc.section.4.3.2">4.3.2.</a> <a href="#threshold-mit-request" id="threshold-mit-request">Automated Threshold-Based Mitigation Request</a></h3>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.5.p.1">TBD</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#change-log" id="change-log">Change Log</a></h1>

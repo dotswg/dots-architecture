@@ -965,56 +965,6 @@ settle the way forward.)
 {:mortensen}
 
 
-Triggering Requests for Mitigation
-----------------------------------
-
-This section discusses some of the possible circumstances DOTS clients might use
-to trigger requests for mitigation.
-
-Although one of the expected benefits of DOTS is highly automated and efficient
-coordinated DDoS attack response, control over mitigation requests MUST remain
-with DOTS client operators. Assuming the preconditions described above in
-{{signaling-session-preconditions}} are in place, DOTS client operators must be
-confident that the relationship with the DOTS server permits them to request
-mitigation or withdraw mitigation requests arbitrarily, barring the operational
-requirements established in [I-D.ietf-dots-requirements].
-
-The use cases in which mitigation requests are made are described in detail in
-[I-D.ietf-dots-use-cases].
-
-### Manual Mitigation Request {#manual-mit-request}
-
-A DOTS client operator may manually prepare a request for mitigation, including
-scope and duration, and manually instruct the DOTS client to send the mitigation
-request to the DOTS server. An operator might do this, for example, in response
-to an alert delivered from other attack detection equipment or software, and
-that attack detector either lacks or is not configured to use available
-interfaces to translating the alert to a mitigation request.
-
-In variation on the above scenario, the operator may have preconfigured on the
-DOTS client mitigation requests for various resources in the operator's
-administrative domain, and, when alerted an attack is underway, manually
-instructs the DOTS client to send the preconfigured mitigation request best
-fitting the alert.
-
-A further variant relates to recursive signaling, as described above in
-{{recursive-signaling}}. As in the previous scenario, the scope and duration of
-the mitigation request are pre-existing, but in this case is derived from a
-downstream mitigation request from a downstream DOTS client, and the DOTS client
-manually instructed to send the mitigation request is itself a mitigator. In
-manually sending the derived mitigation request, the operator of the combined
-mitigator and DOTS client manually recurses the mitigation from the downstream
-DOTS client.
-
-No limitation is placed on the circumstances in which a DOTS client's operator
-may request mitigation manually, nor is justification required, per
-[I-D.ietf-dots-requirements].
-
-
-### Automated Threshold-Based Mitigation Request {#threshold-mit-request}
-
-
-
 Security Considerations         {#security-considerations}
 =======================
 
