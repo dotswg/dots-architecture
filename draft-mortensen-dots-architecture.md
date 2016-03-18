@@ -703,9 +703,9 @@ data, usernames and passwords, or other identifying or cryptographic metadata.
 At the other extreme, the architecture in this document allows for DOTS client
 auto-provisioning. In this case, a DOTS client might discover a DOTS server
 through mechanisms similar to DNS SRV {{RFC2782}} or DNS Service Discovery
-{{RFC6763}}, In this scenario, the DOTS client, using minimal authenticating
+{{RFC6763}}. In this scenario, the DOTS client, using minimal authenticating
 information previously provided by the DOTS server's entity, contacts the DOTS
-server of the data channel and retrieves additional service and cryptographic
+server over the data channel and retrieves additional service and cryptographic
 data; and, using that additional data, establishes the signal channel.
 
 The DOTS client SHOULD successfully authenticate and exchange messages with the

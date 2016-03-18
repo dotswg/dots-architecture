@@ -802,11 +802,12 @@ Internet-Draft              DOTS Architecture                 March 2016
    At the other extreme, the architecture in this document allows for
    DOTS client auto-provisioning.  In this case, a DOTS client might
    discover a DOTS server through mechanisms similar to DNS SRV
-   [RFC2782] or DNS Service Discovery [RFC6763], In this scenario, the
+   [RFC2782] or DNS Service Discovery [RFC6763].  In this scenario, the
    DOTS client, using minimal authenticating information previously
-   provided by the DOTS server's entity, contacts the DOTS server of the
-   data channel and retrieves additional service and cryptographic data;
-   and, using that additional data, establishes the signal channel.
+   provided by the DOTS server's entity, contacts the DOTS server over
+   the data channel and retrieves additional service and cryptographic
+   data; and, using that additional data, establishes the signal
+   channel.
 
    The DOTS client SHOULD successfully authenticate and exchange
    messages with the DOTS server over both signal and data channel as
@@ -831,9 +832,8 @@ Internet-Draft              DOTS Architecture                 March 2016
    lead to accidental denials of service due to the overwhelming number
    of heartbeats a DOTS agent must field.
 
-   Either DOTS agent may consider a signaling session terminated in the
-   extended absence of a heartbeat from its peer agent.  The period of
-   that absence will be established in the protocol definition.
+
+
 
 
 
@@ -841,6 +841,10 @@ Mortensen, et al.      Expires September 19, 2016              [Page 15]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
+
+   Either DOTS agent may consider a signaling session terminated in the
+   extended absence of a heartbeat from its peer agent.  The period of
+   that absence will be established in the protocol definition.
 
 4.2.  Modes of Signaling
 
@@ -887,16 +891,16 @@ Internet-Draft              DOTS Architecture                 March 2016
    each additional DOTS relay in the signaling path, as well as the
    increased operational complexity, when deploying DOTS relays.
 
-   [[EDITOR'S NOTE: we request working group feedback and discussion of
-   operational considerations related to DOTS relays, particularly with
-   respect to the implications of multiple relays in the signal path.]]
-
 
 
 Mortensen, et al.      Expires September 19, 2016              [Page 16]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
+
+   [[EDITOR'S NOTE: we request working group feedback and discussion of
+   operational considerations related to DOTS relays, particularly with
+   respect to the implications of multiple relays in the signal path.]]
 
    As discussed above in Section 2.2, relays may be client-side or
    server-side.  In either case, the relay appears to the peer agent as
@@ -927,10 +931,6 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    A basic redirected signaling session resembles the following, as
    shown in Figure 11:
-
-
-
-
 
 
 
