@@ -16,7 +16,7 @@ Expires: September 19, 2016                                     T. Reddy
                                                           March 18, 2016
 
 
-Distributed Denial of Service (DDoS) Open Threat Signaling Architecture
+Distributed-Denial-of-Service (DDoS) Open Threat Signaling Architecture
                   draft-mortensen-dots-architecture-00
 
 Abstract

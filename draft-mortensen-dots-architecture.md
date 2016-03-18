@@ -1,5 +1,5 @@
 ---
-title: Distributed Denial of Service (DDoS) Open Threat Signaling Architecture
+title: Distributed-Denial-of-Service (DDoS) Open Threat Signaling Architecture
 abbrev: DOTS Architecture
 docname: draft-mortensen-dots-architecture-00
 date: 2016-03-18
