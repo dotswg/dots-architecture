@@ -179,11 +179,11 @@ This document makes the following assumptions:
   elements, but the architecture imposes no additional limitations on the form
   of connectivity.
 
-* Congestion and resource exhaustion are intended outcomes of a DDoS attack.
-  Some operators may utilize non-impacted paths or networks for DOTS, however,
-  it should be assumed that, in general, conditions will be hostile and that
-  DOTS must be able to function in all circumstances, including when the
-  signaling path is significantly impaired.
+* Congestion and resource exhaustion are intended outcomes of a DDoS attack
+  {{RFC4732}}. Some operators may utilize non-impacted paths or networks for
+  DOTS, however, it should be assumed that, in general, conditions will be
+  hostile and that DOTS must be able to function in all circumstances, including
+  when the signaling path is significantly impaired.
 
 * There is no universal DDoS attack scale threshold triggering a coordinated
   response across network administrative domains. A network domain
@@ -340,8 +340,13 @@ relationship between the two that enables enterprise A's DOTS client to
 establish a signal channel with provider B's DOTS server. A and B will
 authenticate each other, and B can verify that A is authorized for its service.
 A and B may each have one or more DOTS relays in front of their DOTS client and
-DOTS server. Considerations of end-to-end signaling and agent authentication
-with relays in the signaling path are discussed below.
+DOTS server.
+
+{:ed-note: source="mortensen"}
+\[\[EDITOR'S NOTE: we request working group feedback and discussion of
+considerations of end-to-end signaling and agent authentication/authorization
+with relays in the signaling path.\]\]
+{:mortensen}
 
 From an operational and design point of view, DOTS assumes that the above
 relationship is established prior to a request for DDoS attack mitigation. In
@@ -418,6 +423,12 @@ mitigation service from multiple providers, as shown in
 {{fig-multi-homed-client}} below.  Operational considerations relating to
 co-ordinating multiple provider responses are beyond the scope of DOTS.
 
+{:ed-note: source="mortensen"}
+\[\[EDITOR'S NOTE: we request working group feedback and discussion of
+operational considerations relating to coordinating multiple provider responses
+to a mitigation request.\]\]
+{:mortensen}
+
 ~~~~~
                        +---+
            ------------| S |
@@ -492,6 +503,11 @@ deployment, as shown in {{fig-server-side-relay-agg}} and
 {{fig-server-side-relay-no-agg}} below.  The relationship between the relay and
 its upstream peers is opaque to the relayed clients.
 
+{:ed-note: source="mortensen"}
+\[\[EDITOR'S NOTE: we request working group feedback and discussion of DOTS
+client visibility into relayed signaling.\]\]
+{:mortensen}
+
 ~~~~~
    +---+
    | c |\
@@ -533,6 +549,13 @@ identify itself as such to any clients or servers it interacts with.  Greater
 abstraction by way of additional layers of relays may introduce undesired
 complexity in regard to authentication and authorization and should be avoided.
 
+{:ed-note: source="mortensen"}
+\[\[EDITOR'S NOTE: we request working group feedback and discussion of the
+many-to-one and one-to-many client/server, client/relay, and relay/server
+relationships described above. We additional request working group feedback and
+discussion of end-to-end signaling considerations in the context of relayed
+signaling.\]\]
+{:mortensen}
 
 Components {#components}
 ==========
@@ -700,15 +723,11 @@ operational in attack conditions (See Data Channel Requirements,
 
 ### Maintaining the Signaling Session {#maintaining-signaling-session}
 
-DOTS clients, servers and relays periodically send heartbeats to each other over the
-signal channel, per Operational Requirements discussed in [I-D.ietf-dots-requirements]. The period of these heartbeats should be configurable to meet
-local operational requirements, and are selected 
-protocol definition, but should be in a range allowing for reasonably rapid
-detection of a degraded signal channel to aid operator response to an ongoing
-DDoS attack, with low enough frequency to prevent accidental denials of service
-incurred by overwhelming a DOTS server with heartbeat messages. Similarly, the
-DOTS server heartbeat period MUST NOT overwhelm a multi-homed DOTS
-client.
+DOTS clients, servers and relays periodically send heartbeats to each other over
+the signal channel, per Operational Requirements discussed in
+[I-D.ietf-dots-requirements]. DOTS agent operators SHOULD configure the
+heartbeat interval such that the frequency does not lead to accidental denials
+of service due to the overwhelming number of heartbeats a DOTS agent must field.
 
 Either DOTS agent may consider a signaling session terminated in the extended
 absence of a heartbeat from its peer agent. The period of that absence will be
@@ -760,7 +779,14 @@ path between the clients and servers, as shown in {{fig-relayed-signaling}}:
 To allow for maximum architectural flexibility, no restriction is placed on the
 number of relays in the signaling path. Operators of DOTS agents should consider
 the impact on signal latency incurred by each additional DOTS relay in the
-signaling path.
+signaling path, as well as the increased operational complexity, when deploying
+DOTS relays.
+
+{:ed-note: source="mortensen"}
+\[\[EDITOR'S NOTE: we request working group feedback and discussion of
+operational considerations related to DOTS relays, particularly with respect to
+the implications of multiple relays in the signal path.\]\]
+{:mortensen}
 
 As discussed above in {{agent-relationships}}, relays may be client-side or
 server-side. In either case, the relay appears to the peer agent as its logical
@@ -768,8 +794,6 @@ opposite. That is, if a DOTS relay appears to a DOTS client or downstream
 relay as a DOTS server. Conversely, a DOTS relay appears to a DOTS server or
 upstream DOTS relay as a DOTS client. Thus relayed signaling may be thought of
 as chained direct signaling sessions.
-
-Relayed signaling is generally opaque to the clients, but 
 
 
 ### Redirected Signaling {#redirected-signaling}
@@ -790,30 +814,8 @@ but are not limited to:
 * Scheduled modifications to the network path between DOTS server and DOTS
   client.
 
-The DOTS architecture does not require the DOTS server to justify the decision
-to redirect the signaling session to another DOTS server.
-
-After sending a redirect signal over the signal channel to the DOTS client, the
-DOTS server MAY cease sending server signals to the DOTS client at any point in
-the timeframe allowed by the protocol. A redirecting DOTS server MUST cease
-sending server signals to the DOTS client before reaching the end of that
-timeframe.
-
-The DOTS server MAY send redundant redirect signals in order to increase the
-probability that the DOTS client receives them. The DOTS client MUST treat the
-first redirect signal it receives from the DOTS server as authoritative, and
-ignore any subsequent redirect signals from that DOTS server.
-
-On receiving a redirection request from a DOTS server, the DOTS client MUST
-terminate its end of the signaling session with the redirecting DOTS server
-within the time frame defined by the protocol.
-
-The DOTS client MAY subsequently establish a new session with the DOTS server to
-which it was redirected, but is not required to do so. Local policy on DOTS
-server redirection is left to DOTS client operators.
-
-A basic redirected signaling session involves the following steps, as shown
-in {{fig-redirected-signaling}}:
+A basic redirected signaling session resembles the following, as shown in
+{{fig-redirected-signaling}}:
 
 ~~~~~
         +-------------+                            +---------------+
@@ -843,27 +845,16 @@ in {{fig-redirected-signaling}}:
 
 1. If the DOTS client does not already have a separate signaling session with
    the redirection target, the DOTS client initiates and establishes a signaling
-   session with DOTS server B as described above. The DOTS client MAY request
-   mitigation via DOTS server B as soon as signal session 2 is established.
+   session with DOTS server B as described above.
 
 1. Having redirected the DOTS client, DOTS server A ceases sending server
    signals. The DOTS client likewise stops sending client signals to DOTS server
-   A. Signal session 1 is terminated, severing any attack response coordination
-   with DOTS server A.
+   A. Signal session 1 is terminated.
 
-Following signaling session termination, the DOTS server SHOULD tear down
-mitigations activated on behalf of the DOTS client, though operational
-relationships between the redirecting and redirection target DOTS servers should
-be taken into account before doing so, given that the two DOTS servers may
-belong to the same entity, and indeed may be using the same mitigator to scrub
-attack traffic.
-
-Due to the increased probability of inbound packet loss during a DDoS attack, it
-is RECOMMENDED that DOTS servers avoid sending redirects during active attacks.
-The method by which the DOTS server measures an active attack is not in scope,
-but is assumed include available metrics from the Mitigator and server signal
-lossiness as reported in the client signal.
-
+{:ed-note: source="mortensen"}
+\[\[EDITOR'S NOTE: we request working group feedback and discussion of the need
+for redirected signaling.\]\]
+{:mortensen}
 
 ### Recursive Signaling {#recursive-signaling}
 
@@ -956,12 +947,12 @@ mitigation toggling in the operational requirements
 recursing entities are not in scope for this document.
 
 {:ed-note: source="mortensen"}
-(EDITOR'S NOTE: Recursive signaling raises questions about how to authenticate
+\[\[EDITOR'S NOTE: Recursive signaling raises questions about how to authenticate
 and authorize the recursed request, how end-to-end signaling functions in such a
 scenario, and implications for operational and data privacy, as well as what
 level of visibility a client has into the recursed mitigation.  We ask the
 working group for feedback and additional discussion of these issues to help
-settle the way forward.)
+settle the way forward.\]\]
 {:mortensen}
 
 
