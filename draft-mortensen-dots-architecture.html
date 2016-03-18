@@ -397,10 +397,11 @@
 <link href="#rfc.section.4.2.3" rel="Chapter" title="4.2.3 Redirected Signaling"/>
 <link href="#rfc.section.4.2.4" rel="Chapter" title="4.2.4 Recursive Signaling"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations"/>
-<link href="#rfc.section.6" rel="Chapter" title="6 Change Log"/>
-<link href="#rfc.references" rel="Chapter" title="7 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="7.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="7.2 Informative References"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Acknowledgments"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Change Log"/>
+<link href="#rfc.references" rel="Chapter" title="8 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="8.2 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -521,10 +522,11 @@
 <li>4.2.3.   <a href="#rfc.section.4.2.3">Redirected Signaling</a></li>
 <li>4.2.4.   <a href="#rfc.section.4.2.4">Recursive Signaling</a></li>
 </ul></ul><li>5.   <a href="#rfc.section.5">Security Considerations</a></li>
-<li>6.   <a href="#rfc.section.6">Change Log</a></li>
-<li>7.   <a href="#rfc.references">References</a></li>
-<ul><li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>7.2.   <a href="#rfc.references.2">Informative References</a></li>
+<li>6.   <a href="#rfc.section.6">Acknowledgments</a></li>
+<li>7.   <a href="#rfc.section.7">Change Log</a></li>
+<li>8.   <a href="#rfc.references">References</a></li>
+<ul><li>8.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>8.2.   <a href="#rfc.references.2">Informative References</a></li>
 </ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
@@ -872,11 +874,15 @@
 <p id="rfc.section.4.2.4.p.9">Operators of recursing mitigators MAY maintain the recursed mitigation for a brief, protocol-defined period in the event the DOTS client originating the mitigation withdraws its request for help, as per the discussion of managing mitigation toggling in the operational requirements (<a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>).  Service or business agreements between recursing entities are not in scope for this document.</p>
 <p id="rfc.section.4.2.4.p.10">[[EDITOR&#8217;S NOTE: Recursive signaling raises questions about how to authenticate and authorize the recursed request, how end-to-end signaling functions in such a scenario, and implications for operational and data privacy, as well as what level of visibility a client has into the recursed mitigation.  We ask the working group for feedback and additional discussion of these issues to help settle the way forward.]]</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
-<p id="rfc.section.5.p.1">TBD</p>
-<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#change-log" id="change-log">Change Log</a></h1>
-<p id="rfc.section.6.p.1">2016-03-18      Initial revision</p>
-<h1 id="rfc.references"><a href="#rfc.references">7.</a> References</h1>
-<h2 id="rfc.references.1"><a href="#rfc.references.1">7.1.</a> Normative References</h2>
+<p id="rfc.section.5.p.1">DOTS is at risk from three primary attack vectors:  agent impersonation, traffic injection and signal blocking.  These vectors may be exploited individually or in concert by an attacker to confuse, disable, take information from, or otherwise inhibit the DOTS system.</p>
+<p id="rfc.section.5.p.2">Any attacker with the ability to impersonate a legitimate client or server or, indeed, inject false messages into the stream may potentially trigger/withdraw traffic redirection, trigger/cancel mitigation activities or subvert black/whitelists.  From an architectural standpoint, operators SHOULD ensure best current practices for secure communication are observed for data and signal channel confidentiality, integrity and authenticity.  Care must be taken to ensure transmission is protected by appropriately secure means, reducing attack surface by exposing only the minimal required services or interfaces.  Similarly, received data at rest SHOULD be stored with a satisfactory degree of security.</p>
+<p id="rfc.section.5.p.3">Any attack targeting the availability of DOTS servers may disrupt the ability of the system to receive and process DOTS signals resulting in failure to fulfill a mitigation request.  Similarly, DOTS relays represent high-value targets in a DOTS architecture. Disrupting any DOTS relay in a signaling path represents a denial-of-service against DOTS in general. DOTS systems SHOULD be given adequate protections, again, in accordance with best current practices for network and host security.</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a></h1>
+<p id="rfc.section.6.p.1">Thanks to Matt Richardson for last minute comments and suggestions.</p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#change-log" id="change-log">Change Log</a></h1>
+<p id="rfc.section.7.p.1">2016-03-18      Initial revision</p>
+<h1 id="rfc.references"><a href="#rfc.references">8.</a> References</h1>
+<h2 id="rfc.references.1"><a href="#rfc.references.1">8.1.</a> Normative References</h2>
 <table>
   <tbody>
     <tr>
@@ -887,7 +893,7 @@
     </tr>
   </tbody>
 </table>
-<h2 id="rfc.references.2"><a href="#rfc.references.2">7.2.</a> Informative References</h2>
+<h2 id="rfc.references.2"><a href="#rfc.references.2">8.2.</a> Informative References</h2>
 <table>
   <tbody>
     <tr>

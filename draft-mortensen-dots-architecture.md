@@ -959,7 +959,35 @@ settle the way forward.\]\]
 Security Considerations         {#security-considerations}
 =======================
 
-TBD
+DOTS is at risk from three primary attack vectors:  agent impersonation,
+traffic injection and signal blocking.  These vectors may be exploited
+individually or in concert by an attacker to confuse, disable, take information
+from, or otherwise inhibit the DOTS system.
+
+Any attacker with the ability to impersonate a legitimate client or server or,
+indeed, inject false messages into the stream may potentially trigger/withdraw
+traffic redirection, trigger/cancel mitigation activities or subvert
+black/whitelists.  From an architectural standpoint, operators SHOULD ensure
+best current practices for secure communication are observed for data and
+signal channel confidentiality, integrity and authenticity.  Care must be taken
+to ensure transmission is protected by appropriately secure means, reducing
+attack surface by exposing only the minimal required services or interfaces.
+Similarly, received data at rest SHOULD be stored with a satisfactory degree of
+security.
+
+Any attack targeting the availability of DOTS servers may disrupt the ability
+of the system to receive and process DOTS signals resulting in failure to
+fulfill a mitigation request.  Similarly, DOTS relays represent high-value
+targets in a DOTS architecture. Disrupting any DOTS relay in a signaling path
+represents a denial-of-service against DOTS in general. DOTS systems SHOULD be
+given adequate protections, again, in accordance with best current practices
+for network and host security.
+
+
+Acknowledgments                 {#acknowledgments}
+===============
+
+Thanks to Matt Richardson for last minute comments and suggestions.
 
 
 Change Log
