@@ -694,23 +694,24 @@ client MAY establish signal channel first, and then data channel, or vice versa.
 
 The methods by which a DOTS client receives the address and associated service
 details of the DOTS server are not prescribed by this document. For example, a
-DOTS client may be manually configured to use a specific DOTS server address and
-port, and manually provided with any data necessary to satisfy the Peer Mutual
-Authentication and Message Confidentiality requirements in
-[I-D.ietf-dots-requirements], such as public/private key pairs or symmetric key
-data, usernames and passwords, or other identifying or cryptographic metadata.
+DOTS client may be directly configured to use a specific DOTS server address and
+port, and directly provided with any data necessary to satisfy the Peer Mutual
+Authentication requirement in [I-D.ietf-dots-requirements], such as
+symmetric or asymmetric keys, usernames and passwords, etc. All configuration
+and authentication information in this scenario is provided out-of-band by the
+entity operating the DOTS server.
 
-At the other extreme, the architecture in this document allows for DOTS client
-auto-provisioning. In this case, a DOTS client might discover a DOTS server
-through mechanisms similar to DNS SRV {{RFC2782}} or DNS Service Discovery
-{{RFC6763}}. In this scenario, the DOTS client, using minimal authenticating
-information previously provided by the DOTS server's entity, contacts the DOTS
-server over the data channel and retrieves additional service and cryptographic
-data; and, using that additional data, establishes the signal channel.
+At the other extreme, the architecture in this document allows for a form of
+DOTS client auto-provisioning. For example, the entity operating the DOTS server
+or servers might provide the client entity only with symmetric or asymmetric
+keys to authenticate the provisioned DOTS clients. Only the keys would then be
+directly configured on DOTS clients, but the remaining configuration required to
+provision the DOTS clients could be learned through mechanisms similar to DNS
+SRV {{RFC2782}} or DNS Service Discovery {{RFC6763}}.
 
 The DOTS client SHOULD successfully authenticate and exchange messages with the
 DOTS server over both signal and data channel as soon as possible to confirm the
-DOTS client has expected access to the DOTS server.
+both channels are operational.
 
 Once the DOTS client begins receiving DOTS server signals, the signaling session
 is active. At any time during the signaling session, the DOTS client MAY use the
