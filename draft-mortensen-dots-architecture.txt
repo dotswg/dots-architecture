@@ -1219,10 +1219,10 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    As many mitigation systems employ diversion to scrub attack traffic,
    operators of DOTS agents SHOULD ensure signaling sessions are
-   resistant to Man-in-the-Middle (MitM) attacks.  As such, an attacker
-   with control of a DOTS client or relay may negatively influence
-   network traffic by requesting and withdrawing requests for mitigation
-   for particular prefixes, leading to route or DNS flapping.
+   resistant to Man-in-the-Middle (MitM) attacks.  An attacker with
+   control of a DOTS client or relay may negatively influence network
+   traffic by requesting and withdrawing requests for mitigation for
+   particular prefixes, leading to route or DNS flapping.
 
    Any attack targeting the availability of DOTS servers may disrupt the
    ability of the system to receive and process DOTS signals resulting
