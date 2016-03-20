@@ -948,11 +948,10 @@ security.</t>
 
 <t>As many mitigation systems employ diversion to scrub attack traffic, operators
 of DOTS agents SHOULD ensure signaling sessions are resistant to
-Man-in-the-Middle (MitM) attacks. Traffic diversion typically involves routing
-table modifications in the diverting network. As such, an attacker with control
-of a DOTS client or relay may negatively influence network traffic by requesting
-and withdrawing requests for mitigation for particular prefixes, leading to
-route or DNS flapping.</t>
+Man-in-the-Middle (MitM) attacks. As such, an attacker with control of a DOTS
+client or relay may negatively influence network traffic by requesting and
+withdrawing requests for mitigation for particular prefixes, leading to route or
+DNS flapping.</t>
 
 <t>Any attack targeting the availability of DOTS servers may disrupt the ability
 of the system to receive and process DOTS signals resulting in failure to

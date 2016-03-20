@@ -1219,13 +1219,13 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    As many mitigation systems employ diversion to scrub attack traffic,
    operators of DOTS agents SHOULD ensure signaling sessions are
-   resistant to Man-in-the-Middle (MitM) attacks.  Traffic diversion
-   typically involves routing table modifications in the diverting
-   network.  As such, an attacker with control of a DOTS client or relay
-   may negatively influence network traffic by requesting and
-   withdrawing requests for mitigation for particular prefixes, leading
-   to route or DNS flapping.
+   resistant to Man-in-the-Middle (MitM) attacks.  As such, an attacker
+   with control of a DOTS client or relay may negatively influence
+   network traffic by requesting and withdrawing requests for mitigation
+   for particular prefixes, leading to route or DNS flapping.
 
+   Any attack targeting the availability of DOTS servers may disrupt the
+   ability of the system to receive and process DOTS signals resulting
 
 
 
@@ -1234,8 +1234,6 @@ Mortensen, et al.      Expires September 20, 2016              [Page 22]
 Internet-Draft              DOTS Architecture                 March 2016
 
 
-   Any attack targeting the availability of DOTS servers may disrupt the
-   ability of the system to receive and process DOTS signals resulting
    in failure to fulfill a mitigation request.  Similarly, DOTS relays
    represent high-value targets in a DOTS architecture.  Disrupting any
    DOTS relay in a signaling path represents a denial-of-service against
@@ -1281,7 +1279,9 @@ Internet-Draft              DOTS Architecture                 March 2016
               793, DOI 10.17487/RFC0793, September 1981,
               <http://www.rfc-editor.org/info/rfc793>.
 
-
+   [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
+              STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
+              <http://www.rfc-editor.org/info/rfc1034>.
 
 
 
@@ -1289,10 +1289,6 @@ Mortensen, et al.      Expires September 20, 2016              [Page 23]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
-
-   [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
-              STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
-              <http://www.rfc-editor.org/info/rfc1034>.
 
    [RFC2782]  Gulbrandsen, A., Vixie, P., and L. Esibov, "A DNS RR for
               specifying the location of services (DNS SRV)", RFC 2782,
@@ -1331,10 +1327,14 @@ Authors' Addresses
    EMail: fandreas@cisco.com
 
 
+   Tirumaleswar Reddy
+   Cisco Systems, Inc.
+   Cessna Business Park, Varthur Hobli
+   Sarjapur Marathalli Outer Ring Road
+   Bangalore, Karnataka  560103
+   India
 
-
-
-
+   EMail: tireddy@cisco.com
 
 
 
@@ -1344,16 +1344,6 @@ Authors' Addresses
 Mortensen, et al.      Expires September 20, 2016              [Page 24]
 
 Internet-Draft              DOTS Architecture                 March 2016
-
-
-   Tirumaleswar Reddy
-   Cisco Systems, Inc.
-   Cessna Business Park, Varthur Hobli
-   Sarjapur Marathalli Outer Ring Road
-   Bangalore, Karnataka  560103
-   India
-
-   EMail: tireddy@cisco.com
 
 
    Christopher Gray
@@ -1374,6 +1364,16 @@ Internet-Draft              DOTS Architecture                 March 2016
    United States
 
    EMail: nteague@verisign.com
+
+
+
+
+
+
+
+
+
+
 
 
 
