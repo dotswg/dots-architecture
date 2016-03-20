@@ -961,6 +961,9 @@ settle the way forward.\]\]
 Security Considerations         {#security-considerations}
 =======================
 
+This section describes identified security considerations for the DOTS
+architecture.
+
 DOTS is at risk from three primary attack vectors:  agent impersonation,
 traffic injection and signal blocking.  These vectors may be exploited
 individually or in concert by an attacker to confuse, disable, take information
@@ -977,9 +980,17 @@ attack surface by exposing only the minimal required services or interfaces.
 Similarly, received data at rest SHOULD be stored with a satisfactory degree of
 security.
 
+As many mitigation systems employ diversion to scrub attack traffic, operators
+of DOTS agents SHOULD ensure signaling sessions are resistant to
+Man-in-the-Middle (MitM) attacks. Traffic diversion typically involves routing
+table modifications in the diverting network. As such, an attacker with control
+of a DOTS client or relay may negatively influence network traffic by requesting
+and withdrawing requests for mitigation for particular prefixes, leading to
+route or DNS flapping.
+
 Any attack targeting the availability of DOTS servers may disrupt the ability
 of the system to receive and process DOTS signals resulting in failure to
-fulfill a mitigation request.  Similarly, DOTS relays represent high-value
+fulfill a mitigation request. Similarly, DOTS relays represent high-value
 targets in a DOTS architecture. Disrupting any DOTS relay in a signaling path
 represents a denial-of-service against DOTS in general. DOTS systems SHOULD be
 given adequate protections, again, in accordance with best current practices

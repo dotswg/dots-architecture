@@ -1196,6 +1196,9 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 5.  Security Considerations
 
+   This section describes identified security considerations for the
+   DOTS architecture.
+
    DOTS is at risk from three primary attack vectors: agent
    impersonation, traffic injection and signal blocking.  These vectors
    may be exploited individually or in concert by an attacker to
@@ -1214,17 +1217,14 @@ Internet-Draft              DOTS Architecture                 March 2016
    services or interfaces.  Similarly, received data at rest SHOULD be
    stored with a satisfactory degree of security.
 
-   Any attack targeting the availability of DOTS servers may disrupt the
-   ability of the system to receive and process DOTS signals resulting
-   in failure to fulfill a mitigation request.  Similarly, DOTS relays
-   represent high-value targets in a DOTS architecture.  Disrupting any
-   DOTS relay in a signaling path represents a denial-of-service against
-   DOTS in general.  DOTS systems SHOULD be given adequate protections,
-   again, in accordance with best current practices for network and host
-   security.
-
-
-
+   As many mitigation systems employ diversion to scrub attack traffic,
+   operators of DOTS agents SHOULD ensure signaling sessions are
+   resistant to Man-in-the-Middle (MitM) attacks.  Traffic diversion
+   typically involves routing table modifications in the diverting
+   network.  As such, an attacker with control of a DOTS client or relay
+   may negatively influence network traffic by requesting and
+   withdrawing requests for mitigation for particular prefixes, leading
+   to route or DNS flapping.
 
 
 
@@ -1233,6 +1233,15 @@ Mortensen, et al.      Expires September 20, 2016              [Page 22]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
+
+   Any attack targeting the availability of DOTS servers may disrupt the
+   ability of the system to receive and process DOTS signals resulting
+   in failure to fulfill a mitigation request.  Similarly, DOTS relays
+   represent high-value targets in a DOTS architecture.  Disrupting any
+   DOTS relay in a signaling path represents a denial-of-service against
+   DOTS in general.  DOTS systems SHOULD be given adequate protections,
+   again, in accordance with best current practices for network and host
+   security.
 
 6.  Acknowledgments
 
@@ -1272,15 +1281,6 @@ Internet-Draft              DOTS Architecture                 March 2016
               793, DOI 10.17487/RFC0793, September 1981,
               <http://www.rfc-editor.org/info/rfc793>.
 
-   [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
-              STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
-              <http://www.rfc-editor.org/info/rfc1034>.
-
-   [RFC2782]  Gulbrandsen, A., Vixie, P., and L. Esibov, "A DNS RR for
-              specifying the location of services (DNS SRV)", RFC 2782,
-              DOI 10.17487/RFC2782, February 2000,
-              <http://www.rfc-editor.org/info/rfc2782>.
-
 
 
 
@@ -1289,6 +1289,15 @@ Mortensen, et al.      Expires September 20, 2016              [Page 23]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
+
+   [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
+              STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
+              <http://www.rfc-editor.org/info/rfc1034>.
+
+   [RFC2782]  Gulbrandsen, A., Vixie, P., and L. Esibov, "A DNS RR for
+              specifying the location of services (DNS SRV)", RFC 2782,
+              DOI 10.17487/RFC2782, February 2000,
+              <http://www.rfc-editor.org/info/rfc2782>.
 
    [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
               Border Gateway Protocol 4 (BGP-4)", RFC 4271, DOI
@@ -1322,6 +1331,21 @@ Authors' Addresses
    EMail: fandreas@cisco.com
 
 
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 24]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
    Tirumaleswar Reddy
    Cisco Systems, Inc.
    Cessna Business Park, Varthur Hobli
@@ -1339,13 +1363,6 @@ Authors' Addresses
    EMail: Christopher_Gray3@cable.comcast.com
 
 
-
-
-Mortensen, et al.      Expires September 20, 2016              [Page 24]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    Rich Compton
    Charter Communications, Inc.
 
@@ -1357,23 +1374,6 @@ Internet-Draft              DOTS Architecture                 March 2016
    United States
 
    EMail: nteague@verisign.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
