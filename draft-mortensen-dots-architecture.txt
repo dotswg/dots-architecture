@@ -5,7 +5,7 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                      Arbor Networks, Inc.
 Intended status: Informational                              F. Andreasen
-Expires: September 19, 2016                                     T. Reddy
+Expires: September 20, 2016                                     T. Reddy
                                                      Cisco Systems, Inc.
                                                                  C. Gray
                                                            Comcast, Inc.
@@ -13,7 +13,7 @@ Expires: September 19, 2016                                     T. Reddy
                                             Charter Communications, Inc.
                                                                N. Teague
                                                           Verisign, Inc.
-                                                          March 18, 2016
+                                                          March 19, 2016
 
 
 Distributed-Denial-of-Service (DDoS) Open Threat Signaling Architecture
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 19, 2016.
+   This Internet-Draft will expire on September 20, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Mortensen, et al.      Expires September 19, 2016               [Page 1]
+Mortensen, et al.      Expires September 20, 2016               [Page 1]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -78,27 +78,27 @@ Table of Contents
      1.3.  Assumptions . . . . . . . . . . . . . . . . . . . . . . .   4
    2.  Architecture  . . . . . . . . . . . . . . . . . . . . . . . .   5
      2.1.  DOTS Operations . . . . . . . . . . . . . . . . . . . . .   7
-     2.2.  DOTS Agent Relationships  . . . . . . . . . . . . . . . .   8
-   3.  Components  . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     3.1.  DOTS client . . . . . . . . . . . . . . . . . . . . . . .  12
-     3.2.  DOTS server . . . . . . . . . . . . . . . . . . . . . . .  13
-   4.  Concepts  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     4.1.  Signaling Sessions  . . . . . . . . . . . . . . . . . . .  14
+     2.2.  DOTS Agent Relationships  . . . . . . . . . . . . . . . .   9
+   3.  Components  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+     3.1.  DOTS client . . . . . . . . . . . . . . . . . . . . . . .  13
+     3.2.  DOTS server . . . . . . . . . . . . . . . . . . . . . . .  14
+   4.  Concepts  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     4.1.  Signaling Sessions  . . . . . . . . . . . . . . . . . . .  15
        4.1.1.  Preconditions . . . . . . . . . . . . . . . . . . . .  15
        4.1.2.  Establishing the Signaling Session  . . . . . . . . .  15
        4.1.3.  Maintaining the Signaling Session . . . . . . . . . .  16
-     4.2.  Modes of Signaling  . . . . . . . . . . . . . . . . . . .  16
-       4.2.1.  Direct Signaling  . . . . . . . . . . . . . . . . . .  16
+     4.2.  Modes of Signaling  . . . . . . . . . . . . . . . . . . .  17
+       4.2.1.  Direct Signaling  . . . . . . . . . . . . . . . . . .  17
        4.2.2.  Relayed Signaling . . . . . . . . . . . . . . . . . .  17
-       4.2.3.  Redirected Signaling  . . . . . . . . . . . . . . . .  17
+       4.2.3.  Redirected Signaling  . . . . . . . . . . . . . . . .  18
        4.2.4.  Recursive Signaling . . . . . . . . . . . . . . . . .  19
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  21
-   6.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  22
-   7.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  22
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  22
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  22
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  22
+   6.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  23
+   7.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  23
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  23
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  23
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  23
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
 
 1.  Context and Motivation
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mortensen, et al.      Expires September 19, 2016               [Page 2]
+Mortensen, et al.      Expires September 20, 2016               [Page 2]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -165,7 +165,7 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016               [Page 3]
+Mortensen, et al.      Expires September 20, 2016               [Page 3]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -221,7 +221,7 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016               [Page 4]
+Mortensen, et al.      Expires September 20, 2016               [Page 4]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -277,7 +277,7 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016               [Page 5]
+Mortensen, et al.      Expires September 20, 2016               [Page 5]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -322,21 +322,25 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    While DOTS is able to request mitigation with just the signal
    channel, the addition of the DOTS data channel provides for
-   additional and more efficient capabilities.  The primary purpose of
-   the data channel is to support DOTS related configuration and policy
+   additional and more efficient capabilities; both channels are
+   required in the DOTS architecture.  The primary purpose of the data
+   channel is to support DOTS related configuration and policy
    information exchange between the DOTS client and the DOTS server.
    Examples of such information include
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016               [Page 6]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
 
    o  Defining names or aliases for attack targets (resources).  Those
       names can be used in subsequent signal channel exchanges to more
       efficiently refer to the resources (attack targets) in question.
-
-
-
-Mortensen, et al.      Expires September 19, 2016               [Page 6]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
 
    o  Black-list management, which enables a DOTS client to inform the
       DOTS server about sources to suppress.
@@ -380,27 +384,28 @@ Internet-Draft              DOTS Architecture                 March 2016
    for its service.  A and B may each have one or more DOTS relays in
    front of their DOTS client and DOTS server.
 
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016               [Page 7]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
    [[EDITOR'S NOTE: we request working group feedback and discussion of
    considerations of end-to-end signaling and agent authentication/
    authorization with relays in the signaling path.]]
 
    From an operational and design point of view, DOTS assumes that the
    above relationship is established prior to a request for DDoS attack
-
-
-
-Mortensen, et al.      Expires September 19, 2016               [Page 7]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    mitigation.  In particular, it is assumed that bi-directional
    communication is possible at this time between the DOTS client and
    DOTS server.  Furthermore, it as assumed that additional service
    provisioning, configuration and information exchange can be performed
-   by use of the data channel, if operationally required, as in the case
-   where vendor-specific extensions are in use.  It is not until this
-   point that the mitigation service is available for use.
+   by use of the data channel, if operationally required.  It is not
+   until this point that the mitigation service is available for use.
 
    Once the mutually authenticated signal channel has been established,
    it will remain in place.  This is done to increase the likelihood
@@ -435,20 +440,21 @@ Internet-Draft              DOTS Architecture                 March 2016
    that operators may require alternative models.  Nothing in this
    document precludes such alternatives.
 
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016               [Page 8]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
 2.2.  DOTS Agent Relationships
 
    So far, we have only considered a relatively simple scenario of a
    single DOTS client associated with a single DOTS server, however DOTS
    supports more advanced relationships.
-
-
-
-
-
-Mortensen, et al.      Expires September 19, 2016               [Page 8]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
 
    A DOTS server may be associated with one or more DOTS clients, and
    those DOTS clients may belong to different entities.  An example
@@ -483,6 +489,23 @@ Internet-Draft              DOTS Architecture                 March 2016
    operational considerations relating to coordinating multiple provider
    responses to a mitigation request.]]
 
+
+
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016               [Page 9]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
                           +---+
               ------------| S |
              /            +---+
@@ -499,30 +522,45 @@ Internet-Draft              DOTS Architecture                 March 2016
 
                      Figure 4: Multi-Homed DOTS Client
 
-
-
-Mortensen, et al.      Expires September 19, 2016               [Page 9]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    DOTS Relays may be either server-side or client-side, or both.  A
    DOTS server-side relay belongs to the entity owning the DOTS server.
    A relay will terminate multiple discrete client connections as if it
    were a server and may aggregate these into a single (Figure 5) or
    multiple DOTS signaling sessions (Figure 6) depending upon locally
    applied policy.  A relay will function as a server to its downstream
-   clients and as a client to its upstream peers.  Aside from the
-   exceptions discussed in Section 4.2.2 below, The relationship between
-   the relay and its upstream peers is opaque to the relayed clients.
+   agents and as a client to its upstream agents.  Aside from the
+   exceptions discussed in Section 4.2.2 below, the relationship between
+   the relay and its upstream agents is opaque to the relayed clients.
    An example scenario is for an enterprise to have deployed multiple
    DOTS capable devices which are able to signal intra-domain using TCP
    [RFC0793] on un-congested links to a relay which may then transform
    these to a UDP [RFC0768] transport inter-domain where connection
-   oriented transports may degrader; this applies to the signal channel
+   oriented transports may degrade; this applies to the signal channel
    only, as the data channel requires a connection-oriented transport.
-   The relationship between the relay and its upstream peers is opaque
+   The relationship between the relay and its upstream agents is opaque
    to the relayed clients.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 10]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
 
       +---+
       | c |\
@@ -539,28 +577,6 @@ Internet-Draft              DOTS Architecture                 March 2016
       DOTS Clients      DOTS Relay          DOTS Server
 
                Figure 5: Client-Side Relay with Aggregation
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 10]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
 
       +---+
       | c |\
@@ -583,10 +599,24 @@ Internet-Draft              DOTS Architecture                 March 2016
    multiple transports and to consolidate these into a single transport
    suitable for the providers deployment, as shown in Figure 7 and
    Figure 8 below.  The relationship between the relay and its upstream
-   peers is opaque to the relayed clients.
+   agents is opaque to the relayed clients.
 
    [[EDITOR'S NOTE: we request working group feedback and discussion of
    DOTS client visibility into relayed signaling.]]
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 11]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
 
       +---+
       | c |\
@@ -603,20 +633,6 @@ Internet-Draft              DOTS Architecture                 March 2016
       DOTS Clients      DOTS Relay          DOTS Server
 
                Figure 7: Server-Side Relay with Aggregation
-
-
-
-
-
-
-
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 11]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
 
       +---+
       | c |\
@@ -635,7 +651,7 @@ Internet-Draft              DOTS Architecture                 March 2016
               Figure 8: Server-Side Relay without Aggregation
 
    In the context of relays, sessions are established directly between
-   peer DOTS agents and may not be end to end.  In spite of this
+   peer DOTS agents and may not be end-to-end.  In spite of this
    distinction a method must exist to uniquely identify the originating
    DOTS client.  The relay should identify itself as such to any clients
    or servers it interacts with.  Greater abstraction by way of
@@ -644,9 +660,19 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    [[EDITOR'S NOTE: we request working group feedback and discussion of
    the many-to-one and one-to-many client/server, client/relay, and
-   relay/server relationships described above.  We additional request
+   relay/server relationships described above.  We additionally request
    working group feedback and discussion of end-to-end signaling
    considerations in the context of relayed signaling.]]
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 12]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
 
 3.  Components
 
@@ -666,14 +692,6 @@ Internet-Draft              DOTS Architecture                 March 2016
    client's domain, but no active attack is required for a DOTS client
    to request help.  Local operators may wish to have upstream traffic
    scrubbers in the network path for an indefinite period, and are
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 12]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    restricted only by business relationships when it comes to duration
    and scope of requested mitigation.
 
@@ -682,7 +700,7 @@ Internet-Draft              DOTS Architecture                 March 2016
    client's desired mitigation scoping, as described in
    [I-D.ietf-dots-requirements].  The actual mitigation scope and
    countermeasures used in response to the attack are up to the DOTS
-   server and Mitgator operators, as the DOTS client may have a narrow
+   server and Mitigator operators, as the DOTS client may have a narrow
    perspective on the ongoing attack.  As such, the DOTS client's
    request for mitigation should be considered advisory: guarantees of
    DOTS server availability or mitigation capacity constitute service
@@ -699,6 +717,18 @@ Internet-Draft              DOTS Architecture                 March 2016
    of the signaling session.  The DOTS client similarly expects a
    heartbeat from the DOTS server, and MAY consider a signaling session
    terminated in the extended absence of a DOTS server heartbeat.
+
+
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 13]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
 
 3.2.  DOTS server
 
@@ -722,14 +752,6 @@ Internet-Draft              DOTS Architecture                 March 2016
    addresses, prefixes, and/or services owned by the DOTS client's
    administrative entity, such that a DOTS client from one entity is not
    able to influence the network path to another entity.  A DOTS server
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 13]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    MUST reject requests for mitigation of resources not owned by the
    requesting DOTS client's administrative entity.  A DOTS server MAY
    also refuse a DOTS client's mitigation request for arbitrary reasons,
@@ -756,6 +778,14 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    To provide a metric of signal health and distinguish an idle
    signaling session from a disconnected or defunct session, the DOTS
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 14]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
    server sends a heartbeat over the signal channel to maintain its half
    of the signaling session.  The DOTS server similarly expects a
    heartbeat from the DOTS client, and MAY consider a signaling session
@@ -777,15 +807,6 @@ Internet-Draft              DOTS Architecture                 March 2016
    Session.  At its most basic, for a DOTS signaling session to exist
    both signal channel and data channel must be functioning between DOTS
    agents.  That is, under nominal network conditions, signals actively
-
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 14]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    sent from a DOTS client are received by the specific DOTS server
    intended by the client, and vice versa.
 
@@ -812,6 +833,15 @@ Internet-Draft              DOTS Architecture                 March 2016
    client initiates a signal session by contacting the DOTS server over
    the signal channel and the data channel.  To allow for DOTS service
    flexibility, neither the order of contact nor the time interval
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 15]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
    between channel creations is specified.  A DOTS client MAY establish
    signal channel first, and then data channel, or vice versa.
 
@@ -834,17 +864,9 @@ Internet-Draft              DOTS Architecture                 March 2016
    to provision the DOTS clients could be learned through mechanisms
    similar to DNS SRV [RFC2782] or DNS Service Discovery [RFC6763].
 
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 15]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    The DOTS client SHOULD successfully authenticate and exchange
    messages with the DOTS server over both signal and data channel as
-   soon as possible to confirm the both channels are operational.
+   soon as possible to confirm that both channels are operational.
 
    Once the DOTS client begins receiving DOTS server signals, the
    signaling session is active.  At any time during the signaling
@@ -868,6 +890,14 @@ Internet-Draft              DOTS Architecture                 March 2016
    extended absence of a heartbeat from its peer agent.  The period of
    that absence will be established in the protocol definition.
 
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 16]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
 4.2.  Modes of Signaling
 
    This section examines the modes of signaling between agents in a DOTS
@@ -890,13 +920,6 @@ Internet-Draft              DOTS Architecture                 March 2016
    signaling session is abstracted from the underlying networks or
    network elements the signals traverse: in a direct signaling session,
    the DOTS client and server are logically peer DOTS agents.
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 16]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
 
 4.2.2.  Relayed Signaling
 
@@ -924,13 +947,20 @@ Internet-Draft              DOTS Architecture                 March 2016
    operational considerations related to DOTS relays, particularly with
    respect to the implications of multiple relays in the signal path.]]
 
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 17]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
    As discussed above in Section 2.2, relays may be client-side or
    server-side.  In either case, the relay appears to the peer agent as
-   its logical opposite.  That is, if a DOTS relay appears to a DOTS
-   client or downstream relay as a DOTS server.  Conversely, a DOTS
-   relay appears to a DOTS server or upstream DOTS relay as a DOTS
-   client.  Thus relayed signaling may be thought of as chained direct
-   signaling sessions.
+   its logical opposite.  That is, a DOTS relay appears to a DOTS client
+   or downstream relay as a DOTS server.  Conversely, a DOTS relay
+   appears to a DOTS server or upstream DOTS relay as a DOTS client.
+   Thus relayed signaling may be thought of as chained direct signaling
+   sessions.
 
 4.2.3.  Redirected Signaling
 
@@ -946,14 +976,6 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    o  Mitigator outage or other downtime, such as scheduled maintenance;
 
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 17]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
    o  Scheduled DOTS server maintenance;
 
    o  Scheduled modifications to the network path between DOTS server
@@ -961,6 +983,32 @@ Internet-Draft              DOTS Architecture                 March 2016
 
    A basic redirected signaling session resembles the following, as
    shown in Figure 11:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 18]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
 
            +-------------+                            +---------------+
            |             |<-(1)-- signal session 1 -->|               |
@@ -1000,16 +1048,6 @@ Internet-Draft              DOTS Architecture                 March 2016
    [[EDITOR'S NOTE: we request working group feedback and discussion of
    the need for redirected signaling.]]
 
-
-
-
-
-
-Mortensen, et al.      Expires September 19, 2016              [Page 18]
-
-Internet-Draft              DOTS Architecture                 March 2016
-
-
 4.2.4.  Recursive Signaling
 
    DOTS is centered around improving the speed and efficiency of
@@ -1020,6 +1058,14 @@ Internet-Draft              DOTS Architecture                 March 2016
    In the course of normal DOTS operations, a DOTS client communicates
    the need for mitigation to a DOTS server, and that server initiates
    mitigation on a mitigator with which the server has an established
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 19]
+
+Internet-Draft              DOTS Architecture                 March 2016
+
+
    service relationship.  The operator of the mitigator may in turn
    monitor mitigation performance and capacity, as the attack being
    mitigated may grow in severity beyond the mitigating entity's
@@ -1061,7 +1107,17 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016              [Page 19]
+
+
+
+
+
+
+
+
+
+
+Mortensen, et al.      Expires September 20, 2016              [Page 20]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -1117,7 +1173,7 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016              [Page 20]
+Mortensen, et al.      Expires September 20, 2016              [Page 21]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -1173,7 +1229,7 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016              [Page 21]
+Mortensen, et al.      Expires September 20, 2016              [Page 22]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -1229,7 +1285,7 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016              [Page 22]
+Mortensen, et al.      Expires September 20, 2016              [Page 23]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -1285,7 +1341,7 @@ Authors' Addresses
 
 
 
-Mortensen, et al.      Expires September 19, 2016              [Page 23]
+Mortensen, et al.      Expires September 20, 2016              [Page 24]
 
 Internet-Draft              DOTS Architecture                 March 2016
 
@@ -1341,4 +1397,4 @@ Internet-Draft              DOTS Architecture                 March 2016
 
 
 
-Mortensen, et al.      Expires September 19, 2016              [Page 24]
+Mortensen, et al.      Expires September 20, 2016              [Page 25]
