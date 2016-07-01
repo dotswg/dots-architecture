@@ -1,8 +1,8 @@
 ---
-title: Distributed-Denial-of-Service (DDoS) Open Threat Signaling Architecture
+title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-mortensen-dots-architecture-00
-date: 2016-03-19
+docname: draft-ietf-dots-architecture-00
+date: @DATE@
 
 area: Security
 wg: DOTS
@@ -100,18 +100,20 @@ informative:
   RFC0793:
   RFC1034:
   RFC2782:
+  RFC3261:
   RFC4271:
   RFC4732:
   RFC6763:
+  RFC7092:
 
 
 --- abstract
 
 This document describes an architecture for establishing and maintaining
 Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and
-between networks. The document makes no attempt to suggest protocols or protocol
-extensions, instead focusing on architectural relationships, components and
-concepts used in a DOTS deployment.
+between domains. The document does not specify protocols or protocol
+extensions, instead focusing on defining architectural relationships, components
+and concepts used in a DOTS deployment.
 
 
 --- middle
@@ -121,15 +123,15 @@ Context and Motivation {#context-and-motivation}
 
 Signaling the need for help defending against an active distributed denial
 of service (DDoS) attack requires a common understanding of mechanisms and
-roles among the parties coordinating attack response. The proposed signaling
+roles among the parties coordinating defensive response. The signaling
 layer and supplementary messaging is the focus of DDoS Open Threat Signaling
-(DOTS). DOTS proposes to standardize a method of coordinating defensive
-measures among willing peers to mitigate attacks quickly and efficiently.
+(DOTS). DOTS defines a method of coordinating defensive measures among willing
+peers to mitigate attacks quickly and efficiently, enabling hybrid attack
+responses coordinated locally at or near the target of an active attack, or
+anywhere in-path between attack sources and target.
 
 This document describes an architecture used in establishing, maintaining or
-terminating a DOTS relationship in a network or between networks. DOTS
-enables hybrid attack responses, coordinated locally at or near the target of
-an active attack, as well as closer to attack sources in the network path.
+terminating a DOTS relationship within a domain or between domains.
 
 
 Terminology     {#terminology}
@@ -150,23 +152,27 @@ This document uses the terms defined in [I-D.ietf-dots-requirements].
 Scope           {#scope}
 -----
 
-This document defines an architecture for the proposed DOTS standard in the
-IETF.
+In this architecture, DOTS clients and servers communicate using the DOTS
+signaling. As a result of signals from a DOTS client, the DOTS server may modify
+the forwarding path of traffic destined for the attack target(s), for example by
+diverting traffic to a mitigator or pool of mitigators, where policy may be
+applied to distinguish and discard attack traffic. Any such policy is
+deployment-specific.
 
-In this architecture, DOTS clients and servers communicate using the signaling
-mechanism established in the proposed DOTS standard. As a result of signals
-from a DOTS client, the DOTS server may modify the network path of traffic
-destined for the attack target or targets, for example by diverting traffic
-to a scrubbing center. Packets deemed part of an active attack may be dropped.
+The DOTS architecture presented here is applicable across network administrative
+domains -- for example, between an enterprise domain and the domain of a
+third-party attack mitigation service -- as well as to a single administrative
+domain. DOTS is generally assumed to be most effective when aiding coordination
+of attack response between two or more participating network domains, but single
+domain scenarios are valuable in their own right, as when aggregating
+intra-domain DOTS client signals for inter-domain coordinated attack response.
 
-The architecture presented here is assumed to be applicable across network
-administrative domains -- for example, between an enterprise domain and
-the domain of a third-party attack scrubbing service -- as well as to a single
-administrative domain. DOTS is generally assumed to be most effective when
-aiding coordination of attack response between two or more participating
-network domains, but single domain scenarios are valuable in their own right,
-as when aggregating intra-domain DOTS client signals for inter-domain
-coordinated attack response.
+
+This document does not address any administrative or business agreements that
+may be established between involved DOTS parties. Those considerations are out
+of scope. Regardless, this document assumes necessary authentication and
+authorization mechanism are put in place so that only authorized clients can
+invoke the DOTS service.
 
 
 Assumptions     {#assumptions}
@@ -174,68 +180,70 @@ Assumptions     {#assumptions}
 
 This document makes the following assumptions:
 
-* The network or networks in which DOTS is deployed are assumed to offer the
-  required connectivity between DOTS agents and any intermediary network
-  elements, but the architecture imposes no additional limitations on the form
-  of connectivity.
+* All domains in which DOTS is deployed are assumed to offer the required
+  connectivity between DOTS agents and any intermediary network elements, but
+  the architecture imposes no additional limitations on the form of
+  connectivity.
 
 * Congestion and resource exhaustion are intended outcomes of a DDoS attack
   {{RFC4732}}. Some operators may utilize non-impacted paths or networks for
-  DOTS, however, it should be assumed that, in general, conditions will be
-  hostile and that DOTS must be able to function in all circumstances, including
-  when the signaling path is significantly impaired.
+  DOTS, but in general conditions should be assumed to be hostile and that DOTS
+  must be able to function in all circumstances, including when the signaling
+  path is significantly impaired.
 
 * There is no universal DDoS attack scale threshold triggering a coordinated
-  response across network administrative domains. A network domain
-  administrator, or service or application owner may arbitrarily set attack
-  scale threshold triggers, or manually send requests for mitigation.
+  response across administrative domains. A network domain administrator, or
+  service or application owner may arbitrarily set attack scale threshold
+  triggers, or manually send requests for mitigation.
 
-* The mitigation capacity and/or capability of networks receiving requests for
-  coordinated attack response is opaque to the network sending the request. The
+* Mitigation requests may be sent to one or more upstream DOTS servers based on
+  criteria determined by DOTS client administrators. The number of DOTS servers
+  with which a given DOTS client has established signaling sessions is
+  determined by local policy and is deployment-specific.
+
+* The mitigation capacity and/or capability of domains receiving requests for
+  coordinated attack response is opaque to the domains sending the request. The
   entity receiving the DOTS client signal may or may not have sufficient
   capacity or capability to filter any or all DDoS attack traffic directed at
-  a target.
+  a target. In either case, the upstream DOTS server may redirect a request to
+  another DOTS server. Redirection may be local to the redirecting DOTS server's
+  domain, or may involve a third-party domain.
 
 * DOTS client and server signals, as well as messages sent through the data
   channel, are sent across any transit networks with the same probability of
-  delivery as any other traffic between the DOTS client network and the DOTS
-  server network. Any encapsulation required for successful delivery is left
+  delivery as any other traffic between the DOTS client domain and the DOTS
+  server domain. Any encapsulation required for successful delivery is left
   untouched by transit network elements. DOTS server and DOTS client cannot
-  assume any preferential treatment of DOTS signals.
+  assume any preferential treatment of DOTS signals. Such preferential treatment
+  may be available in some deployments, and the DOTS architecture does not
+  preclude its use when available. However, DOTS itself does not address how
+  that may be done.
 
 * The architecture allows for, but does not assume, the presence of Quality of
   Service (QoS) policy agreements between DOTS-enabled peer networks or local
   QoS prioritization aimed at ensuring delivery of DOTS messages between DOTS
   agents. QoS is an operational consideration only, not a functional part of
-  a DOTS architecture.
+  the DOTS architecture.
 
-* There is no assumption that the signal channel and the data channel should
-  terminate on the same DOTS server: they may be loosely coupled.
+* The signal channel and the data channel may be loosely coupled, and need not
+  terminate on the same DOTS server.
 
 
 Architecture {#architecture}
 ============
 
-DOTS enables a target that is under a Distributed Denial-of-Service (DDoS)
-attack to signal another entity for help in mitigating the DDoS attack. The
-basic high-level DOTS architecture is illustrated in {{fig-basic-arch}}:
+The basic high-level DOTS architecture is illustrated in {{fig-basic-arch}}:
 
 ~~~~~
     +-----------+            +-------------+
     | Mitigator | ~~~~~~~~~~ | DOTS Server |
     +-----------+            +-------------+
-                               |         |
-                               |         |
-                               |         |
-                               |    +------------+
-                               |    | DOTS Relay |
-                               |    +------------+
-                               |         |
-                               |         |
-                               |         |
-   +---------------+         +-------------+
-   | Attack Target | ~~~~~~~ | DOTS Client |
-   +---------------+         +-------------+
+                                    |
+                                    |
+                                    |
+    +---------------+        +-------------+
+    | Attack Target | ~~~~~~ | DOTS Client |
+    +---------------+        +-------------+
 ~~~~~
 {: #fig-basic-arch title="Basic DOTS Architecture"}
 
@@ -245,25 +253,23 @@ mitigation service as the Mitigator. The enterprise (attack target) is
 connected to the Internet via a link that is getting saturated, and the
 enterprise suspects it is under DDoS attack. The enterprise has a DOTS client,
 which obtains information about the DDoS attack, and signals the DOTS server
-for help in mitigating the attack. The communication may be direct from the
-DOTS client to the DOTS Server, or it may traverse one or more DOTS Relays,
-which act as intermediaries. The DOTS Server in turn invokes one or more
+for help in mitigating the attack. The DOTS server in turn invokes one or more
 mitigators, which are tasked with mitigating the actual DDoS attack, and hence
 aim to suppress the attack traffic while allowing valid traffic to reach the
 attack target.
 
 The scope of the DOTS specifications is the interfaces between the DOTS
-client, DOTS server, and DOTS relay. The interfaces to the attack target and
-the mitigator are out of scope of DOTS. Similarly, the operation of both the
-attack target and the mitigator are out of scope of DOTS. Thus, DOTS neither
-specifies how an attack target decides it is under DDoS attack, nor does DOTS
-specify how a mitigator may actually mitigate such an attack. Indeed, a DOTS
-client's request for mitigation is advisory in nature, and may not lead to any
-mitigation at all, depending on the DOTS server entity's capacity and
-willingness to mitigate on behalf of the DOTS client's entity.
+client and DOTS server. The interfaces to the attack target and the mitigator
+are out of scope of DOTS. Similarly, the operation of both the attack target and
+the mitigator are out of scope of DOTS. Thus, DOTS neither specifies how an
+attack target decides it is under DDoS attack, nor does DOTS specify how a
+mitigator may actually mitigate such an attack. A DOTS client's request for
+mitigation is advisory in nature, and may not lead to any mitigation at all,
+depending on the DOTS server entity's capacity and willingness to mitigate on
+behalf of the DOTS client's entity.
 
 As illustrated in {{fig-interfaces}}, there are two interfaces between the
-DOTS Server and the DOTS Client (and possibly the DOTS Relay):
+DOTS server and the DOTS client:
 
 ~~~~~
     +---------------+                                 +---------------+
@@ -274,14 +280,22 @@ DOTS Server and the DOTS Client (and possibly the DOTS Relay):
 ~~~~~
 {: #fig-interfaces title="DOTS Interfaces"}
 
-The primary purpose of the signal channel is for the DOTS client to ask the
+The DOTS client may be provided with a list of DOTS servers, each associated
+with one or more IP addresses. These addresses may or may not be of the same
+address family. The DOTS client establishes one or more signaling sessions by
+connecting to the provided DOTS server addresses.
+
+\[\[EDITOR'S NOTE: We request feedback from the working group about the mechanism
+of server discovery.\]\]
+
+The primary purpose of the signal channel is for a DOTS client to ask a
 DOTS server for help in mitigating an attack, and for the DOTS server to inform
 the DOTS client about the status of such mitigation. The DOTS client does this
 by sending a client signal, which contains information about the attack target
 or targets.  The client signal may also include telemetry information about the
-attack, if the DOTS client has such information available. The DOTS Server in
+attack, if the DOTS client has such information available. The DOTS server in
 turn sends a server signal to inform the DOTS client of whether it will honor
-the mitigation request. Assuming it will, the DOTS Server initiates attack
+the mitigation request. Assuming it will, the DOTS server initiates attack
 mitigation (by means outside of DOTS), and periodically informs the DOTS client
 about the status of the mitigation.  Similarly, the DOTS client periodically
 informs the DOTS server about the client's status, which at a minimum provides
@@ -299,11 +313,28 @@ addition of the DOTS data channel provides for additional and more efficient
 capabilities; both channels are required in the DOTS architecture. The primary
 purpose of the data channel is to support DOTS related configuration and policy
 information exchange between the DOTS client and the DOTS server. Examples of
-such information include
+such information include, but are not limited to:
 
-* Defining names or aliases for attack targets (resources). Those names can be
-  used in subsequent signal channel exchanges to more efficiently refer to the
-  resources (attack targets) in question.
+* Creating identifiers, such as names or aliases, for resources for which
+  mitigation may be requested. Such identifiers may then be used in subsequent
+  signal channel exchanges to refer more efficiently to the resources under
+  attack, as seen in {{fig-resource-identifiers}} below, using JSON to serialize
+  the data:
+
+~~~~~
+        {
+            "https1": [
+                "172.16.168.254:443",
+                "172.16.169.254:443",
+            ],
+            "proxies": [
+                "10.0.0.10:3128",
+                "[2001:db9::1/128]:3128"
+            ],
+            "api_urls": "https://apiserver.local/api/v1",
+        }
+~~~~~
+{: #fig-resource-identifiers title="Protected resource identifiers"}
 
 * Black-list management, which enables a DOTS client to inform the DOTS server
   about sources to suppress.
@@ -311,48 +342,40 @@ such information include
 * White-list management, which enables a DOTS client to inform the DOTS server
   about sources from which traffic should always be accepted.
 
+* Filter management, which enables a DOTS client to install or remove traffic
+  filters dropping or rate-limiting unwanted traffic.
+
 * DOTS client provisioning.
 
-* Vendor-specific extensions, supplementing or in some other way facilitating
-  mitigation when the mitigator relies on particular proprietary interfaces.
-
 Note that while it is possible to exchange the above information before, during
-or after a DDoS attack, DOTS requires reliable delivery of the above
-information and does not provide any special means for ensuring timely delivery
-of it during an attack. In practice, this means that DOTS entities SHOULD NOT
-rely on such information being exchanged during a DDoS attack.
+or after a DDoS attack, DOTS requires reliable delivery of the this information
+and does not provide any special means for ensuring timely delivery of it during
+an attack. In practice, this means that DOTS entities SHOULD NOT rely on such
+information being exchanged during a DDoS attack.
 
 
 DOTS Operations {#operations}
 ---------------
 The scope of DOTS is focused on the signaling and data exchange between the DOTS
-client, DOTS server and (possibly) the DOTS relay. DOTS does not prescribe any
-specific deployment models, however DOTS is designed with some specific
-requirements around the different DOTS agents and their relationships.
+client and DOTS server. DOTS does not prescribe any specific deployment models,
+however DOTS is designed with some specific requirements around the different
+DOTS agents and their relationships.
 
 First of all, a DOTS agent belongs to an entity, and that entity has an identity
-which can be authenticated. DOTS agents communicate with each other over a
-mutually authenticated signal channel and bulk data channel. However, before
-they can do so, a service relationship needs to be established between them.
-The details and means by which this is done is outside the scope of DOTS,
+which can be authenticated and authorized. DOTS agents communicate with each
+other over a mutually authenticated signal channel and data channel. However,
+before they can do so, a service relationship needs to be established between
+them.  The details and means by which this is done is outside the scope of DOTS,
 however an example would be for an enterprise A (DOTS client) to sign up for
 DDoS service from provider B (DOTS server). This would establish a (service)
 relationship between the two that enables enterprise A's DOTS client to
 establish a signal channel with provider B's DOTS server. A and B will
 authenticate each other, and B can verify that A is authorized for its service.
-A and B may each have one or more DOTS relays in front of their DOTS client and
-DOTS server.
-
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: we request working group feedback and discussion of
-considerations of end-to-end signaling and agent authentication/authorization
-with relays in the signaling path.\]\]
-{:mortensen}
 
 From an operational and design point of view, DOTS assumes that the above
 relationship is established prior to a request for DDoS attack mitigation. In
 particular, it is assumed that bi-directional communication is possible at this
-time between the DOTS client and DOTS server. Furthermore, it as assumed that
+time between the DOTS client and DOTS server. Furthermore, it is assumed that
 additional service provisioning, configuration and information exchange can be
 performed by use of the data channel, if operationally required. It is not until
 this point that the mitigation service is available for use.
@@ -369,17 +392,17 @@ DDoS mitigation service with the help of an upstream mitigator will often
 involve some form of traffic redirection whereby traffic destined for the attack
 target is diverted towards the mitigator, e.g. by use of BGP [RFC4271] or DNS
 [RFC1034]. The mitigator in turn inspects and scrubs the traffic, and forwards
-the resulting (hopefully non-attack) traffic to the attack target, e.g. via a
-GRE tunnel.  Thus, when a DOTS server receives an attack mitigation request from
-a DOTS client, it can be viewed as a way of causing traffic redirection for the
-attack target indicated. Note that DOTS does not consider any authorization
-aspects around who should be allowed to issue such requests for what attack
-targets.  Instead, DOTS merely relies on the mutual authentication and the
-pre-established (service) relationship between the entity owning the DOTS client
-and the entity owning the DOTS server. The entity owning the DOTS server SHOULD
-limit the attack targets that a particular DOTS client can request mitigation
-for as part of establishing this relationship. The method of such limitation is
-not in scope for this document.
+the resulting (hopefully non-attack) traffic to the attack target. Thus, when a
+DOTS server receives an attack mitigation request from a DOTS client, it can be
+viewed as a way of causing traffic redirection for the attack target indicated.
+Note that the DOTS specifications do not address any authorization aspects
+around who should be allowed to issue such requests for what attack targets.
+Instead, DOTS merely relies on the mutual authentication and the pre-established
+(service) relationship between the entity owning the DOTS client and the entity
+owning the DOTS server. The entity owning the DOTS server SHOULD limit the
+attack targets that a particular DOTS client can request mitigation for as part
+of establishing this relationship. The method of such limitation is not in scope
+for this document.
 
 Although co-location of DOTS server and mitigator within the same entity is
 expected to be a common deployment model, it is assumed that operators may
@@ -387,198 +410,18 @@ require alternative models. Nothing in this document precludes such
 alternatives.
 
 
-DOTS Agent Relationships {#agent-relationships}
-------------------------
+Components
+----------
 
-So far, we have only considered a relatively simple scenario of a single DOTS
-client associated with a single DOTS server, however DOTS supports more advanced
-relationships.
-
-A DOTS server may be associated with one or more DOTS clients, and those DOTS
-clients may belong to different entities. An example scenario is a mitigation
-provider serving multiple attack targets ({{fig-multi-client-server}}):
-
-~~~~~
-   +---+
-   | c |-----------
-   +---+           \
-                    \
-   +---+             \ +---+
-   | c |---------------| S |
-   +---+             / +---+
-                    /
-   +---+           /
-   | c |-----------
-   +---+
-   example.com/.org   example.net
-   DOTS Clients       DOTS Server
-~~~~~
-{: #fig-multi-client-server title="Multiple DOTS clients for a DOTS server"}
-
-A DOTS client may be associated with one or more DOTS servers, and
-those DOTS servers may belong to different entities.  This may be to ensure
-high availability or co-ordinate mitigation with more than one directly
-connected ISP.  An example scenario is for an enterprise to have DDoS
-mitigation service from multiple providers, as shown in
-{{fig-multi-homed-client}} below.  Operational considerations relating to
-co-ordinating multiple provider responses are beyond the scope of DOTS.
-
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: we request working group feedback and discussion of
-operational considerations relating to coordinating multiple provider responses
-to a mitigation request.\]\]
-{:mortensen}
-
-~~~~~
-                       +---+
-           ------------| S |
-          /            +---+
-         /
-   +---+/              +---+
-   | c |---------------| S |
-   +---+\              +---+
-         \
-          \            +---+
-           ------------| S |
-                       +---+
-   example.com        example.net/.org
-   DOTS Client        DOTS Servers
-~~~~~
-{: #fig-multi-homed-client title="Multi-Homed DOTS Client"}
-
-DOTS Relays may be either server-side or client-side, or both. A DOTS
-server-side relay belongs to the entity owning the DOTS server.  A relay will
-terminate multiple discrete client connections as if it were a server and may
-aggregate these into a single ({{fig-client-side-relay-agg}}) or multiple DOTS
-signaling sessions ({{fig-client-side-relay-no-agg}}) depending upon locally
-applied policy.  A relay will function as a server to its downstream agents and
-as a client to its upstream agents.  Aside from the exceptions discussed in
-{{relayed-signaling}} below, the relationship between the relay and its upstream
-agents is opaque to the relayed clients. An example scenario is for an
-enterprise to have deployed multiple DOTS capable devices which are able to
-signal intra-domain using TCP [RFC0793] on un-congested links to a relay which
-may then transform these to a UDP [RFC0768] transport inter-domain where
-connection oriented transports may degrade; this applies to the signal channel
-only, as the data channel requires a connection-oriented transport.  The
-relationship between the relay and its upstream agents is opaque to the relayed
-clients.
-
-~~~~~
-   +---+
-   | c |\
-   +---+ \              +---+
-          \-----TCP-----| r |              +---+
-   +---+                | e |              |   |
-   | c |--------TCP-----| l |------UDP-----| S |
-   +---+                | a |              |   |
-          /-----TCP-----| y |              +---+
-   +---+ /              +---+
-   | c |/
-   +---+
-   example.com       example.com         example.net
-   DOTS Clients      DOTS Relay          DOTS Server
-~~~~~
-{: #fig-client-side-relay-agg title="Client-Side Relay with Aggregation"}
-
-~~~~~
-   +---+
-   | c |\
-   +---+ \              +---+
-          \-----TCP-----| r |------UDP-----+---+
-   +---+                | e |              |   |
-   | c |--------TCP-----| l |------UDP-----| S |
-   +---+                | a |              |   |
-          /-----TCP-----| y |------UDP-----+---+
-   +---+ /              +---+
-   | c |/
-   +---+
-   example.com       example.com         example.net
-   DOTS Clients      DOTS Relay          DOTS Server
-~~~~~
-{: #fig-client-side-relay-no-agg title="Client-Side Relay without Aggregation"}
-
-A variation of this scenario would be a DDoS mitigation provider deploying
-relays at their perimeter to consume signals across multiple transports and
-to consolidate these into a single transport suitable for the providers
-deployment, as shown in {{fig-server-side-relay-agg}} and
-{{fig-server-side-relay-no-agg}} below.  The relationship between the relay and
-its upstream agents is opaque to the relayed clients.
-
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: we request working group feedback and discussion of DOTS
-client visibility into relayed signaling.\]\]
-{:mortensen}
-
-~~~~~
-   +---+
-   | c |\
-   +---+ \              +---+
-          \-----UDP-----| r |              +---+
-   +---+                | e |              |   |
-   | c |--------TCP-----| l |------TCP-----| S |
-   +---+                | a |              |   |
-          /-----TCP-----| y |              +---+
-   +---+ /              +---+
-   | c |/
-   +---+
-   example.com       example.net         example.net
-   DOTS Clients      DOTS Relay          DOTS Server
-~~~~~
-{: #fig-server-side-relay-agg title="Server-Side Relay with Aggregation"}
-
-~~~~~
-   +---+
-   | c |\
-   +---+ \              +---+
-          \-----UDP-----| r |------TCP-----+---+
-   +---+                | e |              |   |
-   | c |--------TCP-----| l |------TCP-----| S |
-   +---+                | a |              |   |
-          /-----UDP-----| y |------TCP-----+---+
-   +---+ /              +---+
-   | c |/
-   +---+
-   example.com       example.net         example.net
-   DOTS Clients      DOTS Relay          DOTS Server
-~~~~~
-{: #fig-server-side-relay-no-agg title="Server-Side Relay without Aggregation"}
-
-In the context of relays, sessions are established directly between peer DOTS
-agents and may not be end-to-end.  In spite of this distinction a method must
-exist to uniquely identify the originating DOTS client. The relay should
-identify itself as such to any clients or servers it interacts with.  Greater
-abstraction by way of additional layers of relays may introduce undesired
-complexity in regard to authentication and authorization and should be avoided.
-
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: we request working group feedback and discussion of the
-many-to-one and one-to-many client/server, client/relay, and relay/server
-relationships described above. We additionally request working group feedback
-and discussion of end-to-end signaling considerations in the context of relayed
-signaling.\]\]
-{:mortensen}
-
-Components {#components}
-==========
-
-The architecture in this document is comprised of a few basic components on top
-of the assumed underlay network or networks described above. When connected to
-one another, the components represent an operational DOTS architecture.
-
-This section describes the components themselves. {{concepts}} below describes
-the architectural concepts involved.
-
-
-DOTS client {#dots-client}
------------
+### DOTS Client {#dots-client}
 
 A DOTS client is a DOTS agent from which requests for help coordinating attack
 response originate. The requests may be in response to an active, ongoing
 attack against a target in the DOTS client's domain, but no active attack is
 required for a DOTS client to request help. Local operators may wish to
-have upstream traffic scrubbers in the network path for an indefinite period,
-and are restricted only by business relationships when it comes to duration
-and scope of requested mitigation.
+have upstream mitigators in the network path for an indefinite period, and are
+restricted only by business relationships when it comes to duration and scope of
+requested mitigation.
 
 The DOTS client requests attack response coordination from a DOTS server over
 the signal channel, including in the request the DOTS client's desired
@@ -601,8 +444,7 @@ client similarly expects a heartbeat from the DOTS server, and MAY consider a
 signaling session terminated in the extended absence of a DOTS server heartbeat.
 
 
-DOTS server {#dots-server}
------------
+### DOTS Server {#dots-server}
 
 A DOTS server is a DOTS agent capable of receiving, processing and possibly
 acting on requests for help coordinating attack response from one or more DOTS
@@ -647,6 +489,190 @@ from a disconnected or defunct session, the DOTS server sends a heartbeat over
 the signal channel to maintain its half of the signaling session. The DOTS
 server similarly expects a heartbeat from the DOTS client, and MAY consider a
 signaling session terminated in the extended absence of a DOTS client heartbeat.
+
+
+### DOTS Gateway {#dots-gateway}
+
+Traditional client to server relationships may be expanded by chaining
+DOTS sessions. This chaining is enabled through "logical concatenation"
+[RFC7092] of a DOTS server and a DOTS client, resulting in an application
+analogous to the SIP logical entity of a Back-to-Back User Agent (B2BUA)
+[RFC3261]. The term DOTS gateway will be used here and the following text will
+describe some interactions in relation to this application.
+
+A DOTS gateway may be deployed client-side, server-side or both.  The gateway
+may terminate multiple discrete client connections and may aggregate these into
+a single or multiple DOTS signaling sessions.
+
+The DOTS gateway will appear as a server to its downstream agents and as a
+client to its upstream agents, a functional concatenation of the DOTS client and
+server roles, as depicted in {{fig-dots-gateway}}:
+
+~~~~~
+                      +-------------+
+                      |    | D |    |
+      +----+          |    | O |    |         +----+
+      | c1 |----------| s1 | T | c2 |---------| s2 |
+      +----+          |    | S |    |         +----+
+                      |    | G |    |
+                      +-------------+
+~~~~~
+{: #fig-dots-gateway title="DOTS gateway"}
+
+The DOTS gateway performs full stack DOTS session termination and reorigination
+between its client and server side. The details of how this is achieved are
+implementation specific. The DOTS protocol does not include any special features
+related to DOTS gateways, and hence from a DOTS perspective, whenever a DOTS
+gateway is present, the DOTS session simply terminates/originates there.
+
+
+DOTS Agent Relationships {#agent-relationships}
+------------------------
+
+So far, we have only considered a relatively simple scenario of a single DOTS
+client associated with a single DOTS server, however DOTS supports more advanced
+relationships.
+
+A DOTS server may be associated with one or more DOTS clients, and those DOTS
+clients may belong to different entities. An example scenario is a mitigation
+provider serving multiple attack targets ({{fig-multi-client-server}}):
+
+~~~~~
+   +---+
+   | c |-----------
+   +---+           \
+                    \
+   +---+             \ +---+
+   | c |---------------| S |
+   +---+             / +---+
+                    /
+   +---+           /
+   | c |-----------
+   +---+
+   example.com/.org   example.net
+   DOTS Clients       DOTS Server
+~~~~~
+{: #fig-multi-client-server title="DOTS server with multiple clients"}
+
+A DOTS client may be associated with one or more DOTS servers, and
+those DOTS servers may belong to different entities.  This may be to ensure
+high availability or co-ordinate mitigation with more than one directly
+connected ISP.  An example scenario is for an enterprise to have DDoS
+mitigation service from multiple providers, as shown in
+{{fig-multi-homed-client}} below.  Operational considerations relating to
+co-ordinating multiple provider responses are beyond the scope of DOTS.
+
+{:ed-note: source="mortensen"}
+\[\[EDITOR'S NOTE: we request working group feedback and discussion of
+operational considerations relating to coordinating multiple provider responses
+to a mitigation request.\]\]
+{:mortensen}
+
+~~~~~
+                       +---+
+           ------------| S |
+          /            +---+
+         /
+   +---+/              +---+
+   | c |---------------| S |
+   +---+\              +---+
+         \
+          \            +---+
+           ------------| S |
+                       +---+
+   example.com        example.net/.org
+   DOTS Client        DOTS Servers
+~~~~~
+{: #fig-multi-homed-client title="Multi-Homed DOTS Client"}
+
+
+### Gatewayed signaling
+
+As discussed above in {{dots-gateway}}, a DOTS gateway is a logical function
+chaining signaling sessions through concatenation of a DOTS server and DOTS
+client.
+
+An example scenario, as shown in {{fig-client-gateway-agg}} and
+{{fig-client-gateway-noagg}} below, is for an enterprise to have deployed
+multiple DOTS capable devices which are able to signal intra-domain using TCP
+[RFC0793] on un-congested links to a DOTS gateway which may then transform these
+to a UDP [RFC0768] transport inter-domain where connection oriented transports
+may degrade; this applies to the signal channel only, as the data channel
+requires a connection-oriented transport. The relationship between the gateway
+and its upstream agents is opaque to the initial clients.
+
+~~~~~
+      +---+
+      | c |\
+      +---+ \              +---+
+             \-----TCP-----| D |               +---+
+      +---+                | O |               |   |
+      | c |--------TCP-----| T |------UDP------| S |
+      +---+                | S |               |   |
+             /-----TCP-----| G |               +---+
+      +---+ /              +---+
+      | c |/
+      +---+
+      example.com       example.com           example.net
+      DOTS Clients      DOTS Gateway (DOTSG)  DOTS Server
+~~~~~
+{: #fig-client-gateway-agg title="Client-Side Gateway with Aggregation"}
+
+~~~~~
+      +---+
+      | c |\
+      +---+ \              +---+
+             \-----TCP-----| D |------UDP------+---+
+      +---+                | O |               |   |
+      | c |--------TCP-----| T |------UDP------| S |
+      +---+                | S |               |   |
+             /-----TCP-----| G |------UDP------+---+
+      +---+ /              +---+
+      | c |/
+      +---+
+      example.com       example.com           example.net
+      DOTS Clients      DOTS Gateway (DOTSG)  DOTS Server
+~~~~~
+{: #fig-client-gateway-noagg title="Client-Side Gateway without Aggregation"}
+
+This may similarly be deployed in the inverse scenario where the gateway resides
+in the server-side domain and may be used to terminate and/or aggregate mutiple
+clients to single transport as shown in figures {{fig-server-gateway-agg}} and
+{{fig-server-gateway-noagg}} below.
+
+~~~~~
+      +---+
+      | c |\
+      +---+ \              +---+
+             \-----UDP-----| D |               +---+
+      +---+                | O |               |   |
+      | c |--------TCP-----| T |------TCP------| S |
+      +---+                | S |               |   |
+             /-----TCP-----| G |               +---+
+      +---+ /              +---+
+      | c |/
+      +---+
+      example.com       example.net           example.net
+      DOTS Clients      DOTS Gateway (DOTSG)  DOTS Server
+~~~~~
+{: #fig-server-gateway-agg title="Server-Side Gateway with Aggregation"}
+
+~~~~~
+      +---+
+      | c |\
+      +---+ \              +---+
+             \-----UDP-----| D |------TCP------+---+
+      +---+                | O |               |   |
+      | c |--------TCP-----| T |------TCP------| S |
+      +---+                | S |               |   |
+             /-----UDP-----| G |------TCP------+---+
+      +---+ /              +---+
+      | c |/
+      +---+
+      example.com       example.net           example.net
+      DOTS Clients      DOTS Gateway (DOTSG)  DOTS Server
+~~~~~
+{: #fig-server-gateway-noagg title="Server-Side Gateway without Aggregation"}
 
 
 Concepts {#concepts}
@@ -725,8 +751,8 @@ operational in attack conditions (See Data Channel Requirements,
 
 ### Maintaining the Signaling Session {#maintaining-signaling-session}
 
-DOTS clients, servers and relays periodically send heartbeats to each other over
-the signal channel, per Operational Requirements discussed in
+DOTS clients and servers periodically send heartbeats to each other over the
+signal channel, per Operational Requirements discussed in
 [I-D.ietf-dots-requirements]. DOTS agent operators SHOULD configure the
 heartbeat interval such that the frequency does not lead to accidental denials
 of service due to the overwhelming number of heartbeats a DOTS agent must field.
@@ -756,46 +782,10 @@ clients and servers, as shown in {{fig-direct-signaling}} below:
 {: #fig-direct-signaling title="Direct Signaling"}
 
 In a direct signaling session, DOTS client and server are communicating
-directly, with no relays in the signaling path. A direct signaling session MAY
-exist inter- or intra-domain. The signaling session is abstracted from the
-underlying networks or network elements the signals traverse: in a direct
-signaling session, the DOTS client and server are logically peer DOTS agents.
-
-
-### Relayed Signaling {#relayed-signaling}
-
-A signaling session may also include one or more DOTS relays in the signaling
-path between the clients and servers, as shown in {{fig-relayed-signaling}}:
-
-~~~~~
-    +-------------+                              +-------------+
-    | DOTS client |                              | DOTS server |
-    +-------------+                              +-------------+
-           ^                                           ^
-           |    +------------+       +------------+    |
-           +--->| DOTS relay |<----->| DOTS relay |<---+
-                +------------+       +------------+
-~~~~~
-{: #fig-relayed-signaling title="Relayed Signaling"}
-
-To allow for maximum architectural flexibility, no restriction is placed on the
-number of relays in the signaling path. Operators of DOTS agents should consider
-the impact on signal latency incurred by each additional DOTS relay in the
-signaling path, as well as the increased operational complexity, when deploying
-DOTS relays.
-
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: we request working group feedback and discussion of
-operational considerations related to DOTS relays, particularly with respect to
-the implications of multiple relays in the signal path.\]\]
-{:mortensen}
-
-As discussed above in {{agent-relationships}}, relays may be client-side or
-server-side. In either case, the relay appears to the peer agent as its logical
-opposite. That is, a DOTS relay appears to a DOTS client or downstream relay as
-a DOTS server. Conversely, a DOTS relay appears to a DOTS server or upstream
-DOTS relay as a DOTS client. Thus relayed signaling may be thought of as chained
-direct signaling sessions.
+directly. A direct signaling session MAY exist inter- or intra-domain. The
+signaling session is abstracted from the underlying networks or network elements
+the signals traverse: in a direct signaling session, the DOTS client and server
+are logically peer DOTS agents.
 
 
 ### Redirected Signaling {#redirected-signaling}
@@ -884,9 +874,9 @@ A recursive signaling model as shown in {{fig-recursive-signaling}} below offers
 an alternative. In a variation of the primary use case "Successful Automatic or
 Operator-Assisted CPE or PE Mitigators Request Upstream DDoS Mitigation
 Services" described in [I-D.ietf-dots-use-cases], an entity operating a DOTS
-server and mitigation has a mitigator that is itself capable of acting as a DOTS
-client. The mitigator with DOTS client capabilities has an established signaling
-session with a DOTS server belonging to a separate administrative entity.
+server and mitigation also operates a DOTS client. This DOTS client has an
+established signaling session with a DOTS server belonging to a separate
+administrative domain.
 
 With these preconditions in place, the operator of the mitigator being
 overwhelmed or otherwise performing inadequately may request mitigation for the
@@ -900,21 +890,20 @@ building a cumulative mitigation against the attack:
                      .                               .
        +----+    A   .  +----+       +-----------+   .
        | Cc |<--------->| Sn |~~~~~~~| Mitigator |   .
-       +----+        .  +----+       |     Mn    |   .
-                     .               |   +----+  |   .
-     example.com     .               +---| Cn |--+   .
-        client       .                   +----+      .
-                     .                     ^         .
-                     . . . . . . . . . . . | . . . . .
-                                           |
-                                           | B
-                                           |
-                     . . . . . . . . . . . | . . . . .
-                     .                     v         .
-                     .  +-----------+    +----+      .
-                     .  | Mitigator |~~~~| So |      .
-                     .  |     Mo    |    +----+      .
-                     .  +-----------+                .
+       +----+        .  +====+       |     Mn    |   .
+                     .  | Cn |       +-----------+   .
+     example.com     .  +----+                       .
+        client       .    ^                          .
+                     . . .|. . . . . . . . . . . . . .
+                          |
+                        B |
+                          |
+                     . . .|. . . . . . . . . . . . . .
+                     .    v                          .
+                     .  +----+       +-----------+   .
+                     .  | So |~~~~~~~| Mitigator |   .
+                     .  +----+       |     Mo    |   .
+                     .               +-----------+   .
                      .                               .
                      . . . . . . . . . . . . . . . . .
                      example.org entity
@@ -923,12 +912,12 @@ building a cumulative mitigation against the attack:
 
 In {{fig-recursive-signaling}} above, client Cc signals a request for mitigation
 across inter-domain signaling session A to the DOTS server Sn belonging to the
-example.net entity. DOTS server Sn enables mitigation on mitigator Mn, which,
-acting as DOTS client Cn, has pre-existing inter-domain signaling session B with
-the DOTS server So belonging to the example.org entity. At any point, DOTS
-client Cn MAY recurse an on-going mitigation request to DOTS server So, in the
-expectation that mitigator Mo will be activated to aid in the defense of the
-attack target.
+example.net entity. DOTS server Sn enables mitigation on mitigator Mn. DOTS
+server Sn is logically back-to-back with DOTS client Cn, which has pre-existing
+inter-domain signaling session B with the DOTS server So belonging to the
+example.org entity. At any point, DOTS server Sn MAY recurse an on-going
+mitigation request through DOTS client Cn to DOTS server So, in the expectation
+that mitigator Mo will be activated to aid in the defense of the attack target.
 
 Recursive signaling is opaque to the DOTS client. To maximize mitigation
 visibility to the DOTS client, however, the recursing entity SHOULD provide
@@ -941,20 +930,18 @@ DOTS clients involved in recursive signaling MUST be able to withdraw requests
 for mitigation without warning or justification, per
 [I-D.ietf-dots-requirements].
 
-Operators of recursing mitigators MAY maintain the recursed mitigation for a
-brief, protocol-defined period in the event the DOTS client originating the
+Operators recursing mitigation requests MAY maintain the recursed mitigation for
+a brief, protocol-defined period in the event the DOTS client originating the
 mitigation withdraws its request for help, as per the discussion of managing
 mitigation toggling in the operational requirements
 ([I-D.ietf-dots-requirements]).  Service or business agreements between
 recursing entities are not in scope for this document.
 
 {:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: Recursive signaling raises questions about how to authenticate
-and authorize the recursed request, how end-to-end signaling functions in such a
-scenario, and implications for operational and data privacy, as well as what
-level of visibility a client has into the recursed mitigation.  We ask the
-working group for feedback and additional discussion of these issues to help
-settle the way forward.\]\]
+\[\[EDITOR'S NOTE: Recursive signaling raises questions about operational and
+data privacy, as well as what level of visibility a client has into the recursed
+mitigation.  We ask the working group for feedback and additional discussion of
+these issues to help settle the way forward.\]\]
 {:mortensen}
 
 
@@ -982,24 +969,21 @@ security.
 
 As many mitigation systems employ diversion to scrub attack traffic, operators
 of DOTS agents SHOULD ensure signaling sessions are resistant to
-Man-in-the-Middle (MitM) attacks. An attacker with control of a DOTS client or
-relay may negatively influence network traffic by requesting and withdrawing
-requests for mitigation for particular prefixes, leading to route or DNS
-flapping.
+Man-in-the-Middle (MitM) attacks. An attacker with control of a DOTS client may
+negatively influence network traffic by requesting and withdrawing requests for
+mitigation for particular prefixes, leading to route or DNS flapping.
 
 Any attack targeting the availability of DOTS servers may disrupt the ability
 of the system to receive and process DOTS signals resulting in failure to
-fulfill a mitigation request. Similarly, DOTS relays represent high-value
-targets in a DOTS architecture. Disrupting any DOTS relay in a signaling path
-represents a denial-of-service against DOTS in general. DOTS systems SHOULD be
-given adequate protections, again, in accordance with best current practices
-for network and host security.
+fulfill a mitigation request.  DOTS systems SHOULD be given adequate
+protections, again in accordance with best current practices for network and
+host security.
 
 
 Acknowledgments                 {#acknowledgments}
 ===============
 
-Thanks to Matt Richardson for last minute comments and suggestions.
+Thanks to Matt Richardson and Med Boucadair for their comments and suggestions.
 
 
 Change Log
