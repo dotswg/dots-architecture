@@ -538,19 +538,21 @@ clients may belong to different entities. An example scenario is a mitigation
 provider serving multiple attack targets ({{fig-multi-client-server}}):
 
 ~~~~~
+   DOTS Clients       DOTS Server
    +---+
    | c |-----------
    +---+           \
-                    \
-   +---+             \ +---+
-   | c |---------------| S |
-   +---+             / +---+
+   example.org      \
+                     \
+   +---+              \ +---+
+   | c |----------------| S |
+   +---+              / +---+
+   example.com       /
                     /
    +---+           /
    | c |-----------
    +---+
-   example.com/.org   example.net
-   DOTS Clients       DOTS Server
+   example.com        example.net
 ~~~~~
 {: #fig-multi-client-server title="DOTS server with multiple clients"}
 
@@ -569,19 +571,21 @@ to a mitigation request.\]\]
 {:mortensen}
 
 ~~~~~
+   DOTS Client        DOTS Servers
                        +---+
            ------------| S |
           /            +---+
+                       example.net
          /
    +---+/              +---+
    | c |---------------| S |
    +---+\              +---+
+                       example.org
          \
           \            +---+
            ------------| S |
                        +---+
-   example.com        example.net/.org
-   DOTS Client        DOTS Servers
+   example.com         example.xyz
 ~~~~~
 {: #fig-multi-homed-client title="Multi-Homed DOTS Client"}
 
@@ -943,6 +947,127 @@ data privacy, as well as what level of visibility a client has into the recursed
 mitigation.  We ask the working group for feedback and additional discussion of
 these issues to help settle the way forward.\]\]
 {:mortensen}
+
+
+Triggering Requests for Mitigation {#mit-request-triggers}
+----------------------------------
+
+[I-D.ietf-dots-requirements] places no limitation on the circumstances in which
+a DOTS client operator may request mitigation, nor does it demand justification
+for any mitigation request, thereby reserving operational control over DDoS
+defense for the domain requesting mitigation. This architecture likewise does
+not prescribe the network conditions and mechanisms triggering a mitigation
+request from a DOTS client.
+
+However, considering selected possible mitigation triggers from an architectural
+perspective offers a model for alternative or unanticipated triggers for DOTS
+deployments. In all cases, what network conditions merit a mitigation request
+are at the discretion of the DOTS client operator.
+
+The interfaces required to trigger the mitigation request in the following
+scenarios are implementation-specific.
+
+
+###  Manual Mitigation Request {#manual-mit-request}
+
+A DOTS client operator may manually prepare a request for mitigation, including
+scope and duration, and manually instruct the DOTS client to send the mitigation
+request to the DOTS server. In context, a manual request is a request directly
+issued by the operator without automated decision-making performed by a device
+interacting with the DOTS client. Modes of manual mitigation requests include
+an operator entering a command into a text interface, or directly interacting
+with a graphical interface to send the request.
+
+An operator might do this, for example, in response to notice of an attack
+delivered by attack detection equipment or software, and the alerting detector
+lacks interfaces or is not configured to use available interfaces to translate
+the alert to a mitigation request automatically.
+
+In a variation of the above scenario, the operator may have preconfigured on the
+DOTS client mitigation request for various resources in the operator's domain.
+When notified of an attack, the DOTS client operator manually instructs the DOTS
+client to send the preconfigured mitigation request for the resources under
+attack.
+
+A further variant involves recursive signaling, as described in
+{{recursive-signaling}}. The DOTS client in this case is the second half of a
+DOTS gateway (back-to-back DOTS server and client). As in the previous scenario,
+the scope and duration of the mitigation request are pre-existing, but in this
+case are derived from the mitigation request received from a downstream DOTS
+client by the DOTS server. Assuming the preconditions required by
+{{recursive-signaling}} are in place, the DOTS gateway operator may at any time
+manually request mitigation from an upstream DOTS server, sending a mitigation
+request derived from the downstream DOTS client's request.
+
+The motivations for a DOTS client operator to request mitigation manually are
+not prescribed by this architecture, but are expected to include some of the
+following:
+
+* Notice of an attack delivered via e-mail or alternative messaging
+
+* Notice of an attack delivered via phone call
+
+* Notice of an attack delivered through the interface(s) of networking
+  monitoring software deployed in the operator's domain
+
+* Manual monitoring of network behavior through network monitoring software
+
+
+### Automated Threshold-Based Mitigation Request {#auto-threshold-mit}
+
+Unlike manual mitigation requests, which depend entirely on the DOTS client
+operator's capacity to react with speed and accuracy to every detected or
+detectable attack, mitigation requests triggered by detected attack thresholds
+reduce the operational burden on the DOTS client operator, and minimize the
+latency between attack detection and the start of mitigation.
+
+Mitigation requests are triggered in this scenario by violations of
+operator-specified attack thresholds. Attack detection is deployment-specific,
+and not constrained by this architecture. Similarly the specifics of a threshold
+are left to the discretion of the operator, though common threshold types
+include the following:
+
+* Detected attack exceeding a rate in packets per second (pps).
+
+* Detected attack exceeding a rate in bytes per second (bps).
+
+* Detected resource exhaustion in a attack target.
+
+* Detected resource exhaustion in the local domain's mitigator.
+
+* Number of open connections to an attack target.
+
+* Number of attack sources in a given attack.
+
+* Number of active attacks against targets in the operator's domain.
+
+When automated threshold-based mitigation requests are enabled, violations of
+any of the above thresholds, or any additional operator-defined threshold, will
+trigger a mitigation request from the DOTS client to the DOTS server. The
+interfaces between the application detecting the threshold violation and the
+DOTS client are implementation-specific.
+
+
+### Automated Mitigation on Loss of Signal {#auto-mit-signal-loss}
+
+To maintain a signaling session, the DOTS client and the DOTS server exchange
+regular but infrequent messages across the signaling channel. In the absence of
+an attack, the probability of message loss in the signaling channel should be
+extremely low. Under attack conditions, however, some signal loss may be
+anticipated as attack traffic congests the link, depending on the attack type.
+
+While [I-D.ietf-dots-requirements] specifies the DOTS protocol be robust when
+signaling under attack conditions, there are nevertheless scenarios in which the
+DOTS signal is lost in spite of protocol best efforts. To handle such scenarios,
+a DOTS client operator may elect to trigger mitigation when the DOTS server
+ceases receiving DOTS client signals, or vice versa, beyond the count or period
+permitted by the protocol.
+
+The impact of mitigating due to loss of signal in either direction must be
+considered carefully before enabling it. Signal loss is not caused by links
+congested with attack traffic alone, and as such mitigation requests triggered
+by signal channel degradation in either direction may incur unnecessary costs,
+in network performance and operational expense alike.
 
 
 Security Considerations         {#security-considerations}
