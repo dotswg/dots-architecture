@@ -203,7 +203,7 @@ This document makes the following assumptions:
 
 * The mitigation capacity and/or capability of domains receiving requests for
   coordinated attack response is opaque to the domains sending the request. The
-  entity receiving the DOTS client signal may or may not have sufficient
+  domain receiving the DOTS client signal may or may not have sufficient
   capacity or capability to filter any or all DDoS attack traffic directed at
   a target. In either case, the upstream DOTS server may redirect a request to
   another DOTS server. Redirection may be local to the redirecting DOTS server's
@@ -265,8 +265,8 @@ the mitigator are out of scope of DOTS. Thus, DOTS neither specifies how an
 attack target decides it is under DDoS attack, nor does DOTS specify how a
 mitigator may actually mitigate such an attack. A DOTS client's request for
 mitigation is advisory in nature, and may not lead to any mitigation at all,
-depending on the DOTS server entity's capacity and willingness to mitigate on
-behalf of the DOTS client's entity.
+depending on the DOTS server domain's capacity and willingness to mitigate on
+behalf of the DOTS client's domain.
 
 As illustrated in {{fig-interfaces}}, there are two interfaces between the
 DOTS server and the DOTS client:
@@ -361,7 +361,7 @@ client and DOTS server. DOTS does not prescribe any specific deployment models,
 however DOTS is designed with some specific requirements around the different
 DOTS agents and their relationships.
 
-First of all, a DOTS agent belongs to an entity, and that entity has an identity
+First of all, a DOTS agent belongs to an domain, and that domain has an identity
 which can be authenticated and authorized. DOTS agents communicate with each
 other over a mutually authenticated signal channel and data channel. However,
 before they can do so, a service relationship needs to be established between
@@ -395,16 +395,14 @@ target is diverted towards the mitigator, e.g. by use of BGP [RFC4271] or DNS
 the resulting (hopefully non-attack) traffic to the attack target. Thus, when a
 DOTS server receives an attack mitigation request from a DOTS client, it can be
 viewed as a way of causing traffic redirection for the attack target indicated.
-Note that the DOTS specifications do not address any authorization aspects
-around who should be allowed to issue such requests for what attack targets.
-Instead, DOTS merely relies on the mutual authentication and the pre-established
-(service) relationship between the entity owning the DOTS client and the entity
-owning the DOTS server. The entity owning the DOTS server SHOULD limit the
-attack targets that a particular DOTS client can request mitigation for as part
-of establishing this relationship. The method of such limitation is not in scope
-for this document.
 
-Although co-location of DOTS server and mitigator within the same entity is
+DOTS relies on the mutual authentication and the pre-establish service
+relationship between the DOTS client's domain and the DOTS server's domain to
+provide basic authorization. The DOTS server SHOULD enforce additional
+authorization mechanisms to restrict the mitigation scope a DOTS client can
+request, but such authorization mechanisms are deployment-specific.
+
+Although co-location of DOTS server and mitigator within the same domain is
 expected to be a common deployment model, it is assumed that operators may
 require alternative models. Nothing in this document precludes such
 alternatives.
@@ -461,10 +459,10 @@ mitigation in response to a request for coordinated attack response.
 The DOTS server enforces authorization of DOTS clients' signals for mitigation.
 The mechanism of enforcement is not in scope for this document, but is expected
 to restrict requested mitigation scope to addresses, prefixes, and/or services
-owned by the DOTS client's administrative entity, such that a DOTS client from
-one entity is not able to influence the network path to another entity. A DOTS
+owned by the DOTS client's administrative domain, such that a DOTS client from
+one domain is not able to influence the network path to another domain. A DOTS
 server MUST reject requests for mitigation of resources not owned by the
-requesting DOTS client's administrative entity. A DOTS server MAY also refuse a
+requesting DOTS client's administrative domain. A DOTS server MAY also refuse a
 DOTS client's mitigation request for arbitrary reasons, within any limits
 imposed by business or service level agreements between client and server
 domains. If a DOTS server refuses a DOTS client's request for mitigation, the
@@ -640,7 +638,7 @@ and its upstream agents is opaque to the initial clients.
 {: #fig-client-gateway-noagg title="Client-Side Gateway without Aggregation"}
 
 This may similarly be deployed in the inverse scenario where the gateway resides
-in the server-side domain and may be used to terminate and/or aggregate mutiple
+in the server-side domain and may be used to terminate and/or aggregate multiple
 clients to single transport as shown in figures {{fig-server-gateway-agg}} and
 {{fig-server-gateway-noagg}} below.
 
@@ -730,11 +728,11 @@ port, and directly provided with any data necessary to satisfy the Peer Mutual
 Authentication requirement in [I-D.ietf-dots-requirements], such as
 symmetric or asymmetric keys, usernames and passwords, etc. All configuration
 and authentication information in this scenario is provided out-of-band by the
-entity operating the DOTS server.
+domain operating the DOTS server.
 
 At the other extreme, the architecture in this document allows for a form of
-DOTS client auto-provisioning. For example, the entity operating the DOTS server
-or servers might provide the client entity only with symmetric or asymmetric
+DOTS client auto-provisioning. For example, the domain operating the DOTS server
+or servers might provide the client domain only with symmetric or asymmetric
 keys to authenticate the provisioned DOTS clients. Only the keys would then be
 directly configured on DOTS clients, but the remaining configuration required to
 provision the DOTS clients could be learned through mechanisms similar to DNS
@@ -863,33 +861,33 @@ mitigation to a DOTS server, and that server initiates mitigation on a
 mitigator with which the server has an established service relationship. The
 operator of the mitigator may in turn monitor mitigation performance and
 capacity, as the attack being mitigated may grow in severity beyond the
-mitigating entity's capabilities.
+mitigating domain's capabilities.
 
 The operator of the mitigator has limited options in the event a DOTS
 client-requested mitigation is being overwhelmed by the severity of the attack.
 Out-of-scope business or service level agreements may permit the mitigating
-entity to drop the mitigation and let attack traffic flow unchecked to the
+domain to drop the mitigation and let attack traffic flow unchecked to the
 target, but this is only encourages attack escalation. In the case where
-the mitigating entity is the upstream service provider for the attack target,
-this may mean the mitigating entity and its other services and users continue to
+the mitigating domain is the upstream service provider for the attack target,
+this may mean the mitigating domain and its other services and users continue to
 suffer the incidental effects of the attack.
 
 A recursive signaling model as shown in {{fig-recursive-signaling}} below offers
 an alternative. In a variation of the primary use case "Successful Automatic or
 Operator-Assisted CPE or PE Mitigators Request Upstream DDoS Mitigation
-Services" described in [I-D.ietf-dots-use-cases], an entity operating a DOTS
+Services" described in [I-D.ietf-dots-use-cases], an domain operating a DOTS
 server and mitigation also operates a DOTS client. This DOTS client has an
 established signaling session with a DOTS server belonging to a separate
 administrative domain.
 
 With these preconditions in place, the operator of the mitigator being
 overwhelmed or otherwise performing inadequately may request mitigation for the
-attack target from this separate DOTS-aware entity. Such a request recurses the
+attack target from this separate DOTS-aware domain. Such a request recurses the
 originating mitigation request to the secondary DOTS server, in the hope of
 building a cumulative mitigation against the attack:
 
 ~~~~~
-                     example.net entity
+                     example.net domain
                      . . . . . . . . . . . . . . . . .
                      .                               .
        +----+    A   .  +----+       +-----------+   .
@@ -910,23 +908,23 @@ building a cumulative mitigation against the attack:
                      .               +-----------+   .
                      .                               .
                      . . . . . . . . . . . . . . . . .
-                     example.org entity
+                     example.org domain
 ~~~~~
 {: #fig-recursive-signaling title="Recursive Signaling"}
 
 In {{fig-recursive-signaling}} above, client Cc signals a request for mitigation
 across inter-domain signaling session A to the DOTS server Sn belonging to the
-example.net entity. DOTS server Sn enables mitigation on mitigator Mn. DOTS
+example.net domain. DOTS server Sn enables mitigation on mitigator Mn. DOTS
 server Sn is logically back-to-back with DOTS client Cn, which has pre-existing
 inter-domain signaling session B with the DOTS server So belonging to the
-example.org entity. At any point, DOTS server Sn MAY recurse an on-going
+example.org domain. At any point, DOTS server Sn MAY recurse an on-going
 mitigation request through DOTS client Cn to DOTS server So, in the expectation
 that mitigator Mo will be activated to aid in the defense of the attack target.
 
 Recursive signaling is opaque to the DOTS client. To maximize mitigation
-visibility to the DOTS client, however, the recursing entity SHOULD provide
+visibility to the DOTS client, however, the recursing domain SHOULD provide
 recursed mitigation feedback in signals reporting on mitigation status to the
-DOTS client. For example, the recursing entity's mitigator should incorporate
+DOTS client. For example, the recursing domain's mitigator should incorporate
 into mitigation status messages available metrics such as dropped packet or byte
 counts from the recursed mitigation.
 
@@ -1079,7 +1077,7 @@ architecture.
 DOTS is at risk from three primary attack vectors:  agent impersonation,
 traffic injection and signal blocking.  These vectors may be exploited
 individually or in concert by an attacker to confuse, disable, take information
-from, or otherwise inhibit the DOTS system.
+from, or otherwise inhibit DOTS agents.
 
 Any attacker with the ability to impersonate a legitimate client or server or,
 indeed, inject false messages into the stream may potentially trigger/withdraw
