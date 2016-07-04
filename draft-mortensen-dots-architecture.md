@@ -350,7 +350,7 @@ such information include, but are not limited to:
 Note that while it is possible to exchange the above information before, during
 or after a DDoS attack, DOTS requires reliable delivery of the this information
 and does not provide any special means for ensuring timely delivery of it during
-an attack. In practice, this means that DOTS entities SHOULD NOT rely on such
+an attack. In practice, this means that DOTS deployments SHOULD NOT rely on such
 information being exchanged during a DDoS attack.
 
 
@@ -396,7 +396,7 @@ the resulting (hopefully non-attack) traffic to the attack target. Thus, when a
 DOTS server receives an attack mitigation request from a DOTS client, it can be
 viewed as a way of causing traffic redirection for the attack target indicated.
 
-DOTS relies on the mutual authentication and the pre-establish service
+DOTS relies on mutual authentication and the pre-established service
 relationship between the DOTS client's domain and the DOTS server's domain to
 provide basic authorization. The DOTS server SHOULD enforce additional
 authorization mechanisms to restrict the mitigation scope a DOTS client can
@@ -532,7 +532,7 @@ client associated with a single DOTS server, however DOTS supports more advanced
 relationships.
 
 A DOTS server may be associated with one or more DOTS clients, and those DOTS
-clients may belong to different entities. An example scenario is a mitigation
+clients may belong to different domains. An example scenario is a mitigation
 provider serving multiple attack targets ({{fig-multi-client-server}}):
 
 ~~~~~
@@ -555,7 +555,7 @@ provider serving multiple attack targets ({{fig-multi-client-server}}):
 {: #fig-multi-client-server title="DOTS server with multiple clients"}
 
 A DOTS client may be associated with one or more DOTS servers, and
-those DOTS servers may belong to different entities.  This may be to ensure
+those DOTS servers may belong to different domains.  This may be to ensure
 high availability or co-ordinate mitigation with more than one directly
 connected ISP.  An example scenario is for an enterprise to have DDoS
 mitigation service from multiple providers, as shown in
@@ -854,7 +854,7 @@ for redirected signaling.\]\]
 
 DOTS is centered around improving the speed and efficiency of coordinated
 response to DDoS attacks. One scenario not yet discussed involves coordination
-among federated entities operating DOTS servers and mitigators.
+among federated domains operating DOTS servers and mitigators.
 
 In the course of normal DOTS operations, a DOTS client communicates the need for
 mitigation to a DOTS server, and that server initiates mitigation on a
@@ -889,7 +889,7 @@ building a cumulative mitigation against the attack:
 ~~~~~
                      example.net domain
                      . . . . . . . . . . . . . . . . .
-                     .                               .
+                     .    Gn                            .
        +----+    A   .  +----+       +-----------+   .
        | Cc |<--------->| Sn |~~~~~~~| Mitigator |   .
        +----+        .  +====+       |     Mn    |   .
@@ -915,11 +915,12 @@ building a cumulative mitigation against the attack:
 In {{fig-recursive-signaling}} above, client Cc signals a request for mitigation
 across inter-domain signaling session A to the DOTS server Sn belonging to the
 example.net domain. DOTS server Sn enables mitigation on mitigator Mn. DOTS
-server Sn is logically back-to-back with DOTS client Cn, which has pre-existing
-inter-domain signaling session B with the DOTS server So belonging to the
-example.org domain. At any point, DOTS server Sn MAY recurse an on-going
-mitigation request through DOTS client Cn to DOTS server So, in the expectation
-that mitigator Mo will be activated to aid in the defense of the attack target.
+server Sn is half of DOTS gateway Gn, being deployed logically back-to-back with
+DOTS client Cn, which has pre-existing inter-domain signaling session B with the
+DOTS server So belonging to the example.org domain. At any point, DOTS server Sn
+MAY recurse an on-going mitigation request through DOTS client Cn to DOTS server
+So, in the expectation that mitigator Mo will be activated to aid in the defense
+of the attack target.
 
 Recursive signaling is opaque to the DOTS client. To maximize mitigation
 visibility to the DOTS client, however, the recursing domain SHOULD provide
@@ -937,7 +938,7 @@ a brief, protocol-defined period in the event the DOTS client originating the
 mitigation withdraws its request for help, as per the discussion of managing
 mitigation toggling in the operational requirements
 ([I-D.ietf-dots-requirements]).  Service or business agreements between
-recursing entities are not in scope for this document.
+recursing domains are not in scope for this document.
 
 {:ed-note: source="mortensen"}
 \[\[EDITOR'S NOTE: Recursive signaling raises questions about operational and
@@ -1029,7 +1030,7 @@ include the following:
 
 * Detected attack exceeding a rate in bytes per second (bps).
 
-* Detected resource exhaustion in a attack target.
+* Detected resource exhaustion in an attack target.
 
 * Detected resource exhaustion in the local domain's mitigator.
 
@@ -1038,6 +1039,9 @@ include the following:
 * Number of attack sources in a given attack.
 
 * Number of active attacks against targets in the operator's domain.
+
+* Thresholds developed through arbitrary statistical analysis or deep learning
+  techniques.
 
 When automated threshold-based mitigation requests are enabled, violations of
 any of the above thresholds, or any additional operator-defined threshold, will
@@ -1057,9 +1061,9 @@ anticipated as attack traffic congests the link, depending on the attack type.
 While [I-D.ietf-dots-requirements] specifies the DOTS protocol be robust when
 signaling under attack conditions, there are nevertheless scenarios in which the
 DOTS signal is lost in spite of protocol best efforts. To handle such scenarios,
-a DOTS client operator may elect to trigger mitigation when the DOTS server
-ceases receiving DOTS client signals, or vice versa, beyond the count or period
-permitted by the protocol.
+a DOTS client operator may configure the signaling session to trigger mitigation
+when the DOTS server ceases receiving DOTS client signals (or vice versa) beyond
+the miss count or period permitted by the protocol.
 
 The impact of mitigating due to loss of signal in either direction must be
 considered carefully before enabling it. Signal loss is not caused by links
@@ -1098,9 +1102,8 @@ mitigation for particular prefixes, leading to route or DNS flapping.
 
 Any attack targeting the availability of DOTS servers may disrupt the ability
 of the system to receive and process DOTS signals resulting in failure to
-fulfill a mitigation request.  DOTS systems SHOULD be given adequate
-protections, again in accordance with best current practices for network and
-host security.
+fulfill a mitigation request.  DOTS agents SHOULD be given adequate protections,
+again in accordance with best current practices for network and host security.
 
 
 Acknowledgments                 {#acknowledgments}
