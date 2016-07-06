@@ -104,7 +104,7 @@
       </address>
     </author>
 
-    <date year="2016" month="July" day="04"/>
+    <date year="2016" month="July" day="05"/>
 
     <area>Security</area>
     <workgroup>DOTS</workgroup>
@@ -867,7 +867,7 @@ building a cumulative mitigation against the attack:</t>
 <figure title="Recursive Signaling" anchor="fig-recursive-signaling"><artwork><![CDATA[
                      example.net domain
                      . . . . . . . . . . . . . . . . .
-                     .    Gn                            .
+                     .    Gn                         .
        +----+    A   .  +----+       +-----------+   .
        | Cc |<--------->| Sn |~~~~~~~| Mitigator |   .
        +----+        .  +====+       |     Mn    |   .

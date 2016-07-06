@@ -889,7 +889,7 @@ building a cumulative mitigation against the attack:
 ~~~~~
                      example.net domain
                      . . . . . . . . . . . . . . . . .
-                     .    Gn                            .
+                     .    Gn                         .
        +----+    A   .  +----+       +-----------+   .
        | Cc |<--------->| Sn |~~~~~~~| Mitigator |   .
        +----+        .  +====+       |     Mn    |   .

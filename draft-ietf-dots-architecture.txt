@@ -5,7 +5,7 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                      Arbor Networks, Inc.
 Intended status: Informational                              F. Andreasen
-Expires: January 5, 2017                                        T. Reddy
+Expires: January 6, 2017                                        T. Reddy
                                                      Cisco Systems, Inc.
                                                                  C. Gray
                                                            Comcast, Inc.
@@ -13,7 +13,7 @@ Expires: January 5, 2017                                        T. Reddy
                                             Charter Communications, Inc.
                                                                N. Teague
                                                           Verisign, Inc.
-                                                           July 04, 2016
+                                                           July 05, 2016
 
 
 Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 5, 2017.
+   This Internet-Draft will expire on January 6, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 1]
+Mortensen, et al.        Expires January 6, 2017                [Page 1]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 2]
+Mortensen, et al.        Expires January 6, 2017                [Page 2]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -165,7 +165,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 3]
+Mortensen, et al.        Expires January 6, 2017                [Page 3]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -221,7 +221,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 4]
+Mortensen, et al.        Expires January 6, 2017                [Page 4]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -277,7 +277,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 5]
+Mortensen, et al.        Expires January 6, 2017                [Page 5]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -333,7 +333,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 6]
+Mortensen, et al.        Expires January 6, 2017                [Page 6]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -389,7 +389,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 7]
+Mortensen, et al.        Expires January 6, 2017                [Page 7]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -445,7 +445,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 8]
+Mortensen, et al.        Expires January 6, 2017                [Page 8]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -501,7 +501,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017                [Page 9]
+Mortensen, et al.        Expires January 6, 2017                [Page 9]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -557,7 +557,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 10]
+Mortensen, et al.        Expires January 6, 2017               [Page 10]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -613,7 +613,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 11]
+Mortensen, et al.        Expires January 6, 2017               [Page 11]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -669,7 +669,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 12]
+Mortensen, et al.        Expires January 6, 2017               [Page 12]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -725,7 +725,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 13]
+Mortensen, et al.        Expires January 6, 2017               [Page 13]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -781,7 +781,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 14]
+Mortensen, et al.        Expires January 6, 2017               [Page 14]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -837,7 +837,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 15]
+Mortensen, et al.        Expires January 6, 2017               [Page 15]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -893,7 +893,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 16]
+Mortensen, et al.        Expires January 6, 2017               [Page 16]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -949,7 +949,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 17]
+Mortensen, et al.        Expires January 6, 2017               [Page 17]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1005,7 +1005,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 18]
+Mortensen, et al.        Expires January 6, 2017               [Page 18]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1061,7 +1061,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 19]
+Mortensen, et al.        Expires January 6, 2017               [Page 19]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1072,7 +1072,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
                         example.net domain
                         . . . . . . . . . . . . . . . . .
-                        .    Gn                            .
+                        .    Gn                         .
           +----+    A   .  +----+       +-----------+   .
           | Cc |<--------->| Sn |~~~~~~~| Mitigator |   .
           +----+        .  +====+       |     Mn    |   .
@@ -1117,7 +1117,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 20]
+Mortensen, et al.        Expires January 6, 2017               [Page 20]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1173,7 +1173,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 21]
+Mortensen, et al.        Expires January 6, 2017               [Page 21]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1229,7 +1229,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 22]
+Mortensen, et al.        Expires January 6, 2017               [Page 22]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1285,7 +1285,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 23]
+Mortensen, et al.        Expires January 6, 2017               [Page 23]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1341,7 +1341,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 24]
+Mortensen, et al.        Expires January 6, 2017               [Page 24]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1397,7 +1397,7 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 25]
+Mortensen, et al.        Expires January 6, 2017               [Page 25]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1453,7 +1453,7 @@ Authors' Addresses
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 26]
+Mortensen, et al.        Expires January 6, 2017               [Page 26]
 
 Internet-Draft              DOTS Architecture                  July 2016
 
@@ -1509,4 +1509,4 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 5, 2017               [Page 27]
+Mortensen, et al.        Expires January 6, 2017               [Page 27]
