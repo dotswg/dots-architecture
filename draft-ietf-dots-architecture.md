@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-00
+docname: draft-ietf-dots-architecture-01
 date: @DATE@
 
 area: Security
@@ -324,14 +324,14 @@ such information include, but are not limited to:
 ~~~~~
         {
             "https1": [
-                "172.16.168.254:443",
-                "172.16.169.254:443",
+                "192.0.2.1:443",
+                "198.51.100.2:443",
             ],
             "proxies": [
-                "10.0.0.10:3128",
-                "[2001:db9::1/128]:3128"
+                "203.0.113.3:3128",
+                "[2001:DB8:AC10::1]:3128"
             ],
-            "api_urls": "https://apiserver.local/api/v1",
+            "api_urls": "https://apiserver.example.com/api/v1",
         }
 ~~~~~
 {: #fig-resource-identifiers title="Protected resource identifiers"}
