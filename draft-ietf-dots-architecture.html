@@ -416,7 +416,7 @@
 
   <meta name="dct.creator" content="Mortensen, A., Andreasen, F., Reddy, T., Gray, C., Compton, R., and N. Teague" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-architecture-01" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-10-29" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-10-31" />
   <meta name="dct.abstract" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
   <meta name="description" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
 
@@ -440,7 +440,7 @@
   <td class="right">F. Andreasen</td>
 </tr>
 <tr>
-  <td class="left">Expires: May 2, 2017</td>
+  <td class="left">Expires: May 4, 2017</td>
   <td class="right">T. Reddy</td>
 </tr>
 <tr>
@@ -473,7 +473,7 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">October 29, 2016</td>
+  <td class="right">October 31, 2016</td>
 </tr>
 
     	
@@ -493,7 +493,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 2, 2017.</p>
+<p>This Internet-Draft will expire on May 4, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -703,17 +703,17 @@
                        +---+
            ------------| S |
           /            +---+
-                       example.net
+                       dots1.example.net
          /
    +---+/              +---+
    | c |---------------| S |
    +---+\              +---+
-                       example.org
+                       dots.example.org
          \
           \            +---+
            ------------| S |
                        +---+
-   example.com         example.com
+   example.com         dots2.example.net
 </pre>
 <p class="figure">Figure 6: Multi-Homed DOTS Client</p>
 <h3 id="rfc.section.2.3.1"><a href="#rfc.section.2.3.1">2.3.1.</a> <a href="#gatewayed-signaling" id="gatewayed-signaling">Gatewayed signaling</a></h3>
@@ -804,7 +804,8 @@
 <p id="rfc.section.3.1.2.p.2">The methods by which a DOTS client receives the address and associated service details of the DOTS server are not prescribed by this document. For example, a DOTS client may be directly configured to use a specific DOTS server address and port, and directly provided with any data necessary to satisfy the Peer Mutual Authentication requirement in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>, such as symmetric or asymmetric keys, usernames and passwords, etc. All configuration and authentication information in this scenario is provided out-of-band by the domain operating the DOTS server.</p>
 <p id="rfc.section.3.1.2.p.3">At the other extreme, the architecture in this document allows for a form of DOTS client auto-provisioning. For example, the domain operating the DOTS server or servers might provide the client domain only with symmetric or asymmetric keys to authenticate the provisioned DOTS clients. Only the keys would then be directly configured on DOTS clients, but the remaining configuration required to provision the DOTS clients could be learned through mechanisms similar to DNS SRV <a href="#RFC2782">[RFC2782]</a> or DNS Service Discovery <a href="#RFC6763">[RFC6763]</a>.</p>
 <p id="rfc.section.3.1.2.p.4">The DOTS client SHOULD successfully authenticate and exchange messages with the DOTS server over both signal and data channel as soon as possible to confirm that both channels are operational.</p>
-<p id="rfc.section.3.1.2.p.5">Once the DOTS client begins receiving DOTS server signals, the signaling session is active. At any time during the signaling session, the DOTS client MAY use the data channel to adjust initial configuration, manage black- and white-listed prefixes or addresses, leverage vendor-specific extensions, and so on. Note that unlike the signal channel, there is no requirement that the data channel remain operational in attack conditions (See Data Channel Requirements, <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>).</p>
+<p id="rfc.section.3.1.2.p.5">As described in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>, the DOTS client can configure preferred values for acceptable signal loss, mitigation lifetime, and heartbeat intervals when establishing the signaling session. A signaling session is not active until DOTS agents have agreed on the values for these signaling session parameters, a process defined by the protocol.</p>
+<p id="rfc.section.3.1.2.p.6">Once the DOTS client begins receiving DOTS server signals, the signaling session is active. At any time during the signaling session, the DOTS client MAY use the data channel to adjust initial configuration, manage black- and white-listed prefixes or addresses, leverage vendor-specific extensions, and so on. Note that unlike the signal channel, there is no requirement that the data channel remain operational in attack conditions (See Data Channel Requirements, <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>).</p>
 <h3 id="rfc.section.3.1.3"><a href="#rfc.section.3.1.3">3.1.3.</a> <a href="#maintaining-signaling-session" id="maintaining-signaling-session">Maintaining the Signaling Session</a></h3>
 <p id="rfc.section.3.1.3.p.1">DOTS clients and servers periodically send heartbeats to each other over the signal channel, per Operational Requirements discussed in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>. DOTS agent operators SHOULD configure the heartbeat interval such that the frequency does not lead to accidental denials of service due to the overwhelming number of heartbeats a DOTS agent must field.</p>
 <p id="rfc.section.3.1.3.p.2">Either DOTS agent may consider a signaling session terminated in the extended absence of a heartbeat from its peer agent. The period of that absence will be established in the protocol definition.</p>
@@ -907,7 +908,7 @@
 <p/>
 
 <ul>
-  <li>Simplified DOTS client configuration, including service discovery through the methods described in <a href="#RFC7094">[RFC7094]</a>.</li>
+  <li>Simplified DOTS client configuration, including service discovery through the methods described in <a href="#RFC7094">[RFC7094]</a>. In this scenario, the &#8220;instance discovery&#8221; message would be a DOTS client initiating a signaling session to the DOTS server anycast Service Address, to which the DOTS server would reply with a redirection to the DOTS server unicast address the client should use for DOTS.</li>
   <li>Region- or customer-specific deployments, in which the DOTS Service Addresses route to distinct DOTS servers depending on the client region or the customer network in which a DOTS client resides.</li>
   <li>Operational resiliency, spreading DOTS signaling traffic across the DOTS server domain&#8217;s networks, and thereby also reducing the potential attack surface, as described in BCP 126 <a href="#RFC4786">[RFC4786]</a>.</li>
 </ul>
@@ -915,9 +916,10 @@
 <p id="rfc.section.3.2.4.1.p.1">As long as network configuration remains stable, anycast DOTS signaling is to the individual DOTS client indistinct from direct signaling. However, the operational challenges inherent in anycast signaling are anything but negligible, and DOTS server operators must carefully weigh the risks against the benefits before deploying.</p>
 <p id="rfc.section.3.2.4.1.p.2">While the DOTS signal channel primarily operates over UDP per <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>, the signal channel also requires mutual authentication between DOTS agents, with associated security state on both ends.  The resulting considerations therefore superficially resemble the deployment of anycast DNS over DTLS, as described in <a href="#I-D.ietf-dprive-dnsodtls">[I-D.ietf-dprive-dnsodtls]</a>, but the similiarities only go so far.</p>
 <p id="rfc.section.3.2.4.1.p.3">Network instability is of particular concern with anycast signaling, as DOTS signaling sessions are expected to be long-lived, and potentially operating under congested network conditions caused by a volumetric DDoS attack.</p>
-<p id="rfc.section.3.2.4.1.p.4">For example, a network configuration altering the route to the DOTS server during active anycast signaling may cause the DOTS client to send messages to a DOTS server other than the one with which it initially established a signaling session. That second DOTS server will not have the security state of the existing session, leading to signaling session termination.</p>
+<p id="rfc.section.3.2.4.1.p.4">For example, a network configuration altering the route to the DOTS server during active anycast signaling may cause the DOTS client to send messages to a DOTS server other than the one with which it initially established a signaling session. That second DOTS server may not have the security state of the existing session, forcing the DOTS client to initialize a new signaling session.  This challenge may in part be mitigated by use of pre-shared keys, as described in <a href="#I-D.ietf-tls-tls13">[I-D.ietf-tls-tls13]</a>, but keying material must be available to all DOTS servers sharing the anycast Service Address in that case.</p>
 <p id="rfc.section.3.2.4.1.p.5">While the DOTS client will try to establish a new signaling session with the DOTS server now acting as the anycast DOTS Service Address, the link between DOTS client and server may be congested with attack traffic, making signal session establishment difficult. In such a scenario, anycast Service Address instability becomes a sort of signal session flapping, with obvious negative consequences for the DOTS deployment.</p>
-<p id="rfc.section.3.2.4.1.p.6">Anycast signaling deployments similarly must also take into account active mitigations. Active mitigations initiated through a signaling session may involve diverting traffic to a scrubbing center. If the signaling session flaps due to anycast changes as described above, mitigation may also flap as the DOTS servers sharing the anycast DOTS service address stop mitigation on detecting signaling session loss.</p>
+<p id="rfc.section.3.2.4.1.p.6">Anycast signaling deployments similarly must also take into account active mitigations. Active mitigations initiated through a signaling session may involve diverting traffic to a scrubbing center. If the signaling session flaps due to anycast changes as described above, mitigation may also flap as the DOTS servers sharing the anycast DOTS service address toggles mitigation on detecting signaling session loss, depending on whether the client has configured mitigation on loss of signal.</p>
+<p id="rfc.section.3.2.4.1.p.7">[[EDITOR&#8217;S NOTE: We request feedback from the working group regarding the complexities inherent in an anycast DOTS deployment. Outside of using anycast for service discovery, significant challenges need to be overcome, particularly when dealing with security and mitigation state, and the resulting operational complexity may outweigh the expected benefits.]]</p>
 <h2 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#mit-request-triggers" id="mit-request-triggers">Triggering Requests for Mitigation</a></h2>
 <p><a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a> places no limitation on the circumstances in which a DOTS client operator may request mitigation, nor does it demand justification for any mitigation request, thereby reserving operational control over DDoS defense for the domain requesting mitigation. This architecture likewise does not prescribe the network conditions and mechanisms triggering a mitigation request from a DOTS client.</p>
 <p id="rfc.section.3.3.p.2">However, considering selected possible mitigation triggers from an architectural perspective offers a model for alternative or unanticipated triggers for DOTS deployments. In all cases, what network conditions merit a mitigation request are at the discretion of the DOTS client operator.</p>
@@ -999,6 +1001,12 @@
         <b id="I-D.ietf-dprive-dnsodtls">[I-D.ietf-dprive-dnsodtls]</b>
       </td>
       <td class="top"><a>Reddy, T.</a>, <a>Wing, D.</a> and <a>P. Patil</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dprive-dnsodtls-12">Specification for DNS over Datagram Transport Layer Security (DTLS)</a>", Internet-Draft draft-ietf-dprive-dnsodtls-12, September 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-tls-tls13">[I-D.ietf-tls-tls13]</b>
+      </td>
+      <td class="top"><a>Rescorla, E.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-tls-tls13-18">The Transport Layer Security (TLS) Protocol Version 1.3</a>", Internet-Draft draft-ietf-tls-tls13-18, October 2016.</td>
     </tr>
     <tr>
       <td class="reference">

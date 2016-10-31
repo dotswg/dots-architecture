@@ -97,6 +97,7 @@ informative:
   I-D.ietf-dots-requirements:
   I-D.ietf-dots-use-cases:
   I-D.ietf-dprive-dnsodtls:
+  I-D.ietf-tls-tls13:
   RFC0768:
   RFC0793:
   RFC1034:
@@ -576,17 +577,17 @@ to a mitigation request.\]\]
                        +---+
            ------------| S |
           /            +---+
-                       example.net
+                       dots1.example.net
          /
    +---+/              +---+
    | c |---------------| S |
    +---+\              +---+
-                       example.org
+                       dots.example.org
          \
           \            +---+
            ------------| S |
                        +---+
-   example.com         example.com
+   example.com         dots2.example.net
 ~~~~~
 {: #fig-multi-homed-client title="Multi-Homed DOTS Client"}
 
@@ -744,6 +745,12 @@ SRV {{RFC2782}} or DNS Service Discovery {{RFC6763}}.
 The DOTS client SHOULD successfully authenticate and exchange messages with the
 DOTS server over both signal and data channel as soon as possible to confirm
 that both channels are operational.
+
+As described in [I-D.ietf-dots-requirements], the DOTS client can configure
+preferred values for acceptable signal loss, mitigation lifetime, and heartbeat
+intervals when establishing the signaling session. A signaling session is not
+active until DOTS agents have agreed on the values for these signaling session
+parameters, a process defined by the protocol.
 
 Once the DOTS client begins receiving DOTS server signals, the signaling session
 is active. At any time during the signaling session, the DOTS client MAY use the
@@ -962,7 +969,10 @@ the network configuration at the time the DOTS clients connect.  Among other
 benefits, anycasted signaling potentially offers the following:
 
 * Simplified DOTS client configuration, including service discovery through the
-  methods described in [RFC7094].
+  methods described in [RFC7094]. In this scenario, the "instance discovery"
+  message would be a DOTS client initiating a signaling session to the DOTS
+  server anycast Service Address, to which the DOTS server would reply with a
+  redirection to the DOTS server unicast address the client should use for DOTS.
 
 * Region- or customer-specific deployments, in which the DOTS Service Addresses
   route to distinct DOTS servers depending on the client region or the customer
@@ -995,8 +1005,11 @@ under congested network conditions caused by a volumetric DDoS attack.
 For example, a network configuration altering the route to the DOTS server
 during active anycast signaling may cause the DOTS client to send messages to a
 DOTS server other than the one with which it initially established a signaling
-session. That second DOTS server will not have the security state of the
-existing session, leading to signaling session termination.
+session. That second DOTS server may not have the security state of the
+existing session, forcing the DOTS client to initialize a new signaling session.
+This challenge may in part be mitigated by use of pre-shared keys, as described
+in [I-D.ietf-tls-tls13], but keying material must be available to all DOTS
+servers sharing the anycast Service Address in that case.
 
 While the DOTS client will try to establish a new signaling session with the
 DOTS server now acting as the anycast DOTS Service Address, the link between
@@ -1009,8 +1022,15 @@ Anycast signaling deployments similarly must also take into account active
 mitigations. Active mitigations initiated through a signaling session may
 involve diverting traffic to a scrubbing center. If the signaling session flaps
 due to anycast changes as described above, mitigation may also flap as the DOTS
-servers sharing the anycast DOTS service address stop mitigation on detecting
-signaling session loss.
+servers sharing the anycast DOTS service address toggles mitigation on detecting
+signaling session loss, depending on whether the client has configured
+mitigation on loss of signal.
+
+\[\[EDITOR'S NOTE: We request feedback from the working group regarding the
+complexities inherent in an anycast DOTS deployment. Outside of using anycast
+for service discovery, significant challenges need to be overcome, particularly
+when dealing with security and mitigation state, and the resulting operational
+complexity may outweigh the expected benefits.\]\]
 
 
 Triggering Requests for Mitigation {#mit-request-triggers}
