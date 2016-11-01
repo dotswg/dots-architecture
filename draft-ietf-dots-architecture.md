@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-00
+docname: draft-ietf-dots-architecture-01
 date: @DATE@
 
 area: Security
@@ -96,6 +96,8 @@ normative:
 informative:
   I-D.ietf-dots-requirements:
   I-D.ietf-dots-use-cases:
+  I-D.ietf-dprive-dnsodtls:
+  I-D.ietf-tls-tls13:
   RFC0768:
   RFC0793:
   RFC1034:
@@ -103,8 +105,10 @@ informative:
   RFC3261:
   RFC4271:
   RFC4732:
+  RFC4786:
   RFC6763:
   RFC7092:
+  RFC7094:
 
 
 --- abstract
@@ -324,14 +328,14 @@ such information include, but are not limited to:
 ~~~~~
         {
             "https1": [
-                "172.16.168.254:443",
-                "172.16.169.254:443",
+                "192.0.2.1:443",
+                "198.51.100.2:443",
             ],
             "proxies": [
-                "10.0.0.10:3128",
-                "[2001:db9::1/128]:3128"
+                "203.0.113.3:3128",
+                "[2001:DB8:AC10::1]:3128"
             ],
-            "api_urls": "https://apiserver.local/api/v1",
+            "api_urls": "https://apiserver.example.com/api/v1",
         }
 ~~~~~
 {: #fig-resource-identifiers title="Protected resource identifiers"}
@@ -573,17 +577,17 @@ to a mitigation request.\]\]
                        +---+
            ------------| S |
           /            +---+
-                       example.net
+                       dots1.example.net
          /
    +---+/              +---+
    | c |---------------| S |
    +---+\              +---+
-                       example.org
+                       dots.example.org
          \
           \            +---+
            ------------| S |
                        +---+
-   example.com         example.xyz
+   example.com         dots2.example.net
 ~~~~~
 {: #fig-multi-homed-client title="Multi-Homed DOTS Client"}
 
@@ -741,6 +745,12 @@ SRV {{RFC2782}} or DNS Service Discovery {{RFC6763}}.
 The DOTS client SHOULD successfully authenticate and exchange messages with the
 DOTS server over both signal and data channel as soon as possible to confirm
 that both channels are operational.
+
+As described in [I-D.ietf-dots-requirements], the DOTS client can configure
+preferred values for acceptable signal loss, mitigation lifetime, and heartbeat
+intervals when establishing the signaling session. A signaling session is not
+active until DOTS agents have agreed on the values for these signaling session
+parameters, a process defined by the protocol.
 
 Once the DOTS client begins receiving DOTS server signals, the signaling session
 is active. At any time during the signaling session, the DOTS client MAY use the
@@ -948,6 +958,81 @@ these issues to help settle the way forward.\]\]
 {:mortensen}
 
 
+### Anycast Signaling
+
+The DOTS architecture does not assume the availability of anycast within a DOTS
+deployment, but neither does the architecture exclude it. Domains operating DOTS
+servers MAY deploy DOTS servers with an anycast Service Address as described in
+BCP 126 [RFC4786]. In such a deployment, DOTS clients connecting to the DOTS
+Service Address may be communicating with distinct DOTS servers, depending on
+the network configuration at the time the DOTS clients connect.  Among other
+benefits, anycasted signaling potentially offers the following:
+
+* Simplified DOTS client configuration, including service discovery through the
+  methods described in [RFC7094]. In this scenario, the "instance discovery"
+  message would be a DOTS client initiating a signaling session to the DOTS
+  server anycast Service Address, to which the DOTS server would reply with a
+  redirection to the DOTS server unicast address the client should use for DOTS.
+
+* Region- or customer-specific deployments, in which the DOTS Service Addresses
+  route to distinct DOTS servers depending on the client region or the customer
+  network in which a DOTS client resides.
+
+* Operational resiliency, spreading DOTS signaling traffic across the DOTS
+  server domain's networks, and thereby also reducing the potential attack
+  surface, as described in BCP 126 [RFC4786].
+
+
+#### Anycast Signaling Considerations
+
+As long as network configuration remains stable, anycast DOTS signaling is to
+the individual DOTS client indistinct from direct signaling. However, the
+operational challenges inherent in anycast signaling are anything but
+negligible, and DOTS server operators must carefully weigh the risks against the
+benefits before deploying.
+
+While the DOTS signal channel primarily operates over UDP per
+[I-D.ietf-dots-requirements], the signal channel also requires mutual
+authentication between DOTS agents, with associated security state on both ends.
+The resulting considerations therefore superficially resemble the deployment of
+anycast DNS over DTLS, as described in [I-D.ietf-dprive-dnsodtls], but the
+similiarities only go so far.
+
+Network instability is of particular concern with anycast signaling, as DOTS
+signaling sessions are expected to be long-lived, and potentially operating
+under congested network conditions caused by a volumetric DDoS attack.
+
+For example, a network configuration altering the route to the DOTS server
+during active anycast signaling may cause the DOTS client to send messages to a
+DOTS server other than the one with which it initially established a signaling
+session. That second DOTS server may not have the security state of the
+existing session, forcing the DOTS client to initialize a new signaling session.
+This challenge may in part be mitigated by use of pre-shared keys, as described
+in [I-D.ietf-tls-tls13], but keying material must be available to all DOTS
+servers sharing the anycast Service Address in that case.
+
+While the DOTS client will try to establish a new signaling session with the
+DOTS server now acting as the anycast DOTS Service Address, the link between
+DOTS client and server may be congested with attack traffic, making signal
+session establishment difficult. In such a scenario, anycast Service Address
+instability becomes a sort of signal session flapping, with obvious negative
+consequences for the DOTS deployment.
+
+Anycast signaling deployments similarly must also take into account active
+mitigations. Active mitigations initiated through a signaling session may
+involve diverting traffic to a scrubbing center. If the signaling session flaps
+due to anycast changes as described above, mitigation may also flap as the DOTS
+servers sharing the anycast DOTS service address toggles mitigation on detecting
+signaling session loss, depending on whether the client has configured
+mitigation on loss of signal.
+
+\[\[EDITOR'S NOTE: We request feedback from the working group regarding the
+complexities inherent in an anycast DOTS deployment. Outside of using anycast
+for service discovery, significant challenges need to be overcome, particularly
+when dealing with security and mitigation state, and the resulting operational
+complexity may outweigh the expected benefits.\]\]
+
+
 Triggering Requests for Mitigation {#mit-request-triggers}
 ----------------------------------
 
@@ -1012,19 +1097,19 @@ following:
 * Manual monitoring of network behavior through network monitoring software
 
 
-### Automated Threshold-Based Mitigation Request {#auto-threshold-mit}
+### Automated Conditional Mitigation Request {#auto-conditional-mit}
 
 Unlike manual mitigation requests, which depend entirely on the DOTS client
 operator's capacity to react with speed and accuracy to every detected or
-detectable attack, mitigation requests triggered by detected attack thresholds
+detectable attack, mitigation requests triggered by detected attack conditions
 reduce the operational burden on the DOTS client operator, and minimize the
 latency between attack detection and the start of mitigation.
 
-Mitigation requests are triggered in this scenario by violations of
-operator-specified attack thresholds. Attack detection is deployment-specific,
-and not constrained by this architecture. Similarly the specifics of a threshold
-are left to the discretion of the operator, though common threshold types
-include the following:
+Mitigation requests are triggered in this scenario by operator-specified network
+conditions. Attack detection is deployment-specific, and not constrained by this
+architecture. Similarly the specifics of a condition are left to the discretion
+of the operator, though common conditions meriting mitigation include the
+following:
 
 * Detected attack exceeding a rate in packets per second (pps).
 
@@ -1040,13 +1125,15 @@ include the following:
 
 * Number of active attacks against targets in the operator's domain.
 
-* Thresholds developed through arbitrary statistical analysis or deep learning
-  techniques.
+* Conditional detection developed through arbitrary statistical analysis or deep
+  learning techniques.
 
-When automated threshold-based mitigation requests are enabled, violations of
-any of the above thresholds, or any additional operator-defined threshold, will
+* Any combination of the above.
+
+When automated conditional mitigation requests are enabled, violations of any of
+the above conditions, or any additional operator-defined conditions, will
 trigger a mitigation request from the DOTS client to the DOTS server. The
-interfaces between the application detecting the threshold violation and the
+interfaces between the application detecting the condition violation and the
 DOTS client are implementation-specific.
 
 

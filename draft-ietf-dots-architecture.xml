@@ -6,6 +6,8 @@
 <!ENTITY RFC2119 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY I-D.ietf-dots-requirements SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dots-requirements.xml">
 <!ENTITY I-D.ietf-dots-use-cases SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dots-use-cases.xml">
+<!ENTITY I-D.ietf-dprive-dnsodtls SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dprive-dnsodtls.xml">
+<!ENTITY I-D.ietf-tls-tls13 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-tls13.xml">
 <!ENTITY RFC0768 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0768.xml">
 <!ENTITY RFC0793 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0793.xml">
 <!ENTITY RFC1034 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1034.xml">
@@ -13,8 +15,10 @@
 <!ENTITY RFC3261 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3261.xml">
 <!ENTITY RFC4271 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4271.xml">
 <!ENTITY RFC4732 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4732.xml">
+<!ENTITY RFC4786 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4786.xml">
 <!ENTITY RFC6763 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml">
 <!ENTITY RFC7092 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7092.xml">
+<!ENTITY RFC7094 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7094.xml">
 ]>
 
 <?rfc rfcedstyle="yes"?>
@@ -27,7 +31,7 @@
 <?rfc inline="yes"?>
 <?rfc docmapping="yes"?>
 
-<rfc docName="draft-ietf-dots-architecture-00" category="info">
+<rfc docName="draft-ietf-dots-architecture-01" category="info">
 
   <front>
     <title abbrev="DOTS Architecture">Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture</title>
@@ -104,7 +108,7 @@
       </address>
     </author>
 
-    <date year="2016" month="July" day="05"/>
+    <date year="2016" month="October" day="31"/>
 
     <area>Security</area>
     <workgroup>DOTS</workgroup>
@@ -325,14 +329,14 @@ the data:</t>
 <figure title="Protected resource identifiers" anchor="fig-resource-identifiers"><artwork><![CDATA[
         {
             "https1": [
-                "172.16.168.254:443",
-                "172.16.169.254:443",
+                "192.0.2.1:443",
+                "198.51.100.2:443",
             ],
             "proxies": [
-                "10.0.0.10:3128",
-                "[2001:db9::1/128]:3128"
+                "203.0.113.3:3128",
+                "[2001:DB8:AC10::1]:3128"
             ],
-            "api_urls": "https://apiserver.local/api/v1",
+            "api_urls": "https://apiserver.example.com/api/v1",
         }
 ]]></artwork></figure>
 
@@ -565,17 +569,17 @@ to a mitigation request.]]</t>
                        +---+
            ------------| S |
           /            +---+
-                       example.net
+                       dots1.example.net
          /
    +---+/              +---+
    | c |---------------| S |
    +---+\              +---+
-                       example.org
+                       dots.example.org
          \
           \            +---+
            ------------| S |
                        +---+
-   example.com         example.xyz
+   example.com         dots2.example.net
 ]]></artwork></figure>
 
 <section anchor="gatewayed-signaling" title="Gatewayed signaling">
@@ -726,6 +730,12 @@ SRV <xref target="RFC2782"/> or DNS Service Discovery <xref target="RFC6763"/>.<
 <t>The DOTS client SHOULD successfully authenticate and exchange messages with the
 DOTS server over both signal and data channel as soon as possible to confirm
 that both channels are operational.</t>
+
+<t>As described in <xref target="I-D.ietf-dots-requirements"></xref>, the DOTS client can configure
+preferred values for acceptable signal loss, mitigation lifetime, and heartbeat
+intervals when establishing the signaling session. A signaling session is not
+active until DOTS agents have agreed on the values for these signaling session
+parameters, a process defined by the protocol.</t>
 
 <t>Once the DOTS client begins receiving DOTS server signals, the signaling session
 is active. At any time during the signaling session, the DOTS client MAY use the
@@ -923,6 +933,81 @@ mitigation.  We ask the working group for feedback and additional discussion of
 these issues to help settle the way forward.]]</t>
 
 </section>
+<section anchor="anycast-signaling" title="Anycast Signaling">
+
+<t>The DOTS architecture does not assume the availability of anycast within a DOTS
+deployment, but neither does the architecture exclude it. Domains operating DOTS
+servers MAY deploy DOTS servers with an anycast Service Address as described in
+BCP 126 <xref target="RFC4786"></xref>. In such a deployment, DOTS clients connecting to the DOTS
+Service Address may be communicating with distinct DOTS servers, depending on
+the network configuration at the time the DOTS clients connect.  Among other
+benefits, anycasted signaling potentially offers the following:</t>
+
+<t><list style="symbols">
+  <t>Simplified DOTS client configuration, including service discovery through the
+methods described in <xref target="RFC7094"></xref>. In this scenario, the &ldquo;instance discovery&rdquo;
+message would be a DOTS client initiating a signaling session to the DOTS
+server anycast Service Address, to which the DOTS server would reply with a
+redirection to the DOTS server unicast address the client should use for DOTS.</t>
+  <t>Region- or customer-specific deployments, in which the DOTS Service Addresses
+route to distinct DOTS servers depending on the client region or the customer
+network in which a DOTS client resides.</t>
+  <t>Operational resiliency, spreading DOTS signaling traffic across the DOTS
+server domain&rsquo;s networks, and thereby also reducing the potential attack
+surface, as described in BCP 126 <xref target="RFC4786"></xref>.</t>
+</list></t>
+
+<section anchor="anycast-signaling-considerations" title="Anycast Signaling Considerations">
+
+<t>As long as network configuration remains stable, anycast DOTS signaling is to
+the individual DOTS client indistinct from direct signaling. However, the
+operational challenges inherent in anycast signaling are anything but
+negligible, and DOTS server operators must carefully weigh the risks against the
+benefits before deploying.</t>
+
+<t>While the DOTS signal channel primarily operates over UDP per
+<xref target="I-D.ietf-dots-requirements"></xref>, the signal channel also requires mutual
+authentication between DOTS agents, with associated security state on both ends.
+The resulting considerations therefore superficially resemble the deployment of
+anycast DNS over DTLS, as described in <xref target="I-D.ietf-dprive-dnsodtls"></xref>, but the
+similiarities only go so far.</t>
+
+<t>Network instability is of particular concern with anycast signaling, as DOTS
+signaling sessions are expected to be long-lived, and potentially operating
+under congested network conditions caused by a volumetric DDoS attack.</t>
+
+<t>For example, a network configuration altering the route to the DOTS server
+during active anycast signaling may cause the DOTS client to send messages to a
+DOTS server other than the one with which it initially established a signaling
+session. That second DOTS server may not have the security state of the
+existing session, forcing the DOTS client to initialize a new signaling session.
+This challenge may in part be mitigated by use of pre-shared keys, as described
+in <xref target="I-D.ietf-tls-tls13"></xref>, but keying material must be available to all DOTS
+servers sharing the anycast Service Address in that case.</t>
+
+<t>While the DOTS client will try to establish a new signaling session with the
+DOTS server now acting as the anycast DOTS Service Address, the link between
+DOTS client and server may be congested with attack traffic, making signal
+session establishment difficult. In such a scenario, anycast Service Address
+instability becomes a sort of signal session flapping, with obvious negative
+consequences for the DOTS deployment.</t>
+
+<t>Anycast signaling deployments similarly must also take into account active
+mitigations. Active mitigations initiated through a signaling session may
+involve diverting traffic to a scrubbing center. If the signaling session flaps
+due to anycast changes as described above, mitigation may also flap as the DOTS
+servers sharing the anycast DOTS service address toggles mitigation on detecting
+signaling session loss, depending on whether the client has configured
+mitigation on loss of signal.</t>
+
+<t>[[EDITOR&rsquo;S NOTE: We request feedback from the working group regarding the
+complexities inherent in an anycast DOTS deployment. Outside of using anycast
+for service discovery, significant challenges need to be overcome, particularly
+when dealing with security and mitigation state, and the resulting operational
+complexity may outweigh the expected benefits.]]</t>
+
+</section>
+</section>
 </section>
 <section anchor="mit-request-triggers" title="Triggering Requests for Mitigation">
 
@@ -985,19 +1070,19 @@ monitoring software deployed in the operator&rsquo;s domain</t>
 </list></t>
 
 </section>
-<section anchor="auto-threshold-mit" title="Automated Threshold-Based Mitigation Request">
+<section anchor="auto-conditional-mit" title="Automated Conditional Mitigation Request">
 
 <t>Unlike manual mitigation requests, which depend entirely on the DOTS client
 operator&rsquo;s capacity to react with speed and accuracy to every detected or
-detectable attack, mitigation requests triggered by detected attack thresholds
+detectable attack, mitigation requests triggered by detected attack conditions
 reduce the operational burden on the DOTS client operator, and minimize the
 latency between attack detection and the start of mitigation.</t>
 
-<t>Mitigation requests are triggered in this scenario by violations of
-operator-specified attack thresholds. Attack detection is deployment-specific,
-and not constrained by this architecture. Similarly the specifics of a threshold
-are left to the discretion of the operator, though common threshold types
-include the following:</t>
+<t>Mitigation requests are triggered in this scenario by operator-specified network
+conditions. Attack detection is deployment-specific, and not constrained by this
+architecture. Similarly the specifics of a condition are left to the discretion
+of the operator, though common conditions meriting mitigation include the
+following:</t>
 
 <t><list style="symbols">
   <t>Detected attack exceeding a rate in packets per second (pps).</t>
@@ -1007,14 +1092,15 @@ include the following:</t>
   <t>Number of open connections to an attack target.</t>
   <t>Number of attack sources in a given attack.</t>
   <t>Number of active attacks against targets in the operator&rsquo;s domain.</t>
-  <t>Thresholds developed through arbitrary statistical analysis or deep learning
-techniques.</t>
+  <t>Conditional detection developed through arbitrary statistical analysis or deep
+learning techniques.</t>
+  <t>Any combination of the above.</t>
 </list></t>
 
-<t>When automated threshold-based mitigation requests are enabled, violations of
-any of the above thresholds, or any additional operator-defined threshold, will
+<t>When automated conditional mitigation requests are enabled, violations of any of
+the above conditions, or any additional operator-defined conditions, will
 trigger a mitigation request from the DOTS client to the DOTS server. The
-interfaces between the application detecting the threshold violation and the
+interfaces between the application detecting the condition violation and the
 DOTS client are implementation-specific.</t>
 
 </section>
@@ -1102,6 +1188,8 @@ again in accordance with best current practices for network and host security.</
 
 &I-D.ietf-dots-requirements;
 &I-D.ietf-dots-use-cases;
+&I-D.ietf-dprive-dnsodtls;
+&I-D.ietf-tls-tls13;
 &RFC0768;
 &RFC0793;
 &RFC1034;
@@ -1109,8 +1197,10 @@ again in accordance with best current practices for network and host security.</
 &RFC3261;
 &RFC4271;
 &RFC4732;
+&RFC4786;
 &RFC6763;
 &RFC7092;
+&RFC7094;
 
 
     </references>

@@ -5,7 +5,7 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                      Arbor Networks, Inc.
 Intended status: Informational                              F. Andreasen
-Expires: January 6, 2017                                        T. Reddy
+Expires: May 4, 2017                                            T. Reddy
                                                      Cisco Systems, Inc.
                                                                  C. Gray
                                                            Comcast, Inc.
@@ -13,11 +13,11 @@ Expires: January 6, 2017                                        T. Reddy
                                             Charter Communications, Inc.
                                                                N. Teague
                                                           Verisign, Inc.
-                                                           July 05, 2016
+                                                        October 31, 2016
 
 
 Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
-                    draft-ietf-dots-architecture-00
+                    draft-ietf-dots-architecture-01
 
 Abstract
 
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 6, 2017.
+   This Internet-Draft will expire on May 4, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 1]
+Mortensen, et al.          Expires May 4, 2017                  [Page 1]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -93,25 +93,25 @@ Table of Contents
        3.2.1.  Direct Signaling  . . . . . . . . . . . . . . . . . .  17
        3.2.2.  Redirected Signaling  . . . . . . . . . . . . . . . .  18
        3.2.3.  Recursive Signaling . . . . . . . . . . . . . . . . .  19
-     3.3.  Triggering Requests for Mitigation  . . . . . . . . . . .  21
-       3.3.1.  Manual Mitigation Request . . . . . . . . . . . . . .  21
-       3.3.2.  Automated Threshold-Based Mitigation Request  . . . .  22
-       3.3.3.  Automated Mitigation on Loss of Signal  . . . . . . .  23
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  24
-   5.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  24
-   6.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  25
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  25
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .  25
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
+       3.2.4.  Anycast Signaling . . . . . . . . . . . . . . . . . .  21
+     3.3.  Triggering Requests for Mitigation  . . . . . . . . . . .  23
+       3.3.1.  Manual Mitigation Request . . . . . . . . . . . . . .  23
+       3.3.2.  Automated Conditional Mitigation Request  . . . . . .  24
+       3.3.3.  Automated Mitigation on Loss of Signal  . . . . . . .  25
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  26
+   5.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  26
+   6.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  26
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  27
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .  27
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  28
 
 
 
 
-
-Mortensen, et al.        Expires January 6, 2017                [Page 2]
+Mortensen, et al.          Expires May 4, 2017                  [Page 2]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
 1.  Context and Motivation
@@ -165,9 +165,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 3]
+Mortensen, et al.          Expires May 4, 2017                  [Page 3]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    This document does not address any administrative or business
@@ -221,9 +221,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 4]
+Mortensen, et al.          Expires May 4, 2017                  [Page 4]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
       network elements.  DOTS server and DOTS client cannot assume any
@@ -277,9 +277,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 5]
+Mortensen, et al.          Expires May 4, 2017                  [Page 5]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    Thus, DOTS neither specifies how an attack target decides it is under
@@ -333,9 +333,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 6]
+Mortensen, et al.          Expires May 4, 2017                  [Page 6]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    experiencing a DDoS attack and hence is subject to severe packet loss
@@ -357,14 +357,14 @@ Internet-Draft              DOTS Architecture                  July 2016
 
            {
                "https1": [
-                   "172.16.168.254:443",
-                   "172.16.169.254:443",
+                   "192.0.2.1:443",
+                   "198.51.100.2:443",
                ],
                "proxies": [
-                   "10.0.0.10:3128",
-                   "[2001:db9::1/128]:3128"
+                   "203.0.113.3:3128",
+                   "[2001:DB8:AC10::1]:3128"
                ],
-               "api_urls": "https://apiserver.local/api/v1",
+               "api_urls": "https://apiserver.example.com/api/v1",
            }
 
                  Figure 3: Protected resource identifiers
@@ -389,9 +389,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 7]
+Mortensen, et al.          Expires May 4, 2017                  [Page 7]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    practice, this means that DOTS deployments SHOULD NOT rely on such
@@ -445,9 +445,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 8]
+Mortensen, et al.          Expires May 4, 2017                  [Page 8]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    DOTS server receives an attack mitigation request from a DOTS client,
@@ -501,9 +501,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017                [Page 9]
+Mortensen, et al.          Expires May 4, 2017                  [Page 9]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    of the signaling session.  The DOTS client similarly expects a
@@ -557,9 +557,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017               [Page 10]
+Mortensen, et al.          Expires May 4, 2017                 [Page 10]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    server signals sent to the DOTS client originating the request for
@@ -613,9 +613,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017               [Page 11]
+Mortensen, et al.          Expires May 4, 2017                 [Page 11]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
 2.3.  DOTS Agent Relationships
@@ -669,26 +669,26 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017               [Page 12]
+Mortensen, et al.          Expires May 4, 2017                 [Page 12]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
       DOTS Client        DOTS Servers
                           +---+
               ------------| S |
              /            +---+
-                          example.net
+                          dots1.example.net
             /
       +---+/              +---+
       | c |---------------| S |
       +---+\              +---+
-                          example.org
+                          dots.example.org
             \
              \            +---+
               ------------| S |
                           +---+
-      example.com         example.xyz
+      example.com         dots2.example.net
 
                      Figure 6: Multi-Homed DOTS Client
 
@@ -725,9 +725,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017               [Page 13]
+Mortensen, et al.          Expires May 4, 2017                 [Page 13]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
          +---+
@@ -781,9 +781,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017               [Page 14]
+Mortensen, et al.          Expires May 4, 2017                 [Page 14]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
          +---+
@@ -837,9 +837,9 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017               [Page 15]
+Mortensen, et al.          Expires May 4, 2017                 [Page 15]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    sent from a DOTS client are received by the specific DOTS server
@@ -893,14 +893,21 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-Mortensen, et al.        Expires January 6, 2017               [Page 16]
+Mortensen, et al.          Expires May 4, 2017                 [Page 16]
 
-Internet-Draft              DOTS Architecture                  July 2016
+Internet-Draft              DOTS Architecture               October 2016
 
 
    The DOTS client SHOULD successfully authenticate and exchange
    messages with the DOTS server over both signal and data channel as
    soon as possible to confirm that both channels are operational.
+
+   As described in [I-D.ietf-dots-requirements], the DOTS client can
+   configure preferred values for acceptable signal loss, mitigation
+   lifetime, and heartbeat intervals when establishing the signaling
+   session.  A signaling session is not active until DOTS agents have
+   agreed on the values for these signaling session parameters, a
+   process defined by the protocol.
 
    Once the DOTS client begins receiving DOTS server signals, the
    signaling session is active.  At any time during the signaling
@@ -940,19 +947,19 @@ Internet-Draft              DOTS Architecture                  July 2016
 
                         Figure 11: Direct Signaling
 
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 17]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
    In a direct signaling session, DOTS client and server are
    communicating directly.  A direct signaling session MAY exist inter-
    or intra-domain.  The signaling session is abstracted from the
    underlying networks or network elements the signals traverse: in a
    direct signaling session, the DOTS client and server are logically
    peer DOTS agents.
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 17]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
 
 3.2.2.  Redirected Signaling
 
@@ -996,19 +1003,18 @@ Internet-Draft              DOTS Architecture                  July 2016
 
                       Figure 12: Redirected Signaling
 
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 18]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
    1.  Previously established signaling session 1 exists between a DOTS
        client and DOTS server with address A.
 
    2.  DOTS server A sends a server signal redirecting the client to
        DOTS server B.
-
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 18]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
 
    3.  If the DOTS client does not already have a separate signaling
        session with the redirection target, the DOTS client initiates
@@ -1052,20 +1058,20 @@ Internet-Draft              DOTS Architecture                  July 2016
    Automatic or Operator-Assisted CPE or PE Mitigators Request Upstream
    DDoS Mitigation Services" described in [I-D.ietf-dots-use-cases], an
    domain operating a DOTS server and mitigation also operates a DOTS
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 19]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
    client.  This DOTS client has an established signaling session with a
    DOTS server belonging to a separate administrative domain.
 
    With these preconditions in place, the operator of the mitigator
    being overwhelmed or otherwise performing inadequately may request
    mitigation for the attack target from this separate DOTS-aware
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 19]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
-
    domain.  Such a request recurses the originating mitigation request
    to the secondary DOTS server, in the hope of building a cumulative
    mitigation against the attack:
@@ -1108,19 +1114,19 @@ Internet-Draft              DOTS Architecture                  July 2016
 
    Recursive signaling is opaque to the DOTS client.  To maximize
    mitigation visibility to the DOTS client, however, the recursing
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 20]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
    domain SHOULD provide recursed mitigation feedback in signals
    reporting on mitigation status to the DOTS client.  For example, the
    recursing domain's mitigator should incorporate into mitigation
    status messages available metrics such as dropped packet or byte
    counts from the recursed mitigation.
-
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 20]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
 
    DOTS clients involved in recursive signaling MUST be able to withdraw
    requests for mitigation without warning or justification, per
@@ -1139,6 +1145,104 @@ Internet-Draft              DOTS Architecture                  July 2016
    client has into the recursed mitigation.  We ask the working group
    for feedback and additional discussion of these issues to help settle
    the way forward.]]
+
+3.2.4.  Anycast Signaling
+
+   The DOTS architecture does not assume the availability of anycast
+   within a DOTS deployment, but neither does the architecture exclude
+   it.  Domains operating DOTS servers MAY deploy DOTS servers with an
+   anycast Service Address as described in BCP 126 [RFC4786].  In such a
+   deployment, DOTS clients connecting to the DOTS Service Address may
+   be communicating with distinct DOTS servers, depending on the network
+   configuration at the time the DOTS clients connect.  Among other
+   benefits, anycasted signaling potentially offers the following:
+
+   o  Simplified DOTS client configuration, including service discovery
+      through the methods described in [RFC7094].  In this scenario, the
+      "instance discovery" message would be a DOTS client initiating a
+      signaling session to the DOTS server anycast Service Address, to
+      which the DOTS server would reply with a redirection to the DOTS
+      server unicast address the client should use for DOTS.
+
+   o  Region- or customer-specific deployments, in which the DOTS
+      Service Addresses route to distinct DOTS servers depending on the
+      client region or the customer network in which a DOTS client
+      resides.
+
+
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 21]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
+   o  Operational resiliency, spreading DOTS signaling traffic across
+      the DOTS server domain's networks, and thereby also reducing the
+      potential attack surface, as described in BCP 126 [RFC4786].
+
+3.2.4.1.  Anycast Signaling Considerations
+
+   As long as network configuration remains stable, anycast DOTS
+   signaling is to the individual DOTS client indistinct from direct
+   signaling.  However, the operational challenges inherent in anycast
+   signaling are anything but negligible, and DOTS server operators must
+   carefully weigh the risks against the benefits before deploying.
+
+   While the DOTS signal channel primarily operates over UDP per
+   [I-D.ietf-dots-requirements], the signal channel also requires mutual
+   authentication between DOTS agents, with associated security state on
+   both ends.  The resulting considerations therefore superficially
+   resemble the deployment of anycast DNS over DTLS, as described in
+   [I-D.ietf-dprive-dnsodtls], but the similiarities only go so far.
+
+   Network instability is of particular concern with anycast signaling,
+   as DOTS signaling sessions are expected to be long-lived, and
+   potentially operating under congested network conditions caused by a
+   volumetric DDoS attack.
+
+   For example, a network configuration altering the route to the DOTS
+   server during active anycast signaling may cause the DOTS client to
+   send messages to a DOTS server other than the one with which it
+   initially established a signaling session.  That second DOTS server
+   may not have the security state of the existing session, forcing the
+   DOTS client to initialize a new signaling session.  This challenge
+   may in part be mitigated by use of pre-shared keys, as described in
+   [I-D.ietf-tls-tls13], but keying material must be available to all
+   DOTS servers sharing the anycast Service Address in that case.
+
+   While the DOTS client will try to establish a new signaling session
+   with the DOTS server now acting as the anycast DOTS Service Address,
+   the link between DOTS client and server may be congested with attack
+   traffic, making signal session establishment difficult.  In such a
+   scenario, anycast Service Address instability becomes a sort of
+   signal session flapping, with obvious negative consequences for the
+   DOTS deployment.
+
+   Anycast signaling deployments similarly must also take into account
+   active mitigations.  Active mitigations initiated through a signaling
+   session may involve diverting traffic to a scrubbing center.  If the
+   signaling session flaps due to anycast changes as described above,
+   mitigation may also flap as the DOTS servers sharing the anycast DOTS
+   service address toggles mitigation on detecting signaling session
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 22]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
+   loss, depending on whether the client has configured mitigation on
+   loss of signal.
+
+   [[EDITOR'S NOTE: We request feedback from the working group regarding
+   the complexities inherent in an anycast DOTS deployment.  Outside of
+   using anycast for service discovery, significant challenges need to
+   be overcome, particularly when dealing with security and mitigation
+   state, and the resulting operational complexity may outweigh the
+   expected benefits.]]
 
 3.3.  Triggering Requests for Mitigation
 
@@ -1170,14 +1274,6 @@ Internet-Draft              DOTS Architecture                  July 2016
    entering a command into a text interface, or directly interacting
    with a graphical interface to send the request.
 
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 21]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
-
    An operator might do this, for example, in response to notice of an
    attack delivered by attack detection equipment or software, and the
    alerting detector lacks interfaces or is not configured to use
@@ -1186,6 +1282,14 @@ Internet-Draft              DOTS Architecture                  July 2016
 
    In a variation of the above scenario, the operator may have
    preconfigured on the DOTS client mitigation request for various
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 23]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
    resources in the operator's domain.  When notified of an attack, the
    DOTS client operator manually instructs the DOTS client to send the
    preconfigured mitigation request for the resources under attack.
@@ -1215,32 +1319,32 @@ Internet-Draft              DOTS Architecture                  July 2016
    o  Manual monitoring of network behavior through network monitoring
       software
 
-3.3.2.  Automated Threshold-Based Mitigation Request
+3.3.2.  Automated Conditional Mitigation Request
 
    Unlike manual mitigation requests, which depend entirely on the DOTS
    client operator's capacity to react with speed and accuracy to every
    detected or detectable attack, mitigation requests triggered by
-   detected attack thresholds reduce the operational burden on the DOTS
+   detected attack conditions reduce the operational burden on the DOTS
    client operator, and minimize the latency between attack detection
    and the start of mitigation.
 
-   Mitigation requests are triggered in this scenario by violations of
-   operator-specified attack thresholds.  Attack detection is
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 22]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
-
-   deployment-specific, and not constrained by this architecture.
-   Similarly the specifics of a threshold are left to the discretion of
-   the operator, though common threshold types include the following:
+   Mitigation requests are triggered in this scenario by operator-
+   specified network conditions.  Attack detection is deployment-
+   specific, and not constrained by this architecture.  Similarly the
+   specifics of a condition are left to the discretion of the operator,
+   though common conditions meriting mitigation include the following:
 
    o  Detected attack exceeding a rate in packets per second (pps).
 
    o  Detected attack exceeding a rate in bytes per second (bps).
+
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 24]
+
+Internet-Draft              DOTS Architecture               October 2016
+
 
    o  Detected resource exhaustion in an attack target.
 
@@ -1252,14 +1356,16 @@ Internet-Draft              DOTS Architecture                  July 2016
 
    o  Number of active attacks against targets in the operator's domain.
 
-   o  Thresholds developed through arbitrary statistical analysis or
-      deep learning techniques.
+   o  Conditional detection developed through arbitrary statistical
+      analysis or deep learning techniques.
 
-   When automated threshold-based mitigation requests are enabled,
-   violations of any of the above thresholds, or any additional
-   operator-defined threshold, will trigger a mitigation request from
+   o  Any combination of the above.
+
+   When automated conditional mitigation requests are enabled,
+   violations of any of the above conditions, or any additional
+   operator-defined conditions, will trigger a mitigation request from
    the DOTS client to the DOTS server.  The interfaces between the
-   application detecting the threshold violation and the DOTS client are
+   application detecting the condition violation and the DOTS client are
    implementation-specific.
 
 3.3.3.  Automated Mitigation on Loss of Signal
@@ -1282,17 +1388,19 @@ Internet-Draft              DOTS Architecture                  July 2016
    The impact of mitigating due to loss of signal in either direction
    must be considered carefully before enabling it.  Signal loss is not
    caused by links congested with attack traffic alone, and as such
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 23]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
-
    mitigation requests triggered by signal channel degradation in either
    direction may incur unnecessary costs, in network performance and
    operational expense alike.
+
+
+
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 25]
+
+Internet-Draft              DOTS Architecture               October 2016
+
 
 4.  Security Considerations
 
@@ -1335,20 +1443,20 @@ Internet-Draft              DOTS Architecture                  July 2016
    Thanks to Matt Richardson and Med Boucadair for their comments and
    suggestions.
 
-
-
-
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 24]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
-
 6.  Change Log
 
    2016-03-18 Initial revision
+
+
+
+
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 26]
+
+Internet-Draft              DOTS Architecture               October 2016
+
 
 7.  References
 
@@ -1364,14 +1472,25 @@ Internet-Draft              DOTS Architecture                  July 2016
    [I-D.ietf-dots-requirements]
               Mortensen, A., Moskowitz, R., and T. Reddy, "Distributed
               Denial of Service (DDoS) Open Threat Signaling
-              Requirements", draft-ietf-dots-requirements-01 (work in
-              progress), March 2016.
+              Requirements", draft-ietf-dots-requirements-02 (work in
+              progress), July 2016.
 
    [I-D.ietf-dots-use-cases]
               Dobbins, R., Fouant, S., Migault, D., Moskowitz, R.,
               Teague, N., and L. Xia, "Use cases for DDoS Open Threat
               Signaling", draft-ietf-dots-use-cases-01 (work in
               progress), March 2016.
+
+   [I-D.ietf-dprive-dnsodtls]
+              Reddy, T., Wing, D., and P. Patil, "Specification for DNS
+              over Datagram Transport Layer Security (DTLS)", draft-
+              ietf-dprive-dnsodtls-12 (work in progress), September
+              2016.
+
+   [I-D.ietf-tls-tls13]
+              Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", draft-ietf-tls-tls13-18 (work in progress),
+              October 2016.
 
    [RFC0768]  Postel, J., "User Datagram Protocol", STD 6, RFC 768, DOI
               10.17487/RFC0768, August 1980,
@@ -1385,22 +1504,20 @@ Internet-Draft              DOTS Architecture                  July 2016
               STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,
               <http://www.rfc-editor.org/info/rfc1034>.
 
+
+
+
+
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 27]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
    [RFC2782]  Gulbrandsen, A., Vixie, P., and L. Esibov, "A DNS RR for
               specifying the location of services (DNS SRV)", RFC 2782,
               DOI 10.17487/RFC2782, February 2000,
               <http://www.rfc-editor.org/info/rfc2782>.
-
-
-
-
-
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 25]
-
-Internet-Draft              DOTS Architecture                  July 2016
-
 
    [RFC3261]  Rosenberg, J., Schulzrinne, H., Camarillo, G., Johnston,
               A., Peterson, J., Sparks, R., Handley, M., and E.
@@ -1418,6 +1535,10 @@ Internet-Draft              DOTS Architecture                  July 2016
               RFC4732, December 2006,
               <http://www.rfc-editor.org/info/rfc4732>.
 
+   [RFC4786]  Abley, J. and K. Lindqvist, "Operation of Anycast
+              Services", BCP 126, RFC 4786, DOI 10.17487/RFC4786,
+              December 2006, <http://www.rfc-editor.org/info/rfc4786>.
+
    [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
               <http://www.rfc-editor.org/info/rfc6763>.
@@ -1426,6 +1547,11 @@ Internet-Draft              DOTS Architecture                  July 2016
               Initiation Protocol (SIP) Back-to-Back User Agents", RFC
               7092, DOI 10.17487/RFC7092, December 2013,
               <http://www.rfc-editor.org/info/rfc7092>.
+
+   [RFC7094]  McPherson, D., Oran, D., Thaler, D., and E. Osterweil,
+              "Architectural Considerations of IP Anycast", RFC 7094,
+              DOI 10.17487/RFC7094, January 2014,
+              <http://www.rfc-editor.org/info/rfc7094>.
 
 Authors' Addresses
 
@@ -1438,24 +1564,17 @@ Authors' Addresses
    EMail: amortensen@arbor.net
 
 
+
+Mortensen, et al.          Expires May 4, 2017                 [Page 28]
+
+Internet-Draft              DOTS Architecture               October 2016
+
+
    Flemming Andreasen
    Cisco Systems, Inc.
    United States
 
    EMail: fandreas@cisco.com
-
-
-
-
-
-
-
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 26]
-
-Internet-Draft              DOTS Architecture                  July 2016
 
 
    Tirumaleswar Reddy
@@ -1502,11 +1621,4 @@ Internet-Draft              DOTS Architecture                  July 2016
 
 
 
-
-
-
-
-
-
-
-Mortensen, et al.        Expires January 6, 2017               [Page 27]
+Mortensen, et al.          Expires May 4, 2017                 [Page 29]
