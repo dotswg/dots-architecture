@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-01
+docname: draft-ietf-dots-architecture-02
 date: @DATE@
 
 area: Security
@@ -156,7 +156,7 @@ This document uses the terms defined in [I-D.ietf-dots-requirements].
 Scope           {#scope}
 -----
 
-In this architecture, DOTS clients and servers communicate using the DOTS
+In this architecture, DOTS clients and servers communicate using DOTS
 signaling. As a result of signals from a DOTS client, the DOTS server may modify
 the forwarding path of traffic destined for the attack target(s), for example by
 diverting traffic to a mitigator or pool of mitigators, where policy may be
@@ -171,11 +171,10 @@ of attack response between two or more participating network domains, but single
 domain scenarios are valuable in their own right, as when aggregating
 intra-domain DOTS client signals for inter-domain coordinated attack response.
 
-
 This document does not address any administrative or business agreements that
 may be established between involved DOTS parties. Those considerations are out
 of scope. Regardless, this document assumes necessary authentication and
-authorization mechanism are put in place so that only authorized clients can
+authorization mechanisms are put in place so that only authorized clients can
 invoke the DOTS service.
 
 
@@ -289,9 +288,6 @@ with one or more IP addresses. These addresses may or may not be of the same
 address family. The DOTS client establishes one or more signaling sessions by
 connecting to the provided DOTS server addresses.
 
-\[\[EDITOR'S NOTE: We request feedback from the working group about the mechanism
-of server discovery.\]\]
-
 The primary purpose of the signal channel is for a DOTS client to ask a
 DOTS server for help in mitigating an attack, and for the DOTS server to inform
 the DOTS client about the status of such mitigation. The DOTS client does this
@@ -352,9 +348,9 @@ such information include, but are not limited to:
 * DOTS client provisioning.
 
 Note that while it is possible to exchange the above information before, during
-or after a DDoS attack, DOTS requires reliable delivery of the this information
-and does not provide any special means for ensuring timely delivery of it during
-an attack. In practice, this means that DOTS deployments SHOULD NOT rely on such
+or after a DDoS attack, DOTS requires reliable delivery of this information and
+does not provide any special means for ensuring timely delivery of it during an
+attack. In practice, this means that DOTS deployments SHOULD NOT rely on such
 information being exchanged during a DDoS attack.
 
 
@@ -855,10 +851,6 @@ A basic redirected signaling session resembles the following, as shown in
    signals. The DOTS client likewise stops sending client signals to DOTS server
    A. Signal session 1 is terminated.
 
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: we request working group feedback and discussion of the need
-for redirected signaling.\]\]
-{:mortensen}
 
 ### Recursive Signaling {#recursive-signaling}
 
@@ -1025,12 +1017,6 @@ due to anycast changes as described above, mitigation may also flap as the DOTS
 servers sharing the anycast DOTS service address toggles mitigation on detecting
 signaling session loss, depending on whether the client has configured
 mitigation on loss of signal.
-
-\[\[EDITOR'S NOTE: We request feedback from the working group regarding the
-complexities inherent in an anycast DOTS deployment. Outside of using anycast
-for service discovery, significant challenges need to be overcome, particularly
-when dealing with security and mitigation state, and the resulting operational
-complexity may outweigh the expected benefits.\]\]
 
 
 Triggering Requests for Mitigation {#mit-request-triggers}
