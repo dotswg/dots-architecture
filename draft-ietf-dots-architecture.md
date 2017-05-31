@@ -46,12 +46,11 @@ author:
       -
         ins: T. Reddy
         name: Tirumaleswar Reddy
-        org: Cisco
+        org: McAfee, Inc.
         street:
-        - Cessna Business Park, Varthur Hobli
-        - Sarjapur Marathalli Outer Ring Road
+        - Embassy Golf Link Business Park
         city: Bangalore, Karnataka
-        code: 560103
+        code: 560071
         country: India
         email: tireddy@cisco.com
       -
@@ -99,7 +98,9 @@ informative:
   I-D.ietf-tls-tls13:
   RFC0768:
   RFC0793:
+  RFC1035:
   RFC2782:
+  RFC4271:
   RFC4732:
   RFC4786:
   RFC6763:
@@ -234,8 +235,8 @@ This document makes the following assumptions:
   agents. QoS is an operational consideration only, not a functional part of
   the DOTS architecture.
 
-* The signal channel and data channels may be loosely coupled, and may not
-  terminate on the same DOTS server.
+* The signal and data channels may be loosely coupled, and may not terminate on
+  the same DOTS server.
 
 
 DOTS Architecture {#architecture}
@@ -392,13 +393,14 @@ regardless of inbound link congestion.  This does not necessarily imply that the
 attack target and the DOTS client have to be co-located in the same
 administrative domain, but it is expected to be a common scenario.
 
-DDoS mitigation service with the help of an upstream mitigator may involve some
+DDoS mitigation with the help of an upstream mitigator may involve some
 form of traffic redirection whereby traffic destined for the attack target is
-diverted towards the mitigator.  The mitigator in turn inspects and scrubs the
-traffic, and forwards the resulting (hopefully non-attack) traffic to the attack
-target. Thus, when a DOTS server receives an attack mitigation request from a
-DOTS client, it can be viewed as a way of causing traffic redirection for the
-attack target indicated.
+steered towards the mitigator. Common mechanisms to achieve this redirection
+depend on BGP [RFC4271] and DNS [RFC1035]. The mitigator in turn inspects and
+scrubs the traffic, and forwards the resulting (hopefully non-attack) traffic to
+the attack target. Thus, when a DOTS server receives an attack mitigation
+request from a DOTS client, it can be viewed as a way of causing traffic
+redirection for the attack target indicated.
 
 DOTS relies on mutual authentication and the pre-established service
 relationship between the DOTS client's domain and the DOTS server's domain to

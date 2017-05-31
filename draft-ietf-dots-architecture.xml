@@ -9,7 +9,9 @@
 <!ENTITY I-D.ietf-tls-tls13 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-tls13.xml">
 <!ENTITY RFC0768 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0768.xml">
 <!ENTITY RFC0793 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0793.xml">
+<!ENTITY RFC1035 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1035.xml">
 <!ENTITY RFC2782 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2782.xml">
+<!ENTITY RFC4271 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4271.xml">
 <!ENTITY RFC4732 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4732.xml">
 <!ENTITY RFC4786 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4786.xml">
 <!ENTITY RFC6763 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml">
@@ -58,12 +60,12 @@
       </address>
     </author>
     <author initials="T." surname="Reddy" fullname="Tirumaleswar Reddy">
-      <organization>Cisco</organization>
+      <organization>McAfee, Inc.</organization>
       <address>
         <postal>
-          <street>Cessna Business Park, Varthur Hobli</street> <street>Sarjapur Marathalli Outer Ring Road</street>
+          <street>Embassy Golf Link Business Park</street>
           <city>Bangalore, Karnataka</city>
-          <code>560103</code>
+          <code>560071</code>
           <country>India</country>
         </postal>
         <email>tireddy@cisco.com</email>
@@ -105,7 +107,7 @@
       </address>
     </author>
 
-    <date year="2017" month="May" day="17"/>
+    <date year="2017" month="May" day="31"/>
 
     <area>Security</area>
     <workgroup>DOTS</workgroup>
@@ -235,8 +237,8 @@ Service (QoS) policy agreements between DOTS-enabled peer networks or local
 QoS prioritization aimed at ensuring delivery of DOTS messages between DOTS
 agents. QoS is an operational consideration only, not a functional part of
 the DOTS architecture.</t>
-  <t>The signal channel and data channels may be loosely coupled, and may not
-terminate on the same DOTS server.</t>
+  <t>The signal and data channels may be loosely coupled, and may not terminate on
+the same DOTS server.</t>
 </list></t>
 
 </section>
@@ -390,13 +392,14 @@ regardless of inbound link congestion.  This does not necessarily imply that the
 attack target and the DOTS client have to be co-located in the same
 administrative domain, but it is expected to be a common scenario.</t>
 
-<t>DDoS mitigation service with the help of an upstream mitigator may involve some
+<t>DDoS mitigation with the help of an upstream mitigator may involve some
 form of traffic redirection whereby traffic destined for the attack target is
-diverted towards the mitigator.  The mitigator in turn inspects and scrubs the
-traffic, and forwards the resulting (hopefully non-attack) traffic to the attack
-target. Thus, when a DOTS server receives an attack mitigation request from a
-DOTS client, it can be viewed as a way of causing traffic redirection for the
-attack target indicated.</t>
+steered towards the mitigator. Common mechanisms to achieve this redirection
+depend on BGP <xref target="RFC4271"></xref> and DNS <xref target="RFC1035"></xref>. The mitigator in turn inspects and
+scrubs the traffic, and forwards the resulting (hopefully non-attack) traffic to
+the attack target. Thus, when a DOTS server receives an attack mitigation
+request from a DOTS client, it can be viewed as a way of causing traffic
+redirection for the attack target indicated.</t>
 
 <t>DOTS relies on mutual authentication and the pre-established service
 relationship between the DOTS client&rsquo;s domain and the DOTS server&rsquo;s domain to
@@ -1198,7 +1201,9 @@ again in accordance with best current practices for network and host security.</
 &I-D.ietf-tls-tls13;
 &RFC0768;
 &RFC0793;
+&RFC1035;
 &RFC2782;
+&RFC4271;
 &RFC4732;
 &RFC4786;
 &RFC6763;
