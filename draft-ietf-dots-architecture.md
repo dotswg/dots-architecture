@@ -547,17 +547,17 @@ provider serving multiple attack targets ({{fig-multi-client-server}}).
    +---+
    | c |-----------
    +---+           \
-   example.org      \
+   c1.example.org   \
                      \
    +---+              \ +---+
    | c |----------------| S |
    +---+              / +---+
-   example.com       /
+   c1.example.com    /  dots1.example.net
                     /
    +---+           /
    | c |-----------
    +---+
-   example.com        example.net
+   c2.example.com
 ~~~~~
 {: #fig-multi-client-server title="DOTS server with multiple clients"}
 
@@ -565,34 +565,54 @@ A DOTS client may be associated with one or more DOTS servers, and those DOTS
 servers may belong to different domains.  This may be to ensure high
 availability or co-ordinate mitigation with more than one directly connected
 ISP.  An example scenario is for an enterprise to have DDoS mitigation service
-from multiple providers, as shown in {{fig-multi-homed-client}}.  Operational
-considerations relating to coordinating multiple provider responses are beyond
-the scope of DOTS.
-
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: we request working group feedback and discussion of
-operational considerations relating to coordinating multiple provider responses
-to a mitigation request.\]\]
-{:mortensen}
+from multiple providers, as shown in {{fig-multi-homed-client}}.
 
 ~~~~~
    DOTS client        DOTS servers
                        +---+
-           ------------| S |
-          /            +---+
-                       dots1.example.net
+            -----------| S |
+           /           +---+
+          /            dots1.example.net
          /
    +---+/              +---+
    | c |---------------| S |
    +---+\              +---+
-                       dots.example.org
-         \
-          \            +---+
-           ------------| S |
+         \             dots.example.org
+          \
+           \           +---+
+            -----------| S |
                        +---+
-   example.com         dots2.example.net
+   c.example.com       dots2.example.net
 ~~~~~
 {: #fig-multi-homed-client title="Multi-Homed DOTS Client"}
+
+Deploying a multi-homed client requires extra care and planning, as the DOTS
+servers with which the multi-homed client communicates may not be affiliated.
+Should the multi-homed client simultaneously request for mitigation from all
+servers with which it has established signal channels, the client may
+unintentionally inflict additional network disruption on the resources it
+intends to protect. In one of the worst cases, a multi-homed DOTS client could
+cause a permanent routing loop of traffic destined for the client's protected
+protected services, as the uncoordinated DOTS servers' mitigators all try to
+divert that traffic to their own scrubbing centers.
+
+The DOTS protocol itself provides no fool-proof method to prevent such
+self-inflicted harms as a result deploying multi-homed DOTS clients. If
+DOTS client implementations nevertheless include support for multi-homing, they
+are expected to be aware of the risks, and consequently to include measures
+aimed at reducing the likelihood of negative outcomes. Simple measures might
+include:
+
+* Requesting mitigation serially, ensuring only one mitigation request for
+  a given address space is active at any given time;
+
+* Dividing the protected resources among the DOTS servers, such that no two
+  mitigators will be attempting to divert and scrub the same traffic;
+
+* Using multi-homing for redundancy only. In this case, the DOTS servers would
+  be affiliated, and through shared communications ensure that the redundant
+  mitigation requests do not result in overlapping traffic diversion
+  announcements.
 
 
 ### Gatewayed Signaling
