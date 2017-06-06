@@ -1015,9 +1015,6 @@ benefits before deploying.
 While the DOTS signal channel primarily operates over UDP per
 [I-D.ietf-dots-requirements], the signal channel also requires mutual
 authentication between DOTS agents, with associated security state on both ends.
-The resulting considerations therefore superficially resemble the deployment of
-anycast DNS over DTLS, as described in [RFC8094], but the similarities only go
-so far.
 
 Network instability is of particular concern with anycast signaling, as DOTS
 signaling sessions are expected to be long-lived, and potentially operating
