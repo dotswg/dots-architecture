@@ -972,12 +972,11 @@ mitigation withdraws its request for help, as per the discussion of managing
 mitigation toggling in the operational requirements
 ([I-D.ietf-dots-requirements]).
 
-{:ed-note: source="mortensen"}
-\[\[EDITOR'S NOTE: Recursive signaling raises questions about operational and
-data privacy, as well as what level of visibility a client has into the recursed
-mitigation.  We ask the working group for feedback and additional discussion of
-these issues to help settle the way forward.\]\]
-{:mortensen}
+Deployment of recursive signaling potentially reduces the DOTS client's limited
+control over the network path of mitigated traffic, and consequently control
+over who is scrubbing traffic destined for the DOTS client domain. DOTS client
+operators should be aware of any privacy concerns affecting a recursive
+signaling deployment, and take steps to ensure sensitive material is protected.
 
 
 ### Anycast Signaling
