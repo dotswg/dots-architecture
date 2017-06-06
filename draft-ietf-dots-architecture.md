@@ -609,10 +609,8 @@ include:
 * Dividing the protected resources among the DOTS servers, such that no two
   mitigators will be attempting to divert and scrub the same traffic;
 
-* Using multi-homing for redundancy only. In this case, the DOTS servers would
-  be affiliated, and through shared communications ensure that the redundant
-  mitigation requests do not result in overlapping traffic diversion
-  announcements.
+* Restricting multi-homing to deployments in which all DOTS servers are
+  coordinating management of a shared pool of mitigation resources.
 
 
 ### Gatewayed Signaling
