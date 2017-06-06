@@ -107,7 +107,7 @@
       </address>
     </author>
 
-    <date year="2017" month="June" day="05"/>
+    <date year="2017" month="June" day="06"/>
 
     <area>Security</area>
     <workgroup>DOTS</workgroup>
@@ -603,10 +603,8 @@ include:</t>
 a given address space is active at any given time;</t>
   <t>Dividing the protected resources among the DOTS servers, such that no two
 mitigators will be attempting to divert and scrub the same traffic;</t>
-  <t>Using multi-homing for redundancy only. In this case, the DOTS servers would
-be affiliated, and through shared communications ensure that the redundant
-mitigation requests do not result in overlapping traffic diversion
-announcements.</t>
+  <t>Restricting multi-homing to deployments in which all DOTS servers are
+coordinating management of a shared pool of mitigation resources.</t>
 </list></t>
 
 <section anchor="gatewayed-signaling" title="Gatewayed Signaling">
@@ -956,10 +954,11 @@ mitigation withdraws its request for help, as per the discussion of managing
 mitigation toggling in the operational requirements
 (<xref target="I-D.ietf-dots-requirements"></xref>).</t>
 
-<t>[[EDITOR&rsquo;S NOTE: Recursive signaling raises questions about operational and
-data privacy, as well as what level of visibility a client has into the recursed
-mitigation.  We ask the working group for feedback and additional discussion of
-these issues to help settle the way forward.]]</t>
+<t>Deployment of recursive signaling potentially reduces the DOTS client&rsquo;s limited
+control over the network path of mitigated traffic, and consequently control
+over who is scrubbing traffic destined for the DOTS client domain. DOTS client
+operators should be aware of any privacy concerns affecting a recursive
+signaling deployment, and take steps to ensure sensitive material is protected.</t>
 
 </section>
 <section anchor="anycast-signaling" title="Anycast Signaling">
