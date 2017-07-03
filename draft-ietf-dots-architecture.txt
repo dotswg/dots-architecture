@@ -5,7 +5,7 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                            Arbor Networks
 Intended status: Informational                              F. Andreasen
-Expires: January 2, 2018                                           Cisco
+Expires: January 4, 2018                                           Cisco
                                                                 T. Reddy
                                                             McAfee, Inc.
                                                                  C. Gray
@@ -14,7 +14,7 @@ Expires: January 2, 2018                                           Cisco
                                                                  Charter
                                                                N. Teague
                                                                 Verisign
-                                                           July 01, 2017
+                                                           July 03, 2017
 
 
 Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 2, 2018.
+   This Internet-Draft will expire on January 4, 2018.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 1]
+Mortensen, et al.        Expires January 4, 2018                [Page 1]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 2]
+Mortensen, et al.        Expires January 4, 2018                [Page 2]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -117,7 +117,7 @@ Internet-Draft              DOTS Architecture                  July 2017
    7.  Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  27
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  27
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  28
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  27
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
 
 1.  Context and Motivation
@@ -165,7 +165,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 3]
+Mortensen, et al.        Expires January 4, 2018                [Page 3]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -212,7 +212,7 @@ Internet-Draft              DOTS Architecture                  July 2017
       servers based on criteria determined by DOTS client administrators
       and the underlying network configuration.  The number of DOTS
       servers with which a given DOTS client has established
-      communccations is determined by local policy and is deployment-
+      communications is determined by local policy and is deployment-
       specific.  For example, a DOTS client of a multi-homed network may
       support built-in policies to establish DOTS relationships with
       DOTS servers located upstream of each interconnection link.
@@ -221,7 +221,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 4]
+Mortensen, et al.        Expires January 4, 2018                [Page 4]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -277,7 +277,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 5]
+Mortensen, et al.        Expires January 4, 2018                [Page 5]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -333,7 +333,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 6]
+Mortensen, et al.        Expires January 4, 2018                [Page 6]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -389,7 +389,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 7]
+Mortensen, et al.        Expires January 4, 2018                [Page 7]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -445,7 +445,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 8]
+Mortensen, et al.        Expires January 4, 2018                [Page 8]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -501,7 +501,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018                [Page 9]
+Mortensen, et al.        Expires January 4, 2018                [Page 9]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -557,7 +557,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 10]
+Mortensen, et al.        Expires January 4, 2018               [Page 10]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -613,7 +613,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 11]
+Mortensen, et al.        Expires January 4, 2018               [Page 11]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -669,7 +669,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 12]
+Mortensen, et al.        Expires January 4, 2018               [Page 12]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -725,7 +725,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 13]
+Mortensen, et al.        Expires January 4, 2018               [Page 13]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -781,7 +781,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 14]
+Mortensen, et al.        Expires January 4, 2018               [Page 14]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -837,7 +837,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 15]
+Mortensen, et al.        Expires January 4, 2018               [Page 15]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -867,9 +867,9 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 3.1.1.  Preconditions
 
-   Prior to establishing a DOTS between agents, the owners of the
-   networks, domains, services or applications involved are assumed to
-   have agreed upon the terms of the relationship involved.  Such
+   Prior to establishing a DOTS session between agents, the owners of
+   the networks, domains, services or applications involved are assumed
+   to have agreed upon the terms of the relationship involved.  Such
    agreements are out of scope for this document, but must be in place
    for a functional DOTS architecture.
 
@@ -893,7 +893,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 16]
+Mortensen, et al.        Expires January 4, 2018               [Page 16]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -949,7 +949,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 17]
+Mortensen, et al.        Expires January 4, 2018               [Page 17]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -1005,7 +1005,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 18]
+Mortensen, et al.        Expires January 4, 2018               [Page 18]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -1061,7 +1061,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 19]
+Mortensen, et al.        Expires January 4, 2018               [Page 19]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -1117,7 +1117,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 20]
+Mortensen, et al.        Expires January 4, 2018               [Page 20]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -1173,7 +1173,7 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 21]
+Mortensen, et al.        Expires January 4, 2018               [Page 21]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
@@ -1188,11 +1188,9 @@ Internet-Draft              DOTS Architecture                  July 2017
    examination and mitigation extending beyond the initial bilateral
    relationship between DOTS client and DOTS server.  As such, client
    control over the network path of mitigated traffic may be reduced.
-   DOTS client operators should be aware of any privacy concerns and
-   take steps to ensure sensitive material is suitably protected.  DOTS
-   server operators should exercise transparency when deploying
-   recursion to ensure DOTS clients are able to make appropriately
-   informed decisions.
+   DOTS client operators should be aware of any privacy concerns, and
+   work with DOTS server operators employing recursive signaling to
+   ensure shared sensitive material is suitably protected.
 
 3.2.4.  Anycast Signaling
 
@@ -1203,7 +1201,7 @@ Internet-Draft              DOTS Architecture                  July 2017
    deployment, DOTS clients connecting to the DOTS Service Address may
    be communicating with distinct DOTS servers, depending on the network
    configuration at the time the DOTS clients connect.  Among other
-   benefits, anycasted signaling potentially offers the following:
+   benefits, anycast signaling potentially offers the following:
 
    o  Simplified DOTS client configuration, including service discovery
       through the methods described in [RFC7094].  In this scenario, the
@@ -1226,16 +1224,15 @@ Internet-Draft              DOTS Architecture                  July 2017
    As long as network configuration remains stable, anycast DOTS
    signaling is to the individual DOTS client indistinct from direct
    signaling.  However, the operational challenges inherent in anycast
+   signaling are anything but negligible, and DOTS server operators must
+   carefully weigh the risks against the benefits before deploying.
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 22]
+Mortensen, et al.        Expires January 4, 2018               [Page 22]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
-
-   signaling are anything but negligible, and DOTS server operators must
-   carefully weigh the risks against the benefits before deploying.
 
    While the DOTS signal channel primarily operates over UDP per
    [I-D.ietf-dots-requirements], the signal channel also requires mutual
@@ -1243,19 +1240,19 @@ Internet-Draft              DOTS Architecture                  July 2017
    both ends.
 
    Network instability is of particular concern with anycast signaling,
-   as DOTS sessions are expected to be long-lived, and potentially
-   operating under congested network conditions caused by a volumetric
-   DDoS attack.
+   as DOTS signal channels are expected to be long-lived, and
+   potentially operating under congested network conditions caused by a
+   volumetric DDoS attack.
 
    For example, a network configuration altering the route to the DOTS
    server during active anycast signaling may cause the DOTS client to
    send messages to a DOTS server other than the one with which it
    initially established a signaling session.  That second DOTS server
    may not have the security state of the existing session, forcing the
-   DOTS client to initialize a new DOTS session.  This challenge may in
-   part be mitigated by use of pre-shared keys, as described in
-   [I-D.ietf-tls-tls13], but keying material must be available to all
-   DOTS servers sharing the anycast Service Address in that case.
+   DOTS client to initialize a new DOTS session.  This challenge might
+   in part be mitigated by use of pre-shared keys and session resumption
+   [RFC5246][RFC6347], but keying material must be available to all DOTS
+   servers sharing the anycast Service Address in that case.
 
    While the DOTS client will try to establish a new DOTS session with
    the DOTS server now acting as the anycast DOTS Service Address, the
@@ -1281,17 +1278,17 @@ Internet-Draft              DOTS Architecture                  July 2017
    nor does it demand justification for any mitigation request, thereby
    reserving operational control over DDoS defense for the domain
    requesting mitigation.  This architecture likewise does not prescribe
+   the network conditions and mechanisms triggering a mitigation request
+   from a DOTS client.
 
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 23]
+
+Mortensen, et al.        Expires January 4, 2018               [Page 23]
 
 Internet-Draft              DOTS Architecture                  July 2017
 
-
-   the network conditions and mechanisms triggering a mitigation request
-   from a DOTS client.
 
    However, considering selected possible mitigation triggers from an
    architectural perspective offers a model for alternative or
@@ -1336,21 +1333,18 @@ Internet-Draft              DOTS Architecture                  July 2017
    from an upstream DOTS server, sending a mitigation request derived
    from the downstream DOTS client's request.
 
-
-
-
-
-
-Mortensen, et al.        Expires January 2, 2018               [Page 24]
-
-Internet-Draft              DOTS Architecture                  July 2017
-
-
    The motivations for a DOTS client operator to request mitigation
    manually are not prescribed by this architecture, but are expected to
    include some of the following:
 
    o  Notice of an attack delivered via e-mail or alternative messaging
+
+
+
+Mortensen, et al.        Expires January 4, 2018               [Page 24]
+
+Internet-Draft              DOTS Architecture                  July 2017
+
 
    o  Notice of an attack delivered via phone call
 
@@ -1394,20 +1388,19 @@ Internet-Draft              DOTS Architecture                  July 2017
 
    o  Any combination of the above.
 
-
-
-
-Mortensen, et al.        Expires January 2, 2018               [Page 25]
-
-Internet-Draft              DOTS Architecture                  July 2017
-
-
    When automated conditional mitigation requests are enabled,
    violations of any of the above conditions, or any additional
    operator-defined conditions, will trigger a mitigation request from
    the DOTS client to the DOTS server.  The interfaces between the
    application detecting the condition violation and the DOTS client are
    implementation-specific.
+
+
+
+Mortensen, et al.        Expires January 4, 2018               [Page 25]
+
+Internet-Draft              DOTS Architecture                  July 2017
+
 
 3.3.3.  Automated Mitigation on Loss of Signal
 
@@ -1450,19 +1443,20 @@ Internet-Draft              DOTS Architecture                  July 2017
    mitigation activities or subvert black/whitelists.  From an
    architectural standpoint, operators SHOULD ensure best current
    practices for secure communication are observed for data and signal
-
-
-
-Mortensen, et al.        Expires January 2, 2018               [Page 26]
-
-Internet-Draft              DOTS Architecture                  July 2017
-
-
    channel confidentiality, integrity and authenticity.  Care must be
    taken to ensure transmission is protected by appropriately secure
    means, reducing attack surface by exposing only the minimal required
    services or interfaces.  Similarly, received data at rest SHOULD be
    stored with a satisfactory degree of security.
+
+
+
+
+
+Mortensen, et al.        Expires January 4, 2018               [Page 26]
+
+Internet-Draft              DOTS Architecture                  July 2017
+
 
    As many mitigation systems employ diversion to scrub attack traffic,
    operators of DOTS agents SHOULD ensure DOTS sessions are resistant to
@@ -1502,18 +1496,6 @@ Internet-Draft              DOTS Architecture                  July 2017
               RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
 
-
-
-
-
-
-
-
-Mortensen, et al.        Expires January 2, 2018               [Page 27]
-
-Internet-Draft              DOTS Architecture                  July 2017
-
-
 8.2.  Informative References
 
    [I-D.ietf-dots-requirements]
@@ -1522,16 +1504,21 @@ Internet-Draft              DOTS Architecture                  July 2017
               Requirements", draft-ietf-dots-requirements-05 (work in
               progress), June 2017.
 
+
+
+
+
+
+Mortensen, et al.        Expires January 4, 2018               [Page 27]
+
+Internet-Draft              DOTS Architecture                  July 2017
+
+
    [I-D.ietf-dots-use-cases]
               Dobbins, R., Fouant, S., Migault, D., Moskowitz, R.,
               Teague, N., Xia, L., and K. Nishizuka, "Use cases for DDoS
               Open Threat Signaling (DDoS) Open Threat Signaling",
               draft-ietf-dots-use-cases-05 (work in progress), May 2017.
-
-   [I-D.ietf-tls-tls13]
-              Rescorla, E., "The Transport Layer Security (TLS) Protocol
-              Version 1.3", draft-ietf-tls-tls13-20 (work in progress),
-              April 2017.
 
    [RFC0768]  Postel, J., "User Datagram Protocol", STD 6, RFC 768, DOI
               10.17487/RFC0768, August 1980,
@@ -1560,19 +1547,28 @@ Internet-Draft              DOTS Architecture                  July 2017
               RFC4732, December 2006,
               <http://www.rfc-editor.org/info/rfc4732>.
 
-
-
-
-
-
-Mortensen, et al.        Expires January 2, 2018               [Page 28]
-
-Internet-Draft              DOTS Architecture                  July 2017
-
-
    [RFC4786]  Abley, J. and K. Lindqvist, "Operation of Anycast
               Services", BCP 126, RFC 4786, DOI 10.17487/RFC4786,
               December 2006, <http://www.rfc-editor.org/info/rfc4786>.
+
+   [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
+              (TLS) Protocol Version 1.2", RFC 5246, DOI 10.17487/
+              RFC5246, August 2008,
+              <http://www.rfc-editor.org/info/rfc5246>.
+
+   [RFC6347]  Rescorla, E. and N. Modadugu, "Datagram Transport Layer
+              Security Version 1.2", RFC 6347, DOI 10.17487/RFC6347,
+              January 2012, <http://www.rfc-editor.org/info/rfc6347>.
+
+
+
+
+
+
+Mortensen, et al.        Expires January 4, 2018               [Page 28]
+
+Internet-Draft              DOTS Architecture                  July 2017
+
 
    [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
@@ -1587,11 +1583,6 @@ Internet-Draft              DOTS Architecture                  July 2017
               "Architectural Considerations of IP Anycast", RFC 7094,
               DOI 10.17487/RFC7094, January 2014,
               <http://www.rfc-editor.org/info/rfc7094>.
-
-   [RFC8094]  Reddy, T., Wing, D., and P. Patil, "DNS over Datagram
-              Transport Layer Security (DTLS)", RFC 8094, DOI 10.17487/
-              RFC8094, February 2017,
-              <http://www.rfc-editor.org/info/rfc8094>.
 
 Authors' Addresses
 
@@ -1620,17 +1611,19 @@ Authors' Addresses
    EMail: tireddy@cisco.com
 
 
-
-Mortensen, et al.        Expires January 2, 2018               [Page 29]
-
-Internet-Draft              DOTS Architecture                  July 2017
-
-
    Christopher Gray
    Comcast
    United States
 
    EMail: Christopher_Gray3@cable.comcast.com
+
+
+
+
+
+Mortensen, et al.        Expires January 4, 2018               [Page 29]
+
+Internet-Draft              DOTS Architecture                  July 2017
 
 
    Rich Compton
@@ -1677,4 +1670,11 @@ Internet-Draft              DOTS Architecture                  July 2017
 
 
 
-Mortensen, et al.        Expires January 2, 2018               [Page 30]
+
+
+
+
+
+
+
+Mortensen, et al.        Expires January 4, 2018               [Page 30]
