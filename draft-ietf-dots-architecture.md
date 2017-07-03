@@ -95,7 +95,6 @@ normative:
 informative:
   I-D.ietf-dots-requirements:
   I-D.ietf-dots-use-cases:
-  I-D.ietf-tls-tls13:
   RFC0768:
   RFC0793:
   RFC1035:
@@ -103,10 +102,11 @@ informative:
   RFC4271:
   RFC4732:
   RFC4786:
+  RFC5246:
+  RFC6347:
   RFC6763:
   RFC7092:
   RFC7094:
-  RFC8094:
 
 
 --- abstract
@@ -206,7 +206,7 @@ This document makes the following assumptions:
 * Mitigation requests may be sent to one or more upstream DOTS servers based on
   criteria determined by DOTS client administrators and the underlying network
   configuration. The number of DOTS servers with which a given DOTS client has
-  established communccations is determined by local policy and is
+  established communications is determined by local policy and is
   deployment-specific. For example, a DOTS client of a multi-homed network may
   support built-in policies to establish DOTS relationships with DOTS servers
   located upstream of each interconnection link.
@@ -734,7 +734,7 @@ session is also said to be terminated.
 
 ### Preconditions {#dots-session-preconditions}
 
-Prior to establishing a DOTS between agents, the owners of the networks,
+Prior to establishing a DOTS session between agents, the owners of the networks,
 domains, services or applications involved are assumed to have agreed upon the
 terms of the relationship involved. Such agreements are out of scope for this
 document, but must be in place for a functional DOTS architecture.
@@ -980,10 +980,8 @@ Deployment of recursive signaling may result in traffic redirection, examination
 and mitigation extending beyond the initial bilateral relationship between DOTS
 client and DOTS server. As such, client control over the network path of
 mitigated traffic may be reduced. DOTS client operators should be aware of any
-privacy concerns and take steps to ensure sensitive material is suitably
-protected. DOTS server operators should exercise transparency when deploying
-recursion to ensure DOTS clients are able to make appropriately informed
-decisions.
+privacy concerns, and work with DOTS server operators employing recursive
+signaling to ensure shared sensitive material is suitably protected.
 
 
 ### Anycast Signaling
@@ -994,7 +992,7 @@ servers MAY deploy DOTS servers with an anycast Service Address as described in
 BCP 126 [RFC4786]. In such a deployment, DOTS clients connecting to the DOTS
 Service Address may be communicating with distinct DOTS servers, depending on
 the network configuration at the time the DOTS clients connect.  Among other
-benefits, anycasted signaling potentially offers the following:
+benefits, anycast signaling potentially offers the following:
 
 * Simplified DOTS client configuration, including service discovery through the
   methods described in [RFC7094]. In this scenario, the "instance discovery"
@@ -1024,7 +1022,7 @@ While the DOTS signal channel primarily operates over UDP per
 authentication between DOTS agents, with associated security state on both ends.
 
 Network instability is of particular concern with anycast signaling, as DOTS
-sessions are expected to be long-lived, and potentially operating under
+signal channels are expected to be long-lived, and potentially operating under
 congested network conditions caused by a volumetric DDoS attack.
 
 For example, a network configuration altering the route to the DOTS server
@@ -1032,9 +1030,9 @@ during active anycast signaling may cause the DOTS client to send messages to a
 DOTS server other than the one with which it initially established a signaling
 session. That second DOTS server may not have the security state of the
 existing session, forcing the DOTS client to initialize a new DOTS session.
-This challenge may in part be mitigated by use of pre-shared keys, as described
-in [I-D.ietf-tls-tls13], but keying material must be available to all DOTS
-servers sharing the anycast Service Address in that case.
+This challenge might in part be mitigated by use of pre-shared keys and session
+resumption [RFC5246]{{RFC6347}}, but keying material must be available to all
+DOTS servers sharing the anycast Service Address in that case.
 
 While the DOTS client will try to establish a new DOTS session with the
 DOTS server now acting as the anycast DOTS Service Address, the link between

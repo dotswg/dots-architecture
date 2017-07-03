@@ -6,7 +6,6 @@
 <!ENTITY RFC2119 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY I-D.ietf-dots-requirements SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dots-requirements.xml">
 <!ENTITY I-D.ietf-dots-use-cases SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dots-use-cases.xml">
-<!ENTITY I-D.ietf-tls-tls13 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-tls13.xml">
 <!ENTITY RFC0768 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0768.xml">
 <!ENTITY RFC0793 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0793.xml">
 <!ENTITY RFC1035 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1035.xml">
@@ -14,10 +13,11 @@
 <!ENTITY RFC4271 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4271.xml">
 <!ENTITY RFC4732 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4732.xml">
 <!ENTITY RFC4786 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4786.xml">
+<!ENTITY RFC5246 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5246.xml">
+<!ENTITY RFC6347 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6347.xml">
 <!ENTITY RFC6763 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml">
 <!ENTITY RFC7092 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7092.xml">
 <!ENTITY RFC7094 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7094.xml">
-<!ENTITY RFC8094 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8094.xml">
 ]>
 
 <?rfc rfcedstyle="yes"?>
@@ -107,7 +107,7 @@
       </address>
     </author>
 
-    <date year="2017" month="July" day="01"/>
+    <date year="2017" month="July" day="03"/>
 
     <area>Security</area>
     <workgroup>DOTS</workgroup>
@@ -212,7 +212,7 @@ triggers, or manually send requests for mitigation.</t>
   <t>Mitigation requests may be sent to one or more upstream DOTS servers based on
 criteria determined by DOTS client administrators and the underlying network
 configuration. The number of DOTS servers with which a given DOTS client has
-established communccations is determined by local policy and is
+established communications is determined by local policy and is
 deployment-specific. For example, a DOTS client of a multi-homed network may
 support built-in policies to establish DOTS relationships with DOTS servers
 located upstream of each interconnection link.</t>
@@ -723,7 +723,7 @@ session is also said to be terminated.</t>
 
 <section anchor="dots-session-preconditions" title="Preconditions">
 
-<t>Prior to establishing a DOTS between agents, the owners of the networks,
+<t>Prior to establishing a DOTS session between agents, the owners of the networks,
 domains, services or applications involved are assumed to have agreed upon the
 terms of the relationship involved. Such agreements are out of scope for this
 document, but must be in place for a functional DOTS architecture.</t>
@@ -962,10 +962,8 @@ mitigation toggling in the operational requirements
 and mitigation extending beyond the initial bilateral relationship between DOTS
 client and DOTS server. As such, client control over the network path of
 mitigated traffic may be reduced. DOTS client operators should be aware of any
-privacy concerns and take steps to ensure sensitive material is suitably
-protected. DOTS server operators should exercise transparency when deploying
-recursion to ensure DOTS clients are able to make appropriately informed
-decisions.</t>
+privacy concerns, and work with DOTS server operators employing recursive
+signaling to ensure shared sensitive material is suitably protected.</t>
 
 </section>
 <section anchor="anycast-signaling" title="Anycast Signaling">
@@ -976,7 +974,7 @@ servers MAY deploy DOTS servers with an anycast Service Address as described in
 BCP 126 <xref target="RFC4786"></xref>. In such a deployment, DOTS clients connecting to the DOTS
 Service Address may be communicating with distinct DOTS servers, depending on
 the network configuration at the time the DOTS clients connect.  Among other
-benefits, anycasted signaling potentially offers the following:</t>
+benefits, anycast signaling potentially offers the following:</t>
 
 <t><list style="symbols">
   <t>Simplified DOTS client configuration, including service discovery through the
@@ -1005,7 +1003,7 @@ benefits before deploying.</t>
 authentication between DOTS agents, with associated security state on both ends.</t>
 
 <t>Network instability is of particular concern with anycast signaling, as DOTS
-sessions are expected to be long-lived, and potentially operating under
+signal channels are expected to be long-lived, and potentially operating under
 congested network conditions caused by a volumetric DDoS attack.</t>
 
 <t>For example, a network configuration altering the route to the DOTS server
@@ -1013,9 +1011,9 @@ during active anycast signaling may cause the DOTS client to send messages to a
 DOTS server other than the one with which it initially established a signaling
 session. That second DOTS server may not have the security state of the
 existing session, forcing the DOTS client to initialize a new DOTS session.
-This challenge may in part be mitigated by use of pre-shared keys, as described
-in <xref target="I-D.ietf-tls-tls13"></xref>, but keying material must be available to all DOTS
-servers sharing the anycast Service Address in that case.</t>
+This challenge might in part be mitigated by use of pre-shared keys and session
+resumption <xref target="RFC5246"></xref><xref target="RFC6347"/>, but keying material must be available to all
+DOTS servers sharing the anycast Service Address in that case.</t>
 
 <t>While the DOTS client will try to establish a new DOTS session with the
 DOTS server now acting as the anycast DOTS Service Address, the link between
@@ -1223,7 +1221,6 @@ again in accordance with best current practices for network and host security.</
 
 &I-D.ietf-dots-requirements;
 &I-D.ietf-dots-use-cases;
-&I-D.ietf-tls-tls13;
 &RFC0768;
 &RFC0793;
 &RFC1035;
@@ -1231,10 +1228,11 @@ again in accordance with best current practices for network and host security.</
 &RFC4271;
 &RFC4732;
 &RFC4786;
+&RFC5246;
+&RFC6347;
 &RFC6763;
 &RFC7092;
 &RFC7094;
-&RFC8094;
 
 
     </references>
