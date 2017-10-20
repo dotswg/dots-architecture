@@ -18,6 +18,12 @@
 <!ENTITY RFC6763 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml">
 <!ENTITY RFC7092 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7092.xml">
 <!ENTITY RFC7094 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7094.xml">
+<!ENTITY RFC6724 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6724.xml">
+<!ENTITY RFC4732 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4732.xml">
+<!ENTITY RFC3582 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3582.xml">
+<!ENTITY RFC4116 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4116.xml">
+<!ENTITY RFC8043 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8043.xml">
+<!ENTITY RFC7556 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7556.xml">
 ]>
 
 <?rfc rfcedstyle="yes"?>
@@ -596,7 +602,7 @@ self-inflicted harms as a result deploying multi-homed DOTS clients. If
 DOTS client implementations nevertheless include support for multi-homing, they
 are expected to be aware of the risks, and consequently to include measures
 aimed at reducing the likelihood of negative outcomes.  Sample multi-homing deployment guidelines
-and recommendations are elaborated in <xref target="appendix"></xref>.
+and recommendations are elaborated in <xref target="appendix"></xref>.</t>
 
 <section anchor="gatewayed-signaling" title="Gatewayed Signaling">
 
@@ -1204,8 +1210,6 @@ again in accordance with best current practices for network and host security.</
     <references title='Normative References'>
 
 &RFC2119;
-      <?rfc include='reference.RFC.6724'?>
-
 
     </references>
 
@@ -1225,19 +1229,16 @@ again in accordance with best current practices for network and host security.</
 &RFC6763;
 &RFC7092;
 &RFC7094;
-      <?rfc include='reference.RFC.4732'?>
-
-      <?rfc include='reference.RFC.3582'?>
-
-      <?rfc include='reference.RFC.4116'?>
-
-      <?rfc include='reference.RFC.8043'?>
-
-      <?rfc include='reference.RFC.7556'?>
-
-    </references>
+&RFC4732;
+&RFC3582;
+&RFC4116;
+&RFC8043;
+&RFC7556;
+&RFC6724;     
+ </references>
 
        <section anchor="appendix" title="Multi-homing Operational Guidelines">
+         
       <t>DOTS may be deployed within networks that are connected to one single
       upstream provider. It can also be enabled within networks that are
       multi-homed. The reader may refer to <xref target="RFC3582"></xref> for
@@ -1369,9 +1370,8 @@ again in accordance with best current practices for network and host security.</
         must be established using the interface from which the DOTS server was
         provisioned.</t>
 
-        <t><figure align="center" anchor="dotsrcpe"
-            title="DOTS associations for a multihomed residential CPE">
-            <artwork align="center"><![CDATA[                          +--+
+        <figure title="DOTS associations for a multihomed residential CPE" anchor="dotsrcpe"><artwork><![CDATA[
+                          +--+
                -----------|S1|
               /           +--+
              /            
@@ -1384,8 +1384,8 @@ again in accordance with best current practices for network and host security.</
               \           +--+
                -----------|S2|
                           +--+
-]]></artwork>
-          </figure></t>
+]]></artwork></figure>
+          
       </section>
 
       <section title="Multi-homed Enterprise: Single CPE, Multiple Upstream ISPs">
@@ -1409,9 +1409,8 @@ again in accordance with best current practices for network and host security.</
         <t>Nevertheless, when PI addresses/prefixes are assigned, the DOTS
         gateway MUST sent the same request to all its DOTS servers.</t>
 
-        <t><figure align="center" anchor="dotsmcgms"
-            title="Multiple DOTS Clients, Single DOTS Gateway, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[                               +--+
+        <figure title="Multiple DOTS Clients, Single DOTS Gateway, Multiple DOTS Servers" anchor="dotsmcgms"><artwork><![CDATA[
+                               +--+
                     -----------|S1|
     +---+          /           +--+
     | C1|----+    /            
@@ -1424,8 +1423,7 @@ again in accordance with best current practices for network and host security.</
     +---+          \           +--+
                     -----------|S2|
                                +--+
-]]></artwork>
-          </figure></t>
+]]></artwork></figure>
 
         <t>An alternate deployment model is depicted in <xref
         target="mcms"></xref>. This deployment assumes that:</t>
@@ -1448,10 +1446,9 @@ again in accordance with best current practices for network and host security.</
         traffic to the appropriate DOTS server using the appropriate source IP
         address. These complications discussed in <xref
         target="RFC4116"></xref> are not specific to DOTS .</t>
+   
+<figure title="Multiple DOTS Clients, Multiple DOTS Servers" anchor="mcms"><artwork><![CDATA[
 
-        <t><figure align="center" anchor="mcms"
-            title="Multiple DOTS Clients, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[                 
           +--+         
  +--------|C1|--------+                
  |        +--+        |      
@@ -1461,8 +1458,7 @@ again in accordance with best current practices for network and host security.</
  |        +--+        |     
  +--------|C2|--------+     
           +--+           
-]]></artwork>
-          </figure></t>
+]]></artwork></figure>
 
         <t>Another deployment approach is to enable many DOTS clients; each of
         them responsible to handle communication with a specific DOTS server
@@ -1475,9 +1471,8 @@ again in accordance with best current practices for network and host security.</
         the mitigation request should be forwarded. As a consequence, the
         request may not be forwarded to the appropriate DOTS server.</t>
 
-        <t><figure align="center" anchor="scms"
-            title="Single Homed DOTS Clients">
-            <artwork align="center"><![CDATA[                 
+  <figure title="Single Homed DOTS Clients" anchor="scms"><artwork><![CDATA[
+
           +--+         
  +--------|C1|                 
  |        +--+  
@@ -1485,8 +1480,8 @@ again in accordance with best current practices for network and host security.</
 |S2|      |C2|------|S1|
 +--+      +--+      +--+
 
-]]></artwork>
-          </figure></t>
+]]></artwork></figure>
+          
       </section>
 
       <section title="Multi-homed Enterprise: Multiple CPEs, Multiple Upstream ISPs">
@@ -1521,9 +1516,7 @@ again in accordance with best current practices for network and host security.</
         later MUST select the appropriate DOTS gateway to be contacted. The
         use of anycast is NOT RECOMMENDED to reach DOTS gateways.</t>
 
-        <t><figure align="center" anchor="mcmgms"
-            title="Multiple DOTS Clients, Multiple DOTS Gateways, Multiple DOTS Servers">
-            <artwork align="center"><![CDATA[                 
+       <figure title="SMultiple DOTS Clients, Multiple DOTS Gateways, Multiple DOTS Servers" anchor="mcmgms"><artwork><![CDATA[
                          +---+         
             +------------| C1|----+                
             |            +---+    |      
@@ -1533,8 +1526,8 @@ again in accordance with best current practices for network and host security.</
             |            +---+    |     
             +------------| C2|----+     
                          +---+           
-]]></artwork>
-          </figure></t>
+]]></artwork></figure>
+          
       </section>
 
       <section title="Multi-homed Enterprise: Single ISP">
