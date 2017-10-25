@@ -18,6 +18,12 @@
 <!ENTITY RFC6763 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml">
 <!ENTITY RFC7092 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7092.xml">
 <!ENTITY RFC7094 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7094.xml">
+<!ENTITY RFC6724 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6724.xml">
+<!ENTITY RFC4732 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4732.xml">
+<!ENTITY RFC3582 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3582.xml">
+<!ENTITY RFC4116 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4116.xml">
+<!ENTITY RFC8043 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8043.xml">
+<!ENTITY RFC7556 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7556.xml">
 ]>
 
 <?rfc rfcedstyle="yes"?>
@@ -588,24 +594,15 @@ servers with which it has established signal channels, the client may
 unintentionally inflict additional network disruption on the resources it
 intends to protect. In one of the worst cases, a multi-homed DOTS client could
 cause a permanent routing loop of traffic destined for the client&rsquo;s protected
-protected services, as the uncoordinated DOTS servers&rsquo; mitigators all try to
+services, as the uncoordinated DOTS servers&rsquo; mitigators all try to
 divert that traffic to their own scrubbing centers.</t>
 
 <t>The DOTS protocol itself provides no fool-proof method to prevent such
 self-inflicted harms as a result deploying multi-homed DOTS clients. If
 DOTS client implementations nevertheless include support for multi-homing, they
 are expected to be aware of the risks, and consequently to include measures
-aimed at reducing the likelihood of negative outcomes. Simple measures might
-include:</t>
-
-<t><list style="symbols">
-  <t>Requesting mitigation serially, ensuring only one mitigation request for
-a given address space is active at any given time;</t>
-  <t>Dividing the protected resources among the DOTS servers, such that no two
-mitigators will be attempting to divert and scrub the same traffic;</t>
-  <t>Restricting multi-homing to deployments in which all DOTS servers are
-coordinating management of a shared pool of mitigation resources.</t>
-</list></t>
+aimed at reducing the likelihood of negative outcomes.  Sample multi-homing deployment guidelines
+and recommendations are elaborated in <xref target="appendix"></xref>.</t>
 
 <section anchor="gatewayed-signaling" title="Gatewayed Signaling">
 
@@ -1214,7 +1211,6 @@ again in accordance with best current practices for network and host security.</
 
 &RFC2119;
 
-
     </references>
 
     <references title='Informative References'>
@@ -1233,12 +1229,326 @@ again in accordance with best current practices for network and host security.</
 &RFC6763;
 &RFC7092;
 &RFC7094;
+&RFC4732;
+&RFC3582;
+&RFC4116;
+&RFC8043;
+&RFC7556;
+&RFC6724;     
+ </references>
 
+       <section anchor="appendix" title="Multi-homing Operational Guidelines">
+         
+      <t>DOTS may be deployed within networks that are connected to one single
+      upstream provider. It can also be enabled within networks that are
+      multi-homed. The reader may refer to <xref target="RFC3582"></xref> for
+      an overview of multi-homing goals and motivations. </t>
 
-    </references>
+      <t>This appendix discusses DOTS multi-homing considerations,
+      specifically to:<list style="numbers">
+          <t>Complete the base DOTS architecture with multi-homing specifics.
+          Those specifics need to be taking into account because: <list
+              style="symbols">
+              <t>Send a DOTS mitigation request to an arbitrary DOTS server
+              won't help mitigating a DDoS attack.</t>
 
+              <t>Blindly forking all DOTS mitigation requests among all
+              available DOTS servers is suboptimal.</t>
 
+              <t>Sequentially contacting DOTS servers may increase the delay
+              before a mitigation plan is enforced.</t>
+            </list></t>
 
+          <t>Identify DOTS deployment schemes in a multi-homing context, where
+          DOTS service can be offered by all or a subset of upstream
+          providers.</t>
+
+          <t>Sketch guidelines and recommendations for placing DOTS requests
+          in multi-homed networks, e.g.,: <list style="symbols">
+              <t>Select the appropriate DOTS server(s).</t>
+
+              <t>Identify cases where anycast is not recommended.</t>
+            </list></t>
+        </list></t>
+
+      <t>To that aim, this appendix adopts the following methodology: <list
+          style="symbols">
+          <t>Identify and extract viable deployment candidates from <xref
+          target="I-D.ietf-dots-use-cases"></xref>.</t>
+
+          <t>Augment the description with multi-homing technicalities, e.g.,
+          <list style="symbols">
+              <t>One vs. multiple upstream network providers</t>
+
+              <t>One vs. multiple interconnect routers</t>
+
+              <t>Provider-Independent (PI) vs. Provider-Aggregatable (PA)</t>
+            </list></t>
+
+          <t>Describe the recommended behavior of DOTS clients and gateways
+          for each case.</t>
+        </list></t>
+
+      <t>Multi-homed DOTS agents are assumed to make use of the protocols
+      defined in <xref target="I-D.ietf-dots-signal-channel"></xref> and <xref
+      target="I-D.ietf-dots-data-channel"></xref>; no specific extension is
+      required to the base DOTS protocols for deploying DOTS in a multihomed
+      context.</t>
+
+      <t><xref target="dep"></xref> provides some sample (non-exhaustive)
+      deployment schemes to illustrate how DOTS agents may be deployed for
+      each of the scenarios introduced in <xref target="msc"></xref>.</t>
+
+      <texttable anchor="dep" style="all" title="Sample Deployment Cases">
+        <ttcol align="center">Scenario</ttcol>
+
+        <ttcol align="center">DOTS client</ttcol>
+
+        <ttcol align="center">DOTS gateway</ttcol>
+
+        <c>Residential CPE</c>
+
+        <c>CPE</c>
+
+        <c>N/A</c>
+
+        <c>Single CPE, Multiple provisioning domains</c>
+
+        <c>internal hosts or CPE</c>
+
+        <c>CPE</c>
+
+        <c>Multiple CPEs, Multiple provisioning domains</c>
+
+        <c>internal hosts or all CPEs (rtr1 and rtr2)</c>
+
+        <c>CPEs (rtr1 and rtr2)</c>
+
+        <c>Multi-homed enterprise, Single provisioning domain</c>
+
+        <c>internal hosts or all CPEs (rtr1 and rtr2)</c>
+
+        <c>CPEs (rtr1 and rtr2)</c>
+      </texttable>
+
+      <t>These deployment schemes are further discussed in the following
+      sub-sections.</t>
+
+      <section anchor="dcpe" title="Residential CPE">
+        <t><xref target="dotsrcpe"></xref> depicts DOTS signaling sessions
+        that are required to be established between a DOTS client (C) and DOTS
+        servers (S1, S2) for a multi-homed CPE.</t>
+
+        <t>The DOTS client MUST resolve the DOTS server's name provided by a
+        provisioning domain using the DNS servers learned from the same
+        provisioning domain. The DOTS client MUST use the source address
+        selection algorithm defined in <xref target="RFC6724"></xref> to
+        select the candidate source addresses to contact each of these DOTS
+        servers. DOTS signaling sessions must be established and maintained
+        with each of the DOTS servers because the mitigation scope of these
+        servers is restricted. The DOTS client SHOULD use the certificate
+        provisioned by a provisioning domain to authenticate itself to the
+        DOTS server provided by the same provisioning domain. When conveying a
+        mitigation request to protect the attack target(s), the DOTS client
+        among the DOTS servers available MUST select a DOTS server whose
+        network has assigned the prefixes from which target prefixes and
+        target IP addresses are derived. For example, mitigation request to
+        protect target resources bound to a PA IP address/prefix cannot be
+        honored by an provisioning domain other than the one that owns those
+        addresses/prefixes. Consequently, Typically, if a CPE detects a DDoS
+        attack on all its network attachments, it must contact both DOTS
+        servers for mitigation. Nevertheless, if the DDoS attack is received
+        from one single network, then only the DOTS server of that network
+        must be contacted.</t>
+
+        <t>The DOTS client MUST be able to associate a DOTS server with each
+        provisioning domain. For example, if the DOTS client is provisioned
+        with S1 using DHCP when attaching to a first network and with S2 using
+        Protocol Configuration Option (PCO) when attaching to a second
+        network, the DOTS client must record the interface from which a DOTS
+        server was provisioned. DOTS signaling session to a given DOTS server
+        must be established using the interface from which the DOTS server was
+        provisioned.</t>
+
+        <figure title="DOTS associations for a multihomed residential CPE" anchor="dotsrcpe"><artwork><![CDATA[
+                          +--+
+               -----------|S1|
+              /           +--+
+             /            
+            /
+      +---+/  
+      | C |
+      +---+\  
+            \ 
+             \
+              \           +--+
+               -----------|S2|
+                          +--+
+]]></artwork></figure>
+          
+      </section>
+
+      <section title="Multi-homed Enterprise: Single CPE, Multiple Upstream ISPs">
+        <t><xref target="dotsmcgms"></xref> illustrates a first set of DOTS
+        associations that can be established with a DOTS gateway is enabled in
+        the context of this scenario. This deployment is characterized as
+        follows:</t>
+
+        <t><list style="symbols">
+            <t>One of more DOTS clients are enabled in hosts located in the
+            internal network.</t>
+
+            <t>A DOTS getaway is enabled to aggregate/relay the requests to
+            upstream DOTS servers.</t>
+          </list>When PA addresses/prefixes are in used, the same
+        considerations discussed in <xref target="dcpe"></xref> are to be
+        followed by the DOTS gateway to contact its DOTS server(s). The DOTS
+        gateways can be reachable from DOTS client using a unicast or anycast
+        address.</t>
+
+        <t>Nevertheless, when PI addresses/prefixes are assigned, the DOTS
+        gateway MUST sent the same request to all its DOTS servers.</t>
+
+        <figure title="Multiple DOTS Clients, Single DOTS Gateway, Multiple DOTS Servers" anchor="dotsmcgms"><artwork><![CDATA[
+                               +--+
+                    -----------|S1|
+    +---+          /           +--+
+    | C1|----+    /            
+    +---+    |   /
++---+      +-+-+/  
+| C3|------| G |
++---+      +-+-+\  
+    +---+    |   \ 
+    | C2|----+    \
+    +---+          \           +--+
+                    -----------|S2|
+                               +--+
+]]></artwork></figure>
+
+        <t>An alternate deployment model is depicted in <xref
+        target="mcms"></xref>. This deployment assumes that:</t>
+
+        <t><list style="symbols">
+            <t>One of more DOTS clients are enabled in hosts located in the
+            internal network.</t>
+
+            <t>These DOTS clients communicate directly with upstream DOTS
+            servers.</t>
+          </list>If PI addresses/prefixes are in use, the DOTS client can send
+        the mitigation request for all its PI addresses/prefixes to any one of
+        the DOTS servers. The use of anycast addresses is NOT RECOMMENDED.</t>
+
+        <t>If PA addresses/prefxies are used, the same considerations
+        discussed in <xref target="dcpe"></xref> are to be followed by the
+        DOTS clients. Because DOTS clients are not located on the CPE and
+        multiple addreses/prefixes may not be assigned to the DOTS client
+        (IPv4 context, typically), some complications arise to steer the
+        traffic to the appropriate DOTS server using the appropriate source IP
+        address. These complications discussed in <xref
+        target="RFC4116"></xref> are not specific to DOTS .</t>
+   
+<figure title="Multiple DOTS Clients, Multiple DOTS Servers" anchor="mcms"><artwork><![CDATA[
+
+          +--+         
+ +--------|C1|--------+                
+ |        +--+        |      
++--+      +--+      +--+
+|S2|------|C3|------|S1|
++--+      +--+      +--+
+ |        +--+        |     
+ +--------|C2|--------+     
+          +--+           
+]]></artwork></figure>
+
+        <t>Another deployment approach is to enable many DOTS clients; each of
+        them responsible to handle communication with a specific DOTS server
+        (see <xref target="scms"></xref>). Each DOTS client is provided with
+        policies (e.g., prefix filter) that will trigger DOTS communications
+        with the DOTS servers. The CPE MUST select the appropriate source IP
+        address when forwarding DOTS messages received from an internal DOTS
+        client. If anycast addresses are used to reach DOTS servers, the CPE
+        may not be able to select the appropriate provisioning domain to which
+        the mitigation request should be forwarded. As a consequence, the
+        request may not be forwarded to the appropriate DOTS server.</t>
+
+  <figure title="Single Homed DOTS Clients" anchor="scms"><artwork><![CDATA[
+
+          +--+         
+ +--------|C1|                 
+ |        +--+  
++--+      +--+      +--+
+|S2|      |C2|------|S1|
++--+      +--+      +--+
+
+]]></artwork></figure>
+          
+      </section>
+
+      <section title="Multi-homed Enterprise: Multiple CPEs, Multiple Upstream ISPs">
+        <t>One specific problem for this scenario is to select the appropriate
+        exit router when contacting a given DOTS server.</t>
+
+        <t>An alternative deployment scheme is shown in <xref
+        target="mcmgms"></xref>:<list style="symbols">
+            <t>DOTS clients are enabled in hosts located in the internal
+            network.</t>
+
+            <t>A DOTS gateway is enabled in each CPE (rtr1, rtr2).</t>
+
+            <t>Each of these DOTS gateways communicate with the DOTS server of
+            the provisioning domain.</t>
+          </list></t>
+
+        <t>When PI addresses/prefixes are used, DOTS clients can contact any
+        of the DOTS gateways to send a DOTS message. DOTS gateway will then
+        relay the request to the DOTS server. Note that the use of anycast
+        addresses is NOT RECOMMENDED to establish DOTS signaling sessions
+        between DOTS client and DOTS gateways.</t>
+
+        <t>When PA addresses/prefixes are used, but no filter rules are
+        provided to DOTS clients, these later MUST contact all DOTS gateways
+        simultaneously to send a DOTS message. Upon receipt of a request by a
+        DOTS gateway, it MUST check whether the request is to be forwarded
+        upstream or be rejected.</t>
+
+        <t>When PA addresses/prefixes are used, but specific filter rules are
+        provided to DOTS clients using some means that are out of scope, these
+        later MUST select the appropriate DOTS gateway to be contacted. The
+        use of anycast is NOT RECOMMENDED to reach DOTS gateways.</t>
+
+       <figure title="SMultiple DOTS Clients, Multiple DOTS Gateways, Multiple DOTS Servers" anchor="mcmgms"><artwork><![CDATA[
+                         +---+         
+            +------------| C1|----+                
+            |            +---+    |      
++--+      +-+-+      +---+      +-+-+      +--+  
+|S2|------|G2 |------| C3|------|G1 |------|S1|
++--+      +-+-+      +---+      +-+-+      +--+ 
+            |            +---+    |     
+            +------------| C2|----+     
+                         +---+           
+]]></artwork></figure>
+          
+      </section>
+
+      <section title="Multi-homed Enterprise: Single ISP">
+        <t>The key difference of this scenario compared to the aforementioned
+        scenarios is that multi-homing is provided by the same ISP.
+        Concretely, that ISP can decided to provision the enterprise network
+        with:</t>
+
+        <t><list style="numbers">
+            <t>The same DOTS server for all network attachments.</t>
+
+            <t>Distinct DOTS servers for each network attachment. These DOTS
+            servers needs to coordinate when a mitigation action is received
+            from the enterprise network.</t>
+          </list></t>
+
+        <t>In both cases, DOTS agents enabled within the enterprise network
+        may decide to select one or all network attachments to place DOTS
+        mitigation requests.</t>
+      </section>
+    </section>
   </back>
 </rfc>
 
