@@ -308,19 +308,18 @@ mitigation, and periodically informs the DOTS client about the status of the
 mitigation.  Similarly, the DOTS client periodically informs the DOTS server
 about the client's status, which at a minimum provides client (attack target)
 health information, but it should also include efficacy information about the
-attack mitigation as it is now seen by the client. At some point, the DOTS client may
-decide to terminate the server-side attack mitigation, which it indicates to the
-DOTS server over the signal channel. A mitigation may also be terminated if a
-DOTS client-specified mitigation lifetime is exceeded. Note that the signal
-channel may need to operate over a link that is experiencing a DDoS attack and
-hence is subject to severe packet loss and high latency.
+attack mitigation as it is now seen by the client. At some point, the DOTS
+client may decide to terminate the server-side attack mitigation, which it
+indicates to the DOTS server over the signal channel. A mitigation may also be
+terminated if a DOTS client-specified mitigation lifetime is exceeded. Note that
+the signal channel may need to operate over a link that is experiencing a DDoS
+attack and hence is subject to severe packet loss and high latency.
 
 While DOTS is able to request mitigation with just the signal channel, the
 addition of the DOTS data channel provides for additional and more efficient
-capabilities. The primary
-purpose of the data channel is to support DOTS related configuration and policy
-information exchange between the DOTS client and the DOTS server. Examples of
-such information include, but are not limited to:
+capabilities. The primary purpose of the data channel is to support DOTS related
+configuration and policy information exchange between the DOTS client and the
+DOTS server. Examples of such information include, but are not limited to:
 
 * Creating identifiers, such as names or aliases, for resources for which
   mitigation may be requested. Such identifiers may then be used in subsequent
@@ -369,14 +368,14 @@ relationships.
 
 First of all, a DOTS agent belongs to a domain that has an identity which can be
 authenticated and authorized. DOTS agents communicate with each other over a
-mutually authenticated signal channel and (optionally) data channel. However, before they can
-do so, a service relationship needs to be established between them.  The details
-and means by which this is done is outside the scope of DOTS, however an example
-would be for an enterprise A (DOTS client) to sign up for DDoS service from
-provider B (DOTS server). This would establish a (service) relationship between
-the two that enables enterprise A's DOTS client to establish a signal channel
-with provider B's DOTS server. A and B will authenticate each other, and B can
-verify that A is authorized for its service.
+mutually authenticated signal channel and (optionally) data channel. However,
+before they can do so, a service relationship needs to be established between
+them.  The details and means by which this is done is outside the scope of DOTS,
+however an example would be for an enterprise A (DOTS client) to sign up for
+DDoS service from provider B (DOTS server). This would establish a (service)
+relationship between the two that enables enterprise A's DOTS client to
+establish a signal channel with provider B's DOTS server. A and B will
+authenticate each other, and B can verify that A is authorized for its service.
 
 From an operational and design point of view, DOTS assumes that the above
 relationship is established prior to a request for DDoS attack mitigation. In
@@ -438,9 +437,10 @@ mitigation should be considered advisory: guarantees of DOTS server availability
 or mitigation capacity constitute service level agreements and are out of scope
 for this document.
 
-The DOTS client adjusts mitigation scope and provides available attack feedback (e.g. mitigation efficacy)
-at the direction of its local administrator. Such direction may involve manual
-or automated adjustments in response to updates from the DOTS server.
+The DOTS client adjusts mitigation scope and provides available mitigation
+feedback (e.g. mitigation efficacy) at the direction of its local administrator.
+Such direction may involve manual or automated adjustments in response to
+updates from the DOTS server.
 
 To provide a metric of signal health and distinguish an idle signal channel
 from a disconnected or defunct session, the DOTS client sends a heartbeat over
@@ -452,8 +452,8 @@ terminated in the extended absence of a DOTS server heartbeat.
 ### DOTS Server {#dots-server}
 
 A DOTS server is a DOTS agent capable of receiving, processing and possibly
-acting on requests for help coordinating attack response from DOTS clients.  The DOTS
-server authenticates and authorizes DOTS clients as described in
+acting on requests for help coordinating attack response from DOTS clients.  The
+DOTS server authenticates and authorizes DOTS clients as described in
 {{dots-sessions}}, and maintains session state, tracking requests for
 mitigation, reporting on the status of active mitigations, and terminating
 sessions in the extended absence of a client heartbeat or when a session times
@@ -500,9 +500,10 @@ terminated in the extended absence of a DOTS client heartbeat.
 
 Traditional client/server relationships may be expanded by chaining DOTS
 sessions. This chaining is enabled through "logical concatenation" of a DOTS
-server and a DOTS client, resulting in an application analogous to the Session Initiation Protocol (SIP) {{RFC3261}} logical entity of a Back-to-Back User Agent (B2BUA) [RFC7092]. The term DOTS
-gateway is used here in the descriptions of selected scenarios involving this
-application.
+server and a DOTS client, resulting in an application analogous to the Session
+Initiation Protocol (SIP) {{RFC3261}} logical entity of a Back-to-Back User
+Agent (B2BUA) [RFC7092]. The term DOTS gateway is used here in the descriptions
+of selected scenarios involving this application.
 
 A DOTS gateway may be deployed client-side, server-side or both.  The gateway
 may terminate multiple discrete client connections and may aggregate these into
@@ -721,10 +722,12 @@ domains may also involve business relationships, service level agreements, or
 other formal or informal understandings between network operators, such
 considerations are out of scope for this document.
 
-A DOTS session is established to support bilateral exchange of data between an associated
-DOTS client and a DOTS server. In the DOTS architecture, data is exchanged
-between DOTS agents over signal and data channels. Regardless, a DOTS session is
-characterized by the presence of an established signal channel. A data channel may be established as well, however it is not a prerequisite. Conversely, a DOTS session cannot exist without an established signal channel:
+A DOTS session is established to support bilateral exchange of data between an
+associated DOTS client and a DOTS server. In the DOTS architecture, data is
+exchanged between DOTS agents over signal and data channels. Regardless, a DOTS
+session is characterized by the presence of an established signal channel. A
+data channel may be established as well, however it is not a prerequisite.
+Conversely, a DOTS session cannot exist without an established signal channel:
 when an established signal channel is terminated for any reason, the DOTS
 session is also said to be terminated.
 
@@ -749,10 +752,10 @@ channel messaging.
 
 With the required business agreements in place, the DOTS client
 initiates a signal session by contacting its DOTS server(s) over the signal
-channel and (possibly) the data channel. To allow for DOTS service flexibility, neither the
-order of contact nor the time interval between channel creations is specified. A
-DOTS client MAY establish signal channel first, and then data channel, or vice
-versa.
+channel and (possibly) the data channel. To allow for DOTS service flexibility,
+neither the order of contact nor the time interval between channel creations is
+specified. A DOTS client MAY establish signal channel first, and then data
+channel, or vice versa.
 
 The methods by which a DOTS client receives the address and associated service
 details of the DOTS server are not prescribed by this document. For example, a
@@ -772,8 +775,8 @@ provision the DOTS clients could be learned through mechanisms similar to DNS
 SRV {{RFC2782}} or DNS Service Discovery {{RFC6763}}.
 
 The DOTS client SHOULD successfully authenticate and exchange messages with the
-DOTS server over both signal and (if used) data channel as soon as possible to confirm
-that both channels are operational.
+DOTS server over both signal and (if used) data channel as soon as possible to
+confirm that both channels are operational.
 
 As described in [I-D.ietf-dots-requirements], the DOTS client can configure
 preferred values for acceptable signal loss, mitigation lifetime, and heartbeat
@@ -908,8 +911,8 @@ this may mean the mitigating domain and its other services and users continue to
 suffer the incidental effects of the attack.
 
 A recursive signaling model as shown in {{fig-recursive-signaling}} offers
-an alternative. In a variation of the use case "End-customer with a single upstream
-transit provider offering DDoS mitigation services" described in
+an alternative. In a variation of the use case "End-customer with a single
+upstream transit provider offering DDoS mitigation services" described in
 [I-D.ietf-dots-use-cases], a domain operating a DOTS server and mitigator also
 operates a DOTS client. This DOTS client has an established DOTS session
 with a DOTS server belonging to a separate administrative domain.
@@ -1062,7 +1065,9 @@ perspective offers a model for alternative or unanticipated triggers for DOTS
 deployments. In all cases, what network conditions merit a mitigation request
 are at the discretion of the DOTS client operator.
 
-The mitigation request itself is defined by DOTS, however the interfaces required to trigger the mitigation request in the following scenarios are implementation-specific. .
+The mitigation request itself is defined by DOTS, however the interfaces
+required to trigger the mitigation request in the following scenarios are
+implementation-specific.
 
 
 ###  Manual Mitigation Request {#manual-mit-request}
@@ -1083,8 +1088,8 @@ the alert to a mitigation request automatically.
 In a variation of the above scenario, the operator may have preconfigured on the
 DOTS client mitigation requests for various resources in the operator's domain.
 When notified of an attack, the DOTS client operator manually instructs the DOTS
-client to send the relevant preconfigured mitigation request for the resources under
-attack.
+client to send the relevant preconfigured mitigation request for the resources
+under attack.
 
 A further variant involves recursive signaling, as described in
 {{recursive-signaling}}. The DOTS client in this case is the second half of a
@@ -1183,11 +1188,11 @@ traffic injection and signal blocking.  These vectors may be exploited
 individually or in concert by an attacker to confuse, disable, take information
 from, or otherwise inhibit DOTS agents.
 
-Any attacker with the ability to impersonate a legitimate DOTS client or server or,
-indeed, inject false messages into the stream may potentially trigger/withdraw
-traffic redirection, trigger/cancel mitigation activities or subvert
-black/whitelists.  From an architectural standpoint, operators SHOULD ensure
-best current practices for secure communication are observed for data and
+Any attacker with the ability to impersonate a legitimate DOTS client or server
+or, indeed, inject false messages into the stream may potentially
+trigger/withdraw traffic redirection, trigger/cancel mitigation activities or
+subvert black/whitelists.  From an architectural standpoint, operators SHOULD
+ensure best current practices for secure communication are observed for data and
 signal channel confidentiality, integrity and authenticity.  Care must be taken
 to ensure transmission is protected by appropriately secure means, reducing
 attack surface by exposing only the minimal required services or interfaces.
@@ -1219,9 +1224,3 @@ Acknowledgments                 {#acknowledgments}
 ===============
 
 Thanks to Matt Richardson and Med Boucadair for their comments and suggestions.
-
-
-Change Log
-==========
-
-2016-03-18      Initial revision
