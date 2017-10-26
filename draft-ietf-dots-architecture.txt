@@ -18,7 +18,7 @@ Expires: April 28, 2018                                            Cisco
 
 
 Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
-                    draft-ietf-dots-architecture-04
+                    draft-ietf-dots-architecture-05
 
 Abstract
 
