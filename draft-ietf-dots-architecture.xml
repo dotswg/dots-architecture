@@ -31,7 +31,7 @@
 <?rfc inline="yes"?>
 <?rfc docmapping="yes"?>
 
-<rfc docName="draft-ietf-dots-architecture-04" category="info">
+<rfc docName="draft-ietf-dots-architecture-05" category="info">
 
   <front>
     <title abbrev="DOTS Architecture">Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture</title>

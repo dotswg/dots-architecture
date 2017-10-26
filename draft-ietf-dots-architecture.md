@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-04
+docname: draft-ietf-dots-architecture-05
 date: @DATE@
 
 area: Security
