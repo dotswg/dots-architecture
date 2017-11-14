@@ -108,7 +108,7 @@
       </address>
     </author>
 
-    <date year="2017" month="October" day="25"/>
+    <date year="2017" month="November" day="14"/>
 
     <area>Security</area>
     <workgroup>DOTS</workgroup>
@@ -918,7 +918,7 @@ building a cumulative mitigation against the attack.</t>
         client       .    ^                          .
                      . . .|. . . . . . . . . . . . . .
                           |
-                        1 |
+                        2 |
                           |
                      . . .|. . . . . . . . . . . . . .
                      .    v                          .

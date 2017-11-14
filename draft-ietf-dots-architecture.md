@@ -935,7 +935,7 @@ building a cumulative mitigation against the attack.
         client       .    ^                          .
                      . . .|. . . . . . . . . . . . . .
                           |
-                        1 |
+                        2 |
                           |
                      . . .|. . . . . . . . . . . . . .
                      .    v                          .
