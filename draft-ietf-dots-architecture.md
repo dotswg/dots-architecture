@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-05
+docname: draft-ietf-dots-architecture-06
 date: @DATE@
 
 area: Security
@@ -56,7 +56,8 @@ author:
       -
         ins: C. Gray
         name: Christopher Gray
-        org: Comcast
+        org:
+        -
         street:
         -
         city:
@@ -99,15 +100,18 @@ informative:
   RFC0793:
   RFC1035:
   RFC2782:
+  RFC3235:
   RFC3261:
   RFC4271:
   RFC4732:
   RFC4786:
   RFC5246:
+  RFC5389:
   RFC6347:
   RFC6763:
   RFC7092:
   RFC7094:
+  RFC8085:
 
 
 --- abstract
@@ -1048,6 +1052,80 @@ anycast changes as described above, mitigation may also flap as the DOTS servers
 sharing the anycast DOTS service address toggles mitigation on detecting
 DOTS session loss, depending on whether the client has configured
 mitigation on loss of signal.
+
+
+### Signaling Considerations for Network Address Translation {#nat-signaling}
+
+Network address translators (NATs) are expected to be a common feature of DOTS
+deployments. The Middlebox Traversal Guidelines in [RFC8085] include general
+NAT considerations for DOTS deployements when the signal channel is established
+over UDP.
+
+Additional DOTS-specific considerations arise when NATs are part of the DOTS
+architecture. For example, DDoS attack detection behind a NAT will detect
+attacks against internal addresses. A DOTS client subsequently asked to request
+mitigation for the attacked scope of addresses cannot reasonably perform the
+task, due to the lack of externally routable addresses in the mitigation scope.
+
+The following considerations do not cover all possible scenarios, but are meant
+rather to highlight anticipated common issues when signaling through NATs.
+
+
+#### Direct Provisioning of Internal-to-External Address Mappings
+
+Operators may circumvent the problem of translating internal addresses or
+prefixes to externally routable mitigation scopes by directly provisioning the
+mappings of external addresses to internal protected resources on the DOTS
+client. When the operator requests mitigation scoped for internal addresses,
+directly or through automated means, the DOTS client looks up the matching
+external addresses or prefixes, and issues a mitigation request scoped to that
+externally routable information.
+
+When directly provisioning the address mappings, operators must ensure the
+mappings remain up to date, or risk losing the ability to request accurate
+mitigation scopes. This document does not prescribe the method by which mappings
+are maintained once they are provisioned on the DOTS client.
+
+
+#### Resolving Public Mitigation Scope with Session Traversal Utilities (STUN)
+
+Internal resources may discover their external address through a STUN Binding
+request/response transaction, as described in [RFC5389]. After learning its
+reflexive transport address from the STUN server, the internal service can
+export its external/internal address pair to the DOTS client, allowing the DOTS
+client to request mitigation with the correct external scope, as depicted in
+{{fig-nat-stun}}. The mechanism for provisioning the DOTS client with the
+address pair is unspecified.
+
+
+~~~~~
+                Binding         Binding
+    +--------+  request  +---+  request  +--------+
+    |  STUN  |<----------| N |<----------|  STUN  |
+    | server |           | A |           | client |
+    |        |---------->| T |---------->|        |
+    +--------+  Binding  +---+  Binding  +--------+
+                response        response     |
+                                             | external/internal
+                                             | address pair
+                                             v
+                                         +--------+
+                                         |  DOTS  |
+                                         | client |
+                                         +--------+
+~~~~~
+{: #fig-nat-stun title="Resolving mitigation scope with STUN"}
+
+
+#### Resolving Requested Mitigation Scope with DNS
+
+DOTS supports mitigation scoped to DNS names. As discussed in [RFC3235],
+using DNS names instead of IP addresses potentially avoids the address
+translation problem, as long as the name is internally and externally
+resolvable by the same name. For example, a detected attack's internal target
+address can be mapped to a DNS name through a reverse lookup. The DNS name
+returned by the reverse lookup can then be provided to the DOTS client as the
+external scope for mitigation.
 
 
 Triggering Requests for Mitigation {#mit-request-triggers}
