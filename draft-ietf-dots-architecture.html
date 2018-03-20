@@ -398,6 +398,7 @@
 <link href="#rfc.section.3.2.2" rel="Chapter" title="3.2.2 Redirected Signaling"/>
 <link href="#rfc.section.3.2.3" rel="Chapter" title="3.2.3 Recursive Signaling"/>
 <link href="#rfc.section.3.2.4" rel="Chapter" title="3.2.4 Anycast Signaling"/>
+<link href="#rfc.section.3.2.5" rel="Chapter" title="3.2.5 Signaling Considerations for Network Address Translation"/>
 <link href="#rfc.section.3.3" rel="Chapter" title="3.3 Triggering Requests for Mitigation"/>
 <link href="#rfc.section.3.3.1" rel="Chapter" title="3.3.1 Manual Mitigation Request"/>
 <link href="#rfc.section.3.3.2" rel="Chapter" title="3.3.2 Automated Conditional Mitigation Request"/>
@@ -415,8 +416,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Mortensen, A., Andreasen, F., Reddy, T., Gray, C., Compton, R., and N. Teague" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-architecture-05" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-11-14" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-architecture-06" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-3-20" />
   <meta name="dct.abstract" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
   <meta name="description" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
 
@@ -440,7 +441,7 @@
   <td class="right">F. Andreasen</td>
 </tr>
 <tr>
-  <td class="left">Expires: May 18, 2018</td>
+  <td class="left">Expires: September 21, 2018</td>
   <td class="right">Cisco</td>
 </tr>
 <tr>
@@ -457,7 +458,7 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">Comcast</td>
+  <td class="right"></td>
 </tr>
 <tr>
   <td class="left"></td>
@@ -477,7 +478,7 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 14, 2017</td>
+  <td class="right">March 20, 2018</td>
 </tr>
 
     	
@@ -485,7 +486,7 @@
   </table>
 
   <p class="title">Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture<br />
-  <span class="filename">draft-ietf-dots-architecture-05</span></p>
+  <span class="filename">draft-ietf-dots-architecture-06</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -497,11 +498,11 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 18, 2018.</p>
+<p>This Internet-Draft will expire on September 21, 2018.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
-<p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
 
   
@@ -533,6 +534,7 @@
 <li>3.2.2.   <a href="#rfc.section.3.2.2">Redirected Signaling</a></li>
 <li>3.2.3.   <a href="#rfc.section.3.2.3">Recursive Signaling</a></li>
 <li>3.2.4.   <a href="#rfc.section.3.2.4">Anycast Signaling</a></li>
+<li>3.2.5.   <a href="#rfc.section.3.2.5">Signaling Considerations for Network Address Translation</a></li>
 </ul><li>3.3.   <a href="#rfc.section.3.3">Triggering Requests for Mitigation</a></li>
 <ul><li>3.3.1.   <a href="#rfc.section.3.3.1">Manual Mitigation Request</a></li>
 <li>3.3.2.   <a href="#rfc.section.3.3.2">Automated Conditional Mitigation Request</a></li>
@@ -553,7 +555,7 @@
 <p id="rfc.section.1.p.2">This document describes an architecture used in establishing, maintaining or terminating a DOTS relationship within a domain or between domains.</p>
 <h2 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#terminology" id="terminology">Terminology</a></h2>
 <h3 id="rfc.section.1.1.1"><a href="#rfc.section.1.1.1">1.1.1.</a> <a href="#key-words" id="key-words">Key Words</a></h3>
-<p id="rfc.section.1.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
+<p id="rfc.section.1.1.1.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <h3 id="rfc.section.1.1.2"><a href="#rfc.section.1.1.2">1.1.2.</a> <a href="#definition-of-terms" id="definition-of-terms">Definition of Terms</a></h3>
 <p id="rfc.section.1.1.2.p.1">This document uses the terms defined in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>.</p>
 <h2 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#scope" id="scope">Scope</a></h2>
@@ -570,7 +572,7 @@
   <li>Congestion and resource exhaustion are intended outcomes of a DDoS attack <a href="#RFC4732">[RFC4732]</a>. Some operators may utilize non-impacted paths or networks for DOTS, but in general conditions should be assumed to be hostile and DOTS must be able to function in all circumstances, including when the signaling path is significantly impaired.</li>
   <li>There is no universal DDoS attack scale threshold triggering a coordinated response across administrative domains. A network domain administrator, or service or application owner may arbitrarily set attack scale threshold triggers, or manually send requests for mitigation.</li>
   <li>Mitigation requests may be sent to one or more upstream DOTS servers based on criteria determined by DOTS client administrators and the underlying network configuration. The number of DOTS servers with which a given DOTS client has established communications is determined by local policy and is deployment-specific. For example, a DOTS client of a multi-homed network may support built-in policies to establish DOTS relationships with DOTS servers located upstream of each interconnection link.</li>
-  <li>The mitigation capacity and/or capability of domains receiving requests for coordinated attack response is opaque to the domains sending the request. The domain receiving the DOTS client signal may or may not have sufficient capacity or capability to filter any or all DDoS attack traffic directed at a target. In either case, the upstream DOTS server may redirect a request to another DOTS server. Redirection may be local to the redirecting DOTS server&#8217;s domain, or may involve a third-party domain.</li>
+  <li>The mitigation capacity and/or capability of domains receiving requests for coordinated attack response is opaque to the domains sending the request. The domain receiving the DOTS client signal may or may not have sufficient capacity or capability to filter any or all DDoS attack traffic directed at a target. In either case, the upstream DOTS server may redirect a request to another DOTS server. Redirection may be local to the redirecting DOTS server's domain, or may involve a third-party domain.</li>
   <li>DOTS client and server signals, as well as messages sent through the data channel, are sent across any transit networks with the same probability of delivery as any other traffic between the DOTS client domain and the DOTS server domain. Any encapsulation required for successful delivery is left untouched by transit network elements. DOTS server and DOTS client cannot assume any preferential treatment of DOTS signals. Such preferential treatment may be available in some deployments (e.g., intra-domain scenarios), and the DOTS architecture does not preclude its use when available. However, DOTS itself does not address how that may be done.</li>
   <li>The architecture allows for, but does not assume, the presence of Quality of Service (QoS) policy agreements between DOTS-enabled peer networks or local QoS prioritization aimed at ensuring delivery of DOTS messages between DOTS agents. QoS is an operational consideration only, not a functional part of the DOTS architecture.</li>
   <li>The signal and data channels are loosely coupled, and may not terminate on the same DOTS server.</li>
@@ -592,7 +594,7 @@
 </pre>
 <p class="figure">Figure 1: Basic DOTS Architecture</p>
 <p id="rfc.section.2.p.2">A simple example instantiation of the DOTS architecture could be an enterprise as the attack target for a volumetric DDoS attack, and an upstream DDoS mitigation service as the mitigator. The enterprise (attack target) is connected to the Internet via a link that is getting saturated, and the enterprise suspects it is under DDoS attack. The enterprise has a DOTS client, which obtains information about the DDoS attack, and signals the DOTS server for help in mitigating the attack. The DOTS server in turn invokes one or more mitigators, which are tasked with mitigating the actual DDoS attack, and hence aim to suppress the attack traffic while allowing valid traffic to reach the attack target.</p>
-<p id="rfc.section.2.p.3">The scope of the DOTS specifications is the interfaces between the DOTS client and DOTS server. The interfaces to the attack target and the mitigator are out of scope of DOTS. Similarly, the operation of both the attack target and the mitigator is out of scope of DOTS. Thus, DOTS neither specifies how an attack target decides it is under DDoS attack, nor does DOTS specify how a mitigator may actually mitigate such an attack. A DOTS client&#8217;s request for mitigation is advisory in nature, and may not lead to any mitigation at all, depending on the DOTS server domain&#8217;s capacity and willingness to mitigate on behalf of the DOTS client&#8217;s domain.</p>
+<p id="rfc.section.2.p.3">The scope of the DOTS specifications is the interfaces between the DOTS client and DOTS server. The interfaces to the attack target and the mitigator are out of scope of DOTS. Similarly, the operation of both the attack target and the mitigator is out of scope of DOTS. Thus, DOTS neither specifies how an attack target decides it is under DDoS attack, nor does DOTS specify how a mitigator may actually mitigate such an attack. A DOTS client's request for mitigation is advisory in nature, and may not lead to any mitigation at all, depending on the DOTS server domain's capacity and willingness to mitigate on behalf of the DOTS client's domain.</p>
 <p id="rfc.section.2.p.4">The DOTS client may be provided with a list of DOTS servers, each associated with one or more IP addresses. These addresses may or may not be of the same address family. The DOTS client establishes one or more sessions by connecting to the provided DOTS server addresses.</p>
 <p id="rfc.section.2.p.5">As illustrated in <a href="#fig-interfaces">Figure 2</a>, there are two interfaces between a DOTS server and a DOTS client; a signal channel and (optionally) a data channel.</p>
 <div id="rfc.figure.2"/>
@@ -605,7 +607,7 @@
     +---------------+                                 +---------------+
 </pre>
 <p class="figure">Figure 2: DOTS Interfaces</p>
-<p id="rfc.section.2.p.6">The primary purpose of the signal channel is for a DOTS client to ask a DOTS server for help in mitigating an attack, and for the DOTS server to inform the DOTS client about the status of such mitigation. The DOTS client does this by sending a client signal, which contains information about the attack target(s). The client signal may also include telemetry information about the attack, if the DOTS client has such information available. The DOTS server in turn sends a server signal to inform the DOTS client of whether it will honor the mitigation request. Assuming it will, the DOTS server initiates attack mitigation, and periodically informs the DOTS client about the status of the mitigation.  Similarly, the DOTS client periodically informs the DOTS server about the client&#8217;s status, which at a minimum provides client (attack target) health information, but it should also include efficacy information about the attack mitigation as it is now seen by the client. At some point, the DOTS client may decide to terminate the server-side attack mitigation, which it indicates to the DOTS server over the signal channel. A mitigation may also be terminated if a DOTS client-specified mitigation lifetime is exceeded. Note that the signal channel may need to operate over a link that is experiencing a DDoS attack and hence is subject to severe packet loss and high latency.</p>
+<p id="rfc.section.2.p.6">The primary purpose of the signal channel is for a DOTS client to ask a DOTS server for help in mitigating an attack, and for the DOTS server to inform the DOTS client about the status of such mitigation. The DOTS client does this by sending a client signal, which contains information about the attack target(s). The client signal may also include telemetry information about the attack, if the DOTS client has such information available. The DOTS server in turn sends a server signal to inform the DOTS client of whether it will honor the mitigation request. Assuming it will, the DOTS server initiates attack mitigation, and periodically informs the DOTS client about the status of the mitigation.  Similarly, the DOTS client periodically informs the DOTS server about the client's status, which at a minimum provides client (attack target) health information, but it should also include efficacy information about the attack mitigation as it is now seen by the client. At some point, the DOTS client may decide to terminate the server-side attack mitigation, which it indicates to the DOTS server over the signal channel. A mitigation may also be terminated if a DOTS client-specified mitigation lifetime is exceeded. Note that the signal channel may need to operate over a link that is experiencing a DDoS attack and hence is subject to severe packet loss and high latency.</p>
 <p id="rfc.section.2.p.7">While DOTS is able to request mitigation with just the signal channel, the addition of the DOTS data channel provides for additional and more efficient capabilities. The primary purpose of the data channel is to support DOTS related configuration and policy information exchange between the DOTS client and the DOTS server. Examples of such information include, but are not limited to:</p>
 <p/>
 
@@ -639,27 +641,27 @@
 <p id="rfc.section.2.p.10">Note that while it is possible to exchange the above information before, during or after a DDoS attack, DOTS requires reliable delivery of this information and does not provide any special means for ensuring timely delivery of it during an attack. In practice, this means that DOTS deployments should not rely on such information being exchanged during a DDoS attack.</p>
 <h2 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#operations" id="operations">DOTS Operations</a></h2>
 <p id="rfc.section.2.1.p.1">DOTS does not prescribe any specific deployment models, however DOTS is designed with some specific requirements around the different DOTS agents and their relationships.</p>
-<p id="rfc.section.2.1.p.2">First of all, a DOTS agent belongs to a domain that has an identity which can be authenticated and authorized. DOTS agents communicate with each other over a mutually authenticated signal channel and (optionally) data channel. However, before they can do so, a service relationship needs to be established between them.  The details and means by which this is done is outside the scope of DOTS, however an example would be for an enterprise A (DOTS client) to sign up for DDoS service from provider B (DOTS server). This would establish a (service) relationship between the two that enables enterprise A&#8217;s DOTS client to establish a signal channel with provider B&#8217;s DOTS server. A and B will authenticate each other, and B can verify that A is authorized for its service.</p>
+<p id="rfc.section.2.1.p.2">First of all, a DOTS agent belongs to a domain that has an identity which can be authenticated and authorized. DOTS agents communicate with each other over a mutually authenticated signal channel and (optionally) data channel. However, before they can do so, a service relationship needs to be established between them.  The details and means by which this is done is outside the scope of DOTS, however an example would be for an enterprise A (DOTS client) to sign up for DDoS service from provider B (DOTS server). This would establish a (service) relationship between the two that enables enterprise A's DOTS client to establish a signal channel with provider B's DOTS server. A and B will authenticate each other, and B can verify that A is authorized for its service.</p>
 <p id="rfc.section.2.1.p.3">From an operational and design point of view, DOTS assumes that the above relationship is established prior to a request for DDoS attack mitigation. In particular, it is assumed that bi-directional communication is possible at this time between the DOTS client and DOTS server. Furthermore, it is assumed that additional service provisioning, configuration and information exchange can be performed by use of the data channel, if operationally required. It is not until this point that the mitigation service is available for use.</p>
 <p id="rfc.section.2.1.p.4">Once the mutually authenticated signal channel has been established, it will remain active. This is done to increase the likelihood that the DOTS client can signal the DOTS server for help when the attack target is being flooded, and similarly raise the probability that DOTS server signals reach the client regardless of inbound link congestion.  This does not necessarily imply that the attack target and the DOTS client have to be co-located in the same administrative domain, but it is expected to be a common scenario.</p>
 <p id="rfc.section.2.1.p.5">DDoS mitigation with the help of an upstream mitigator may involve some form of traffic redirection whereby traffic destined for the attack target is steered towards the mitigator. Common mechanisms to achieve this redirection depend on BGP <a href="#RFC4271">[RFC4271]</a> and DNS <a href="#RFC1035">[RFC1035]</a>. The mitigator in turn inspects and scrubs the traffic, and forwards the resulting (hopefully non-attack) traffic to the attack target. Thus, when a DOTS server receives an attack mitigation request from a DOTS client, it can be viewed as a way of causing traffic redirection for the attack target indicated.</p>
-<p id="rfc.section.2.1.p.6">DOTS relies on mutual authentication and the pre-established service relationship between the DOTS client&#8217;s domain and the DOTS server&#8217;s domain to provide basic authorization. The DOTS server should enforce additional authorization mechanisms to restrict the mitigation scope a DOTS client can request, but such authorization mechanisms are deployment-specific.</p>
+<p id="rfc.section.2.1.p.6">DOTS relies on mutual authentication and the pre-established service relationship between the DOTS client's domain and the DOTS server's domain to provide basic authorization. The DOTS server should enforce additional authorization mechanisms to restrict the mitigation scope a DOTS client can request, but such authorization mechanisms are deployment-specific.</p>
 <p id="rfc.section.2.1.p.7">Although co-location of DOTS server and mitigator within the same domain is expected to be a common deployment model, it is assumed that operators may require alternative models. Nothing in this document precludes such alternatives.</p>
 <h2 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#components" id="components">Components</a></h2>
 <h3 id="rfc.section.2.2.1"><a href="#rfc.section.2.2.1">2.2.1.</a> <a href="#dots-client" id="dots-client">DOTS Client</a></h3>
-<p id="rfc.section.2.2.1.p.1">A DOTS client is a DOTS agent from which requests for help coordinating attack response originate. The requests may be in response to an active, ongoing attack against a target in the DOTS client&#8217;s domain, but no active attack is required for a DOTS client to request help. Operators may wish to have upstream mitigators in the network path for an indefinite period, and are restricted only by business relationships when it comes to duration and scope of requested mitigation.</p>
-<p id="rfc.section.2.2.1.p.2">The DOTS client requests attack response coordination from a DOTS server over the signal channel, including in the request the DOTS client&#8217;s desired mitigation scoping, as described in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>. The actual mitigation scope and countermeasures used in response to the attack are up to the DOTS server and mitigator operators, as the DOTS client may have a narrow perspective on the ongoing attack. As such, the DOTS client&#8217;s request for mitigation should be considered advisory: guarantees of DOTS server availability or mitigation capacity constitute service level agreements and are out of scope for this document.</p>
+<p id="rfc.section.2.2.1.p.1">A DOTS client is a DOTS agent from which requests for help coordinating attack response originate. The requests may be in response to an active, ongoing attack against a target in the DOTS client's domain, but no active attack is required for a DOTS client to request help. Operators may wish to have upstream mitigators in the network path for an indefinite period, and are restricted only by business relationships when it comes to duration and scope of requested mitigation.</p>
+<p id="rfc.section.2.2.1.p.2">The DOTS client requests attack response coordination from a DOTS server over the signal channel, including in the request the DOTS client's desired mitigation scoping, as described in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>. The actual mitigation scope and countermeasures used in response to the attack are up to the DOTS server and mitigator operators, as the DOTS client may have a narrow perspective on the ongoing attack. As such, the DOTS client's request for mitigation should be considered advisory: guarantees of DOTS server availability or mitigation capacity constitute service level agreements and are out of scope for this document.</p>
 <p id="rfc.section.2.2.1.p.3">The DOTS client adjusts mitigation scope and provides available mitigation feedback (e.g. mitigation efficacy) at the direction of its local administrator.  Such direction may involve manual or automated adjustments in response to updates from the DOTS server.</p>
 <p id="rfc.section.2.2.1.p.4">To provide a metric of signal health and distinguish an idle signal channel from a disconnected or defunct session, the DOTS client sends a heartbeat over the signal channel to maintain its half of the channel. The DOTS client similarly expects a heartbeat from the DOTS server, and may consider a session terminated in the extended absence of a DOTS server heartbeat.</p>
 <h3 id="rfc.section.2.2.2"><a href="#rfc.section.2.2.2">2.2.2.</a> <a href="#dots-server" id="dots-server">DOTS Server</a></h3>
 <p id="rfc.section.2.2.2.p.1">A DOTS server is a DOTS agent capable of receiving, processing and possibly acting on requests for help coordinating attack response from DOTS clients.  The DOTS server authenticates and authorizes DOTS clients as described in <a href="#dots-sessions">Section 3.1</a>, and maintains session state, tracking requests for mitigation, reporting on the status of active mitigations, and terminating sessions in the extended absence of a client heartbeat or when a session times out.</p>
 <p id="rfc.section.2.2.2.p.2">Assuming the preconditions discussed below exist, a DOTS client maintaining an active session with a DOTS server may reasonably expect some level of mitigation in response to a request for coordinated attack response.</p>
-<p id="rfc.section.2.2.2.p.3">The DOTS server enforces authorization of DOTS clients&#8217; signals for mitigation.  The mechanism of enforcement is not in scope for this document, but is expected to restrict requested mitigation scope to addresses, prefixes, and/or services owned by the DOTS client&#8217;s administrative domain, such that a DOTS client from one domain is not able to influence the network path to another domain. A DOTS server MUST reject requests for mitigation of resources not owned by the requesting DOTS client&#8217;s administrative domain. A DOTS server MAY also refuse a DOTS client&#8217;s mitigation request for arbitrary reasons, within any limits imposed by business or service level agreements between client and server domains. If a DOTS server refuses a DOTS client&#8217;s request for mitigation, the DOTS server SHOULD include the refusal reason in the server signal sent to the client.</p>
-<p id="rfc.section.2.2.2.p.4">A DOTS server is in regular contact with one or more mitigators. If a DOTS server accepts a DOTS client&#8217;s request for help, the DOTS server forwards a translated form of that request to the mitigator(s) responsible for scrubbing attack traffic. Note that the form of the translated request passed from the DOTS server to the mitigator is not in scope: it may be as simple as an alert to mitigator operators, or highly automated using vendor or open application programming interfaces supported by the mitigator. The DOTS server MUST report the actual scope of any mitigation enabled on behalf of a client.</p>
+<p id="rfc.section.2.2.2.p.3">The DOTS server enforces authorization of DOTS clients' signals for mitigation.  The mechanism of enforcement is not in scope for this document, but is expected to restrict requested mitigation scope to addresses, prefixes, and/or services owned by the DOTS client's administrative domain, such that a DOTS client from one domain is not able to influence the network path to another domain. A DOTS server MUST reject requests for mitigation of resources not owned by the requesting DOTS client's administrative domain. A DOTS server MAY also refuse a DOTS client's mitigation request for arbitrary reasons, within any limits imposed by business or service level agreements between client and server domains. If a DOTS server refuses a DOTS client's request for mitigation, the DOTS server SHOULD include the refusal reason in the server signal sent to the client.</p>
+<p id="rfc.section.2.2.2.p.4">A DOTS server is in regular contact with one or more mitigators. If a DOTS server accepts a DOTS client's request for help, the DOTS server forwards a translated form of that request to the mitigator(s) responsible for scrubbing attack traffic. Note that the form of the translated request passed from the DOTS server to the mitigator is not in scope: it may be as simple as an alert to mitigator operators, or highly automated using vendor or open application programming interfaces supported by the mitigator. The DOTS server MUST report the actual scope of any mitigation enabled on behalf of a client.</p>
 <p id="rfc.section.2.2.2.p.5">The DOTS server SHOULD retrieve available metrics for any mitigations activated on behalf of a DOTS client, and SHOULD include them in server signals sent to the DOTS client originating the request for mitigation.</p>
 <p id="rfc.section.2.2.2.p.6">To provide a metric of signal health and distinguish an idle signal channel from a disconnected or defunct channel, the DOTS server MUST send a heartbeat over the signal channel to maintain its half of the channel. The DOTS server similarly expects a heartbeat from the DOTS client, and MAY consider a session terminated in the extended absence of a DOTS client heartbeat.</p>
 <h3 id="rfc.section.2.2.3"><a href="#rfc.section.2.2.3">2.2.3.</a> <a href="#dots-gateway" id="dots-gateway">DOTS Gateway</a></h3>
-<p id="rfc.section.2.2.3.p.1">Traditional client/server relationships may be expanded by chaining DOTS sessions. This chaining is enabled through &#8220;logical concatenation&#8221; of a DOTS server and a DOTS client, resulting in an application analogous to the Session Initiation Protocol (SIP) <a href="#RFC3261">[RFC3261]</a> logical entity of a Back-to-Back User Agent (B2BUA) <a href="#RFC7092">[RFC7092]</a>. The term DOTS gateway is used here in the descriptions of selected scenarios involving this application.</p>
+<p id="rfc.section.2.2.3.p.1">Traditional client/server relationships may be expanded by chaining DOTS sessions. This chaining is enabled through "logical concatenation" of a DOTS server and a DOTS client, resulting in an application analogous to the Session Initiation Protocol (SIP) <a href="#RFC3261">[RFC3261]</a> logical entity of a Back-to-Back User Agent (B2BUA) <a href="#RFC7092">[RFC7092]</a>. The term DOTS gateway is used here in the descriptions of selected scenarios involving this application.</p>
 <p id="rfc.section.2.2.3.p.2">A DOTS gateway may be deployed client-side, server-side or both.  The gateway may terminate multiple discrete client connections and may aggregate these into a single or multiple DOTS sessions.</p>
 <p id="rfc.section.2.2.3.p.3">The DOTS gateway will appear as a server to its downstream agents and as a client to its upstream agents, a functional concatenation of the DOTS client and server roles, as depicted in <a href="#fig-dots-gateway">Figure 4</a>:</p>
 <div id="rfc.figure.4"/>
@@ -719,7 +721,7 @@
    c.example.com       dots2.example.net
 </pre>
 <p class="figure">Figure 6: Multi-Homed DOTS Client</p>
-<p id="rfc.section.2.3.p.4">Deploying a multi-homed client requires extra care and planning, as the DOTS servers with which the multi-homed client communicates may not be affiliated.  Should the multi-homed client simultaneously request for mitigation from all servers with which it has established signal channels, the client may unintentionally inflict additional network disruption on the resources it intends to protect. In one of the worst cases, a multi-homed DOTS client could cause a permanent routing loop of traffic destined for the client&#8217;s protected services, as the uncoordinated DOTS servers&#8217; mitigators all try to divert that traffic to their own scrubbing centers.</p>
+<p id="rfc.section.2.3.p.4">Deploying a multi-homed client requires extra care and planning, as the DOTS servers with which the multi-homed client communicates may not be affiliated.  Should the multi-homed client simultaneously request for mitigation from all servers with which it has established signal channels, the client may unintentionally inflict additional network disruption on the resources it intends to protect. In one of the worst cases, a multi-homed DOTS client could cause a permanent routing loop of traffic destined for the client's protected services, as the uncoordinated DOTS servers' mitigators all try to divert that traffic to their own scrubbing centers.</p>
 <p id="rfc.section.2.3.p.5">The DOTS protocol itself provides no fool-proof method to prevent such self-inflicted harms as a result deploying multi-homed DOTS clients. If DOTS client implementations nevertheless include support for multi-homing, they are expected to be aware of the risks, and consequently to include measures aimed at reducing the likelihood of negative outcomes. Simple measures might include:</p>
 <p/>
 
@@ -804,7 +806,7 @@
       DOTS clients      DOTS gateway (DOTSG)  DOTS server
 </pre>
 <p class="figure">Figure 10: Server-Side Gateway without Aggregation</p>
-<p id="rfc.section.2.3.1.p.4">This document anticipates scenarios involving multiple DOTS gateways. An example is a DOTS gateway at the network client&#8217;s side, and another one at the server side. The first gateway can be located at a CPE to aggregate requests from multiple DOTS clients enabled in an enterprise network. The second DOTS gateway is deployed on the provider side. This scenario can be seen as a combination of the client-side and server-side scenarios.</p>
+<p id="rfc.section.2.3.1.p.4">This document anticipates scenarios involving multiple DOTS gateways. An example is a DOTS gateway at the network client's side, and another one at the server side. The first gateway can be located at a CPE to aggregate requests from multiple DOTS clients enabled in an enterprise network. The second DOTS gateway is deployed on the provider side. This scenario can be seen as a combination of the client-side and server-side scenarios.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#concepts" id="concepts">Concepts</a></h1>
 <h2 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#dots-sessions" id="dots-sessions">DOTS Sessions</a></h2>
 <p id="rfc.section.3.1.p.1">In order for DOTS to be effective as a vehicle for DDoS mitigation requests, one or more DOTS clients must establish ongoing communication with one or more DOTS servers. While the preconditions for enabling DOTS in or among network domains may also involve business relationships, service level agreements, or other formal or informal understandings between network operators, such considerations are out of scope for this document.</p>
@@ -879,9 +881,9 @@
 </ol>
 <h3 id="rfc.section.3.2.3"><a href="#rfc.section.3.2.3">3.2.3.</a> <a href="#recursive-signaling" id="recursive-signaling">Recursive Signaling</a></h3>
 <p id="rfc.section.3.2.3.p.1">DOTS is centered around improving the speed and efficiency of coordinated response to DDoS attacks. One scenario not yet discussed involves coordination among federated domains operating DOTS servers and mitigators.</p>
-<p id="rfc.section.3.2.3.p.2">In the course of normal DOTS operations, a DOTS client communicates the need for mitigation to a DOTS server, and that server initiates mitigation on a mitigator with which the server has an established service relationship. The operator of the mitigator may in turn monitor mitigation performance and capacity, as the attack being mitigated may grow in severity beyond the mitigating domain&#8217;s capabilities.</p>
+<p id="rfc.section.3.2.3.p.2">In the course of normal DOTS operations, a DOTS client communicates the need for mitigation to a DOTS server, and that server initiates mitigation on a mitigator with which the server has an established service relationship. The operator of the mitigator may in turn monitor mitigation performance and capacity, as the attack being mitigated may grow in severity beyond the mitigating domain's capabilities.</p>
 <p id="rfc.section.3.2.3.p.3">The operator of the mitigator has limited options in the event a DOTS client-requested mitigation is being overwhelmed by the severity of the attack.  Out-of-scope business or service level agreements may permit the mitigating domain to drop the mitigation and let attack traffic flow unchecked to the target, but this only encourages attack escalation. In the case where the mitigating domain is the upstream service provider for the attack target, this may mean the mitigating domain and its other services and users continue to suffer the incidental effects of the attack.</p>
-<p id="rfc.section.3.2.3.p.4">A recursive signaling model as shown in <a href="#fig-recursive-signaling">Figure 13</a> offers an alternative. In a variation of the use case &#8220;End-customer with a single upstream transit provider offering DDoS mitigation services&#8221; described in <a href="#I-D.ietf-dots-use-cases">[I-D.ietf-dots-use-cases]</a>, a domain operating a DOTS server and mitigator also operates a DOTS client. This DOTS client has an established DOTS session with a DOTS server belonging to a separate administrative domain.</p>
+<p id="rfc.section.3.2.3.p.4">A recursive signaling model as shown in <a href="#fig-recursive-signaling">Figure 13</a> offers an alternative. In a variation of the use case "End-customer with a single upstream transit provider offering DDoS mitigation services" described in <a href="#I-D.ietf-dots-use-cases">[I-D.ietf-dots-use-cases]</a>, a domain operating a DOTS server and mitigator also operates a DOTS client. This DOTS client has an established DOTS session with a DOTS server belonging to a separate administrative domain.</p>
 <p id="rfc.section.3.2.3.p.5">With these preconditions in place, the operator of the mitigator being overwhelmed or otherwise performing inadequately may request mitigation for the attack target from this separate DOTS-aware domain. Such a request recurses the originating mitigation request to the secondary DOTS server, in the hope of building a cumulative mitigation against the attack.</p>
 <div id="rfc.figure.13"/>
 <div id="fig-recursive-signaling"/>
@@ -911,7 +913,7 @@
 </pre>
 <p class="figure">Figure 13: Recursive Signaling</p>
 <p id="rfc.section.3.2.3.p.6">In <a href="#fig-recursive-signaling">Figure 13</a>, client Cc signals a request for mitigation across inter-domain DOTS session 1 to the DOTS server Sn belonging to the example.net domain. DOTS server Sn enables mitigation on mitigator Mn. DOTS server Sn is half of DOTS gateway Gn, being deployed logically back-to-back with DOTS client Cn, which has pre-existing inter-domain DOTS session 2 with the DOTS server So belonging to the example.org domain. At any point, DOTS server Sn MAY recurse an on-going mitigation request through DOTS client Cn to DOTS server So, in the expectation that mitigator Mo will be activated to aid in the defense of the attack target.</p>
-<p id="rfc.section.3.2.3.p.7">Recursive signaling is opaque to the DOTS client. To maximize mitigation visibility to the DOTS client, however, the recursing domain SHOULD provide recursed mitigation feedback in signals reporting on mitigation status to the DOTS client. For example, the recursing domain&#8217;s mitigator should incorporate into mitigation status messages available metrics such as dropped packet or byte counts from the recursed mitigation.</p>
+<p id="rfc.section.3.2.3.p.7">Recursive signaling is opaque to the DOTS client. To maximize mitigation visibility to the DOTS client, however, the recursing domain SHOULD provide recursed mitigation feedback in signals reporting on mitigation status to the DOTS client. For example, the recursing domain's mitigator should incorporate into mitigation status messages available metrics such as dropped packet or byte counts from the recursed mitigation.</p>
 <p id="rfc.section.3.2.3.p.8">DOTS clients involved in recursive signaling must be able to withdraw requests for mitigation without warning or justification, per <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>.</p>
 <p id="rfc.section.3.2.3.p.9">Operators recursing mitigation requests MAY maintain the recursed mitigation for a brief, protocol-defined period in the event the DOTS client originating the mitigation withdraws its request for help, as per the discussion of managing mitigation toggling in the operational requirements (<a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>).</p>
 <p id="rfc.section.3.2.3.p.10">Deployment of recursive signaling may result in traffic redirection, examination and mitigation extending beyond the initial bilateral relationship between DOTS client and DOTS server. As such, client control over the network path of mitigated traffic may be reduced. DOTS client operators should be aware of any privacy concerns, and work with DOTS server operators employing recursive signaling to ensure shared sensitive material is suitably protected.</p>
@@ -920,9 +922,9 @@
 <p/>
 
 <ul>
-  <li>Simplified DOTS client configuration, including service discovery through the methods described in <a href="#RFC7094">[RFC7094]</a>. In this scenario, the &#8220;instance discovery&#8221; message would be a DOTS client initiating a DOTS session to the DOTS server anycast Service Address, to which the DOTS server would reply with a redirection to the DOTS server unicast address the client should use for DOTS.</li>
+  <li>Simplified DOTS client configuration, including service discovery through the methods described in <a href="#RFC7094">[RFC7094]</a>. In this scenario, the "instance discovery" message would be a DOTS client initiating a DOTS session to the DOTS server anycast Service Address, to which the DOTS server would reply with a redirection to the DOTS server unicast address the client should use for DOTS.</li>
   <li>Region- or customer-specific deployments, in which the DOTS Service Addresses route to distinct DOTS servers depending on the client region or the customer network in which a DOTS client resides.</li>
-  <li>Operational resiliency, spreading DOTS signaling traffic across the DOTS server domain&#8217;s networks, and thereby also reducing the potential attack surface, as described in BCP 126 <a href="#RFC4786">[RFC4786]</a>.</li>
+  <li>Operational resiliency, spreading DOTS signaling traffic across the DOTS server domain's networks, and thereby also reducing the potential attack surface, as described in BCP 126 <a href="#RFC4786">[RFC4786]</a>.</li>
 </ul>
 <h4 id="rfc.section.3.2.4.1"><a href="#rfc.section.3.2.4.1">3.2.4.1.</a> <a href="#anycast-signaling-considerations" id="anycast-signaling-considerations">Anycast Signaling Considerations</a></h4>
 <p id="rfc.section.3.2.4.1.p.1">As long as network configuration remains stable, anycast DOTS signaling is to the individual DOTS client indistinct from direct signaling. However, the operational challenges inherent in anycast signaling are anything but negligible, and DOTS server operators must carefully weigh the risks against the benefits before deploying.</p>
@@ -931,6 +933,36 @@
 <p id="rfc.section.3.2.4.1.p.4">For example, a network configuration altering the route to the DOTS server during active anycast signaling may cause the DOTS client to send messages to a DOTS server other than the one with which it initially established a signaling session. That second DOTS server may not have the security state of the existing session, forcing the DOTS client to initialize a new DOTS session.  This challenge might in part be mitigated by use of pre-shared keys and session resumption <a href="#RFC5246">[RFC5246]</a><a href="#RFC6347">[RFC6347]</a>, but keying material must be available to all DOTS servers sharing the anycast Service Address in that case.</p>
 <p id="rfc.section.3.2.4.1.p.5">While the DOTS client will try to establish a new DOTS session with the DOTS server now acting as the anycast DOTS Service Address, the link between DOTS client and server may be congested with attack traffic, making signal session establishment difficult. In such a scenario, anycast Service Address instability becomes a sort of signal session flapping, with obvious negative consequences for the DOTS deployment.</p>
 <p id="rfc.section.3.2.4.1.p.6">Anycast signaling deployments similarly must also take into account active mitigations. Active mitigations initiated through a DOTS session may involve diverting traffic to a scrubbing center. If the DOTS session flaps due to anycast changes as described above, mitigation may also flap as the DOTS servers sharing the anycast DOTS service address toggles mitigation on detecting DOTS session loss, depending on whether the client has configured mitigation on loss of signal.</p>
+<h3 id="rfc.section.3.2.5"><a href="#rfc.section.3.2.5">3.2.5.</a> <a href="#nat-signaling" id="nat-signaling">Signaling Considerations for Network Address Translation</a></h3>
+<p id="rfc.section.3.2.5.p.1">Network address translators (NATs) are expected to be a common feature of DOTS deployments. The Middlebox Traversal Guidelines in <a href="#RFC8085">[RFC8085]</a> include general NAT considerations for DOTS deployements when the signal channel is established over UDP.</p>
+<p id="rfc.section.3.2.5.p.2">Additional DOTS-specific considerations arise when NATs are part of the DOTS architecture. For example, DDoS attack detection behind a NAT will detect attacks against internal addresses. A DOTS client subsequently asked to request mitigation for the attacked scope of addresses cannot reasonably perform the task, due to the lack of externally routable addresses in the mitigation scope.</p>
+<p id="rfc.section.3.2.5.p.3">The following considerations do not cover all possible scenarios, but are meant rather to highlight anticipated common issues when signaling through NATs.</p>
+<h4 id="rfc.section.3.2.5.1"><a href="#rfc.section.3.2.5.1">3.2.5.1.</a> <a href="#direct-provisioning-of-internal-to-external-address-mappings" id="direct-provisioning-of-internal-to-external-address-mappings">Direct Provisioning of Internal-to-External Address Mappings</a></h4>
+<p id="rfc.section.3.2.5.1.p.1">Operators may circumvent the problem of translating internal addresses or prefixes to externally routable mitigation scopes by directly provisioning the mappings of external addresses to internal protected resources on the DOTS client. When the operator requests mitigation scoped for internal addresses, directly or through automated means, the DOTS client looks up the matching external addresses or prefixes, and issues a mitigation request scoped to that externally routable information.</p>
+<p id="rfc.section.3.2.5.1.p.2">When directly provisioning the address mappings, operators must ensure the mappings remain up to date, or risk losing the ability to request accurate mitigation scopes. This document does not prescribe the method by which mappings are maintained once they are provisioned on the DOTS client.</p>
+<h4 id="rfc.section.3.2.5.2"><a href="#rfc.section.3.2.5.2">3.2.5.2.</a> <a href="#resolving-public-mitigation-scope-with-session-traversal-utilities-stun" id="resolving-public-mitigation-scope-with-session-traversal-utilities-stun">Resolving Public Mitigation Scope with Session Traversal Utilities (STUN)</a></h4>
+<p id="rfc.section.3.2.5.2.p.1">Internal resources may discover their external address through a STUN Binding request/response transaction, as described in <a href="#RFC5389">[RFC5389]</a>. After learning its reflexive transport address from the STUN server, the internal service can export its external/internal address pair to the DOTS client, allowing the DOTS client to request mitigation with the correct external scope, as depicted in <a href="#fig-nat-stun">Figure 14</a>. The mechanism for provisioning the DOTS client with the address pair is unspecified.</p>
+<div id="rfc.figure.14"/>
+<div id="fig-nat-stun"/>
+<pre>
+                Binding         Binding
+    +--------+  request  +---+  request  +--------+
+    |  STUN  |&lt;----------| N |&lt;----------|  STUN  |
+    | server |           | A |           | client |
+    |        |----------&gt;| T |----------&gt;|        |
+    +--------+  Binding  +---+  Binding  +--------+
+                response        response     |
+                                             | external/internal
+                                             | address pair
+                                             v
+                                         +--------+
+                                         |  DOTS  |
+                                         | client |
+                                         +--------+
+</pre>
+<p class="figure">Figure 14: Resolving mitigation scope with STUN</p>
+<h4 id="rfc.section.3.2.5.3"><a href="#rfc.section.3.2.5.3">3.2.5.3.</a> <a href="#resolving-requested-mitigation-scope-with-dns" id="resolving-requested-mitigation-scope-with-dns">Resolving Requested Mitigation Scope with DNS</a></h4>
+<p id="rfc.section.3.2.5.3.p.1">DOTS supports mitigation scoped to DNS names. As discussed in <a href="#RFC3235">[RFC3235]</a>, using DNS names instead of IP addresses potentially avoids the address translation problem, as long as the name is internally and externally resolvable by the same name. For example, a detected attack's internal target address can be mapped to a DNS name through a reverse lookup. The DNS name returned by the reverse lookup can then be provided to the DOTS client as the external scope for mitigation.</p>
 <h2 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#mit-request-triggers" id="mit-request-triggers">Triggering Requests for Mitigation</a></h2>
 <p><a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a> places no limitation on the circumstances in which a DOTS client operator may request mitigation, nor does it demand justification for any mitigation request, thereby reserving operational control over DDoS defense for the domain requesting mitigation. This architecture likewise does not prescribe the network conditions and mechanisms triggering a mitigation request from a DOTS client.</p>
 <p id="rfc.section.3.3.p.2">However, considering selected possible mitigation triggers from an architectural perspective offers a model for alternative or unanticipated triggers for DOTS deployments. In all cases, what network conditions merit a mitigation request are at the discretion of the DOTS client operator.</p>
@@ -938,19 +970,19 @@
 <h3 id="rfc.section.3.3.1"><a href="#rfc.section.3.3.1">3.3.1.</a> <a href="#manual-mit-request" id="manual-mit-request">Manual Mitigation Request</a></h3>
 <p id="rfc.section.3.3.1.p.1">A DOTS client operator may manually prepare a request for mitigation, including scope and duration, and manually instruct the DOTS client to send the mitigation request to the DOTS server. In context, a manual request is a request directly issued by the operator without automated decision-making performed by a device interacting with the DOTS client. Modes of manual mitigation requests include an operator entering a command into a text interface, or directly interacting with a graphical interface to send the request.</p>
 <p id="rfc.section.3.3.1.p.2">An operator might do this, for example, in response to notice of an attack delivered by attack detection equipment or software, and the alerting detector lacks interfaces or is not configured to use available interfaces to translate the alert to a mitigation request automatically.</p>
-<p id="rfc.section.3.3.1.p.3">In a variation of the above scenario, the operator may have preconfigured on the DOTS client mitigation requests for various resources in the operator&#8217;s domain.  When notified of an attack, the DOTS client operator manually instructs the DOTS client to send the relevant preconfigured mitigation request for the resources under attack.</p>
-<p id="rfc.section.3.3.1.p.4">A further variant involves recursive signaling, as described in <a href="#recursive-signaling">Section 3.2.3</a>. The DOTS client in this case is the second half of a DOTS gateway (back-to-back DOTS server and client). As in the previous scenario, the scope and duration of the mitigation request are pre-existing, but in this case are derived from the mitigation request received from a downstream DOTS client by the DOTS server. Assuming the preconditions required by <a href="#recursive-signaling">Section 3.2.3</a> are in place, the DOTS gateway operator may at any time manually request mitigation from an upstream DOTS server, sending a mitigation request derived from the downstream DOTS client&#8217;s request.</p>
+<p id="rfc.section.3.3.1.p.3">In a variation of the above scenario, the operator may have preconfigured on the DOTS client mitigation requests for various resources in the operator's domain.  When notified of an attack, the DOTS client operator manually instructs the DOTS client to send the relevant preconfigured mitigation request for the resources under attack.</p>
+<p id="rfc.section.3.3.1.p.4">A further variant involves recursive signaling, as described in <a href="#recursive-signaling">Section 3.2.3</a>. The DOTS client in this case is the second half of a DOTS gateway (back-to-back DOTS server and client). As in the previous scenario, the scope and duration of the mitigation request are pre-existing, but in this case are derived from the mitigation request received from a downstream DOTS client by the DOTS server. Assuming the preconditions required by <a href="#recursive-signaling">Section 3.2.3</a> are in place, the DOTS gateway operator may at any time manually request mitigation from an upstream DOTS server, sending a mitigation request derived from the downstream DOTS client's request.</p>
 <p id="rfc.section.3.3.1.p.5">The motivations for a DOTS client operator to request mitigation manually are not prescribed by this architecture, but are expected to include some of the following:</p>
 <p/>
 
 <ul>
   <li>Notice of an attack delivered via e-mail or alternative messaging</li>
   <li>Notice of an attack delivered via phone call</li>
-  <li>Notice of an attack delivered through the interface(s) of networking monitoring software deployed in the operator&#8217;s domain</li>
+  <li>Notice of an attack delivered through the interface(s) of networking monitoring software deployed in the operator's domain</li>
   <li>Manual monitoring of network behavior through network monitoring software</li>
 </ul>
 <h3 id="rfc.section.3.3.2"><a href="#rfc.section.3.3.2">3.3.2.</a> <a href="#auto-conditional-mit" id="auto-conditional-mit">Automated Conditional Mitigation Request</a></h3>
-<p id="rfc.section.3.3.2.p.1">Unlike manual mitigation requests, which depend entirely on the DOTS client operator&#8217;s capacity to react with speed and accuracy to every detected or detectable attack, mitigation requests triggered by detected attack conditions reduce the operational burden on the DOTS client operator, and minimize the latency between attack detection and the start of mitigation.</p>
+<p id="rfc.section.3.3.2.p.1">Unlike manual mitigation requests, which depend entirely on the DOTS client operator's capacity to react with speed and accuracy to every detected or detectable attack, mitigation requests triggered by detected attack conditions reduce the operational burden on the DOTS client operator, and minimize the latency between attack detection and the start of mitigation.</p>
 <p id="rfc.section.3.3.2.p.2">Mitigation requests are triggered in this scenario by operator-specified network conditions. Attack detection is deployment-specific, and not constrained by this architecture. Similarly the specifics of a condition are left to the discretion of the operator, though common conditions meriting mitigation include the following:</p>
 <p/>
 
@@ -958,10 +990,10 @@
   <li>Detected attack exceeding a rate in packets per second (pps).</li>
   <li>Detected attack exceeding a rate in bytes per second (bps).</li>
   <li>Detected resource exhaustion in an attack target.</li>
-  <li>Detected resource exhaustion in the local domain&#8217;s mitigator.</li>
+  <li>Detected resource exhaustion in the local domain's mitigator.</li>
   <li>Number of open connections to an attack target.</li>
   <li>Number of attack sources in a given attack.</li>
-  <li>Number of active attacks against targets in the operator&#8217;s domain.</li>
+  <li>Number of active attacks against targets in the operator's domain.</li>
   <li>Conditional detection developed through arbitrary statistical analysis or deep learning techniques.</li>
   <li>Any combination of the above.</li>
 </ul>
@@ -1006,7 +1038,7 @@
       <td class="reference">
         <b id="I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</b>
       </td>
-      <td class="top"><a>Mortensen, A.</a>, <a>Moskowitz, R.</a> and <a>T. Reddy</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dots-requirements-07">Distributed Denial of Service (DDoS) Open Threat Signaling Requirements</a>", Internet-Draft draft-ietf-dots-requirements-07, October 2017.</td>
+      <td class="top"><a>Mortensen, A.</a>, <a>Moskowitz, R.</a> and <a>T. Reddy</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dots-requirements-14">Distributed Denial of Service (DDoS) Open Threat Signaling Requirements</a>", Internet-Draft draft-ietf-dots-requirements-14, February 2018.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1040,6 +1072,12 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC3235">[RFC3235]</b>
+      </td>
+      <td class="top"><a>Senie, D.</a>, "<a href="http://tools.ietf.org/html/rfc3235">Network Address Translator (NAT)-Friendly Application Design Guidelines</a>", RFC 3235, DOI 10.17487/RFC3235, January 2002.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC3261">[RFC3261]</b>
       </td>
       <td class="top"><a>Rosenberg, J.</a>, <a>Schulzrinne, H.</a>, <a>Camarillo, G.</a>, <a>Johnston, A.</a>, <a>Peterson, J.</a>, <a>Sparks, R.</a>, <a>Handley, M.</a> and <a>E. Schooler</a>, "<a href="http://tools.ietf.org/html/rfc3261">SIP: Session Initiation Protocol</a>", RFC 3261, DOI 10.17487/RFC3261, June 2002.</td>
@@ -1070,6 +1108,12 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC5389">[RFC5389]</b>
+      </td>
+      <td class="top"><a>Rosenberg, J.</a>, <a>Mahy, R.</a>, <a>Matthews, P.</a> and <a>D. Wing</a>, "<a href="http://tools.ietf.org/html/rfc5389">Session Traversal Utilities for NAT (STUN)</a>", RFC 5389, DOI 10.17487/RFC5389, October 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC6347">[RFC6347]</b>
       </td>
       <td class="top"><a>Rescorla, E.</a> and <a>N. Modadugu</a>, "<a href="http://tools.ietf.org/html/rfc6347">Datagram Transport Layer Security Version 1.2</a>", RFC 6347, DOI 10.17487/RFC6347, January 2012.</td>
@@ -1091,6 +1135,12 @@
         <b id="RFC7094">[RFC7094]</b>
       </td>
       <td class="top"><a>McPherson, D.</a>, <a>Oran, D.</a>, <a>Thaler, D.</a> and <a>E. Osterweil</a>, "<a href="http://tools.ietf.org/html/rfc7094">Architectural Considerations of IP Anycast</a>", RFC 7094, DOI 10.17487/RFC7094, January 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC8085">[RFC8085]</b>
+      </td>
+      <td class="top"><a>Eggert, L.</a>, <a>Fairhurst, G.</a> and <a>G. Shepherd</a>, "<a href="http://tools.ietf.org/html/rfc8085">UDP Usage Guidelines</a>", BCP 145, RFC 8085, DOI 10.17487/RFC8085, March 2017.</td>
     </tr>
   </tbody>
 </table>
@@ -1170,7 +1220,7 @@
 		<span class="family-name">Gray</span>
 	  </span>
 	</span>
-	<span class="org vcardline">Comcast</span>
+	<span class="org vcardline"></span>
 	<span class="adr">
 	  
 	  <span class="vcardline">
