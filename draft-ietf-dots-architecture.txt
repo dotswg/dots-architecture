@@ -5,7 +5,7 @@
 DOTS                                                        A. Mortensen
 Internet-Draft                                            Arbor Networks
 Intended status: Informational                              F. Andreasen
-Expires: September 21, 2018                                        Cisco
+Expires: January 21, 2019                                          Cisco
                                                                 T. Reddy
                                                             McAfee, Inc.
                                                                  C. Gray
@@ -14,11 +14,11 @@ Expires: September 21, 2018                                        Cisco
                                                                  Charter
                                                                N. Teague
                                                                 Verisign
-                                                          March 20, 2018
+                                                           July 20, 2018
 
 
 Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
-                    draft-ietf-dots-architecture-06
+                    draft-ietf-dots-architecture-07
 
 Abstract
 
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 21, 2018.
+   This Internet-Draft will expire on January 21, 2019.
 
 
 
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 1]
+Mortensen, et al.       Expires January 21, 2019                [Page 1]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 2]
+Mortensen, et al.       Expires January 21, 2019                [Page 2]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    5.  Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  29
@@ -165,9 +165,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 3]
+Mortensen, et al.       Expires January 21, 2019                [Page 3]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    as to a single administrative domain.  DOTS is generally assumed to
@@ -221,9 +221,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 4]
+Mortensen, et al.       Expires January 21, 2019                [Page 4]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    o  The mitigation capacity and/or capability of domains receiving
@@ -277,9 +277,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 5]
+Mortensen, et al.       Expires January 21, 2019                [Page 5]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    A simple example instantiation of the DOTS architecture could be an
@@ -333,9 +333,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 6]
+Mortensen, et al.       Expires January 21, 2019                [Page 6]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    mitigation request.  Assuming it will, the DOTS server initiates
@@ -389,9 +389,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 7]
+Mortensen, et al.       Expires January 21, 2019                [Page 7]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    o  Filter management, which enables a DOTS client to install or
@@ -445,9 +445,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 8]
+Mortensen, et al.       Expires January 21, 2019                [Page 8]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    DDoS mitigation with the help of an upstream mitigator may involve
@@ -501,9 +501,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018               [Page 9]
+Mortensen, et al.       Expires January 21, 2019                [Page 9]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    its local administrator.  Such direction may involve manual or
@@ -542,7 +542,7 @@ Internet-Draft              DOTS Architecture                 March 2018
    also refuse a DOTS client's mitigation request for arbitrary reasons,
    within any limits imposed by business or service level agreements
    between client and server domains.  If a DOTS server refuses a DOTS
-   client's request for mitigation, the DOTS server SHOULD include the
+   client's request for mitigation, the DOTS server MUST include the
    refusal reason in the server signal sent to the client.
 
    A DOTS server is in regular contact with one or more mitigators.  If
@@ -557,9 +557,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 10]
+Mortensen, et al.       Expires January 21, 2019               [Page 10]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    The DOTS server SHOULD retrieve available metrics for any mitigations
@@ -613,9 +613,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 11]
+Mortensen, et al.       Expires January 21, 2019               [Page 11]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
 2.3.  DOTS Agent Relationships
@@ -669,9 +669,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 12]
+Mortensen, et al.       Expires January 21, 2019               [Page 12]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
       DOTS client        DOTS servers
@@ -725,9 +725,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 13]
+Mortensen, et al.       Expires January 21, 2019               [Page 13]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
 2.3.1.  Gatewayed Signaling
@@ -781,9 +781,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 14]
+Mortensen, et al.       Expires January 21, 2019               [Page 14]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    This may similarly be deployed in the inverse scenario where the
@@ -837,9 +837,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 15]
+Mortensen, et al.       Expires January 21, 2019               [Page 15]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
 3.  Concepts
@@ -893,9 +893,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 16]
+Mortensen, et al.       Expires January 21, 2019               [Page 16]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    The methods by which a DOTS client receives the address and
@@ -949,9 +949,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 17]
+Mortensen, et al.       Expires January 21, 2019               [Page 17]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    Either DOTS agent may consider a DOTS session terminated in the
@@ -1005,9 +1005,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 18]
+Mortensen, et al.       Expires January 21, 2019               [Page 18]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
            +-------------+                            +---------------+
@@ -1061,9 +1061,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 19]
+Mortensen, et al.       Expires January 21, 2019               [Page 19]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    The operator of the mitigator has limited options in the event a DOTS
@@ -1077,12 +1077,12 @@ Internet-Draft              DOTS Architecture                 March 2018
    incidental effects of the attack.
 
    A recursive signaling model as shown in Figure 13 offers an
-   alternative.  In a variation of the use case "End-customer with a
-   single upstream transit provider offering DDoS mitigation services"
-   described in [I-D.ietf-dots-use-cases], a domain operating a DOTS
-   server and mitigator also operates a DOTS client.  This DOTS client
-   has an established DOTS session with a DOTS server belonging to a
-   separate administrative domain.
+   alternative.  In a variation of the use case "Upstream DDoS
+   Mitigation by an Upstream Internet Transit Provider" described in
+   [I-D.ietf-dots-use-cases], a domain operating a DOTS server and
+   mitigator also operates a DOTS client.  This DOTS client has an
+   established DOTS session with a DOTS server belonging to a separate
+   administrative domain.
 
    With these preconditions in place, the operator of the mitigator
    being overwhelmed or otherwise performing inadequately may request
@@ -1117,9 +1117,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 20]
+Mortensen, et al.       Expires January 21, 2019               [Page 20]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
                         example.net domain
@@ -1173,9 +1173,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 21]
+Mortensen, et al.       Expires January 21, 2019               [Page 21]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    Operators recursing mitigation requests MAY maintain the recursed
@@ -1229,9 +1229,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 22]
+Mortensen, et al.       Expires January 21, 2019               [Page 22]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    While the DOTS signal channel primarily operates over UDP per
@@ -1285,9 +1285,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 23]
+Mortensen, et al.       Expires January 21, 2019               [Page 23]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    addresses cannot reasonably perform the task, due to the lack of
@@ -1341,9 +1341,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 24]
+Mortensen, et al.       Expires January 21, 2019               [Page 24]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
                    Binding         Binding
@@ -1397,9 +1397,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 25]
+Mortensen, et al.       Expires January 21, 2019               [Page 25]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
 3.3.1.  Manual Mitigation Request
@@ -1453,9 +1453,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 26]
+Mortensen, et al.       Expires January 21, 2019               [Page 26]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
 3.3.2.  Automated Conditional Mitigation Request
@@ -1509,9 +1509,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 27]
+Mortensen, et al.       Expires January 21, 2019               [Page 27]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    however, some signal loss may be anticipated as attack traffic
@@ -1520,10 +1520,10 @@ Internet-Draft              DOTS Architecture                 March 2018
    While [I-D.ietf-dots-requirements] specifies the DOTS protocol be
    robust when signaling under attack conditions, there are nevertheless
    scenarios in which the DOTS signal is lost in spite of protocol best
-   efforts.  To handle such scenarios, a DOTS operator may configure the
-   DOTS session to trigger mitigation when the DOTS server ceases
-   receiving DOTS client signals (or vice versa) beyond the miss count
-   or period permitted by the protocol.
+   efforts.  To handle such scenarios, a DOTS operator may request one
+   or more mitigations which are triggered only when the DOTS server
+   ceases receiving DOTS client heartbeats beyond the miss count or
+   interval permitted by the protocol.
 
    The impact of mitigating due to loss of signal in either direction
    must be considered carefully before enabling it.  Signal loss is not
@@ -1565,9 +1565,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 28]
+Mortensen, et al.       Expires January 21, 2019               [Page 28]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    Any attack targeting the availability of DOTS servers may disrupt the
@@ -1608,8 +1608,8 @@ Internet-Draft              DOTS Architecture                 March 2018
    [I-D.ietf-dots-use-cases]
               Dobbins, R., Migault, D., Fouant, S., Moskowitz, R.,
               Teague, N., Xia, L., and K. Nishizuka, "Use cases for DDoS
-              Open Threat Signaling", draft-ietf-dots-use-cases-09 (work
-              in progress), November 2017.
+              Open Threat Signaling", draft-ietf-dots-use-cases-16 (work
+              in progress), July 2018.
 
    [RFC0768]  Postel, J., "User Datagram Protocol", STD 6, RFC 768, DOI
               10.17487/RFC0768, August 1980, <https://www.rfc-
@@ -1621,9 +1621,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 29]
+Mortensen, et al.       Expires January 21, 2019               [Page 29]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    [RFC1035]  Mockapetris, P., "Domain names - implementation and
@@ -1677,9 +1677,9 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 30]
+Mortensen, et al.       Expires January 21, 2019               [Page 30]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
@@ -1733,9 +1733,9 @@ Authors' Addresses
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 31]
+Mortensen, et al.       Expires January 21, 2019               [Page 31]
 
-Internet-Draft              DOTS Architecture                 March 2018
+Internet-Draft              DOTS Architecture                  July 2018
 
 
    Christopher Gray
@@ -1789,4 +1789,4 @@ Internet-Draft              DOTS Architecture                 March 2018
 
 
 
-Mortensen, et al.      Expires September 21, 2018              [Page 32]
+Mortensen, et al.       Expires January 21, 2019               [Page 32]
