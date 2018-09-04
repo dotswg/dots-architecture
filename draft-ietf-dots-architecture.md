@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-06
+docname: draft-ietf-dots-architecture-07
 date: @DATE@
 
 area: Security
@@ -477,7 +477,7 @@ requesting DOTS client's administrative domain. A DOTS server MAY also refuse a
 DOTS client's mitigation request for arbitrary reasons, within any limits
 imposed by business or service level agreements between client and server
 domains. If a DOTS server refuses a DOTS client's request for mitigation, the
-DOTS server SHOULD include the refusal reason in the server signal sent to the
+DOTS server MUST include the refusal reason in the server signal sent to the
 client.
 
 A DOTS server is in regular contact with one or more mitigators. If a DOTS
@@ -915,11 +915,11 @@ this may mean the mitigating domain and its other services and users continue to
 suffer the incidental effects of the attack.
 
 A recursive signaling model as shown in {{fig-recursive-signaling}} offers
-an alternative. In a variation of the use case "End-customer with a single
-upstream transit provider offering DDoS mitigation services" described in
-[I-D.ietf-dots-use-cases], a domain operating a DOTS server and mitigator also
-operates a DOTS client. This DOTS client has an established DOTS session
-with a DOTS server belonging to a separate administrative domain.
+an alternative. In a variation of the use case "Upstream DDoS Mitigation by an
+Upstream Internet Transit Provider" described in [I-D.ietf-dots-use-cases], a
+domain operating a DOTS server and mitigator also operates a DOTS client. This
+DOTS client has an established DOTS session with a DOTS server belonging to a
+separate administrative domain.
 
 With these preconditions in place, the operator of the mitigator being
 overwhelmed or otherwise performing inadequately may request mitigation for the
@@ -1244,9 +1244,9 @@ anticipated as attack traffic congests the link, depending on the attack type.
 While [I-D.ietf-dots-requirements] specifies the DOTS protocol be robust when
 signaling under attack conditions, there are nevertheless scenarios in which the
 DOTS signal is lost in spite of protocol best efforts. To handle such scenarios,
-a DOTS operator may configure the DOTS session to trigger mitigation
-when the DOTS server ceases receiving DOTS client signals (or vice versa) beyond
-the miss count or period permitted by the protocol.
+a DOTS operator may request one or more mitigations which are triggered only
+when the DOTS server ceases receiving DOTS client heartbeats beyond the miss
+count or interval permitted by the protocol.
 
 The impact of mitigating due to loss of signal in either direction must be
 considered carefully before enabling it. Signal loss is not caused by links
