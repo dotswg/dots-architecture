@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-07
+docname: draft-ietf-dots-architecture-08
 date: @DATE@
 
 area: Security
@@ -52,7 +52,30 @@ author:
         city: Bangalore, Karnataka
         code: 560071
         country: India
-        email: tireddy@cisco.com
+        email: kondtir@gmail.com
+      -
+        ins: N. Teague
+        name: Nik Teague
+        org: Verisign
+        street:
+        -
+        city:
+        -
+        code:
+        -
+        country: United States
+        email: nteague@verisign.com
+      -
+        ins: R. Compton
+        name: Rich Compton
+        org: Charter
+        street:
+        -
+        city:
+        -
+        code:
+        -
+        email: Rich.Compton@charter.com
       -
         ins: C. Gray
         name: Christopher Gray
@@ -66,29 +89,6 @@ author:
         -
         country: United States
         email: Christopher_Gray3@cable.comcast.com
-      -
-        ins: R. Compton
-        name: Rich Compton
-        org: Charter
-        street:
-        -
-        city:
-        -
-        code:
-        -
-        email: Rich.Compton@charter.com
-      -
-        ins: N. Teague
-        name: Nik Teague
-        org: Verisign
-        street:
-        -
-        city:
-        -
-        code:
-        -
-        country: United States
-        email: nteague@verisign.com
 
 normative:
   RFC2119:
@@ -96,21 +96,26 @@ normative:
 informative:
   I-D.ietf-dots-requirements:
   I-D.ietf-dots-use-cases:
+  I-D.ietf-opsawg-nat-yang:
   RFC0768:
   RFC0793:
   RFC1035:
   RFC2782:
   RFC3235:
   RFC3261:
+  RFC4033:
   RFC4271:
   RFC4732:
   RFC4786:
   RFC5246:
   RFC5389:
+  RFC5780:
   RFC6347:
+  RFC6887:
   RFC6763:
   RFC7092:
   RFC7094:
+  RFC7350:
   RFC8085:
 
 
@@ -442,9 +447,9 @@ or mitigation capacity constitute service level agreements and are out of scope
 for this document.
 
 The DOTS client adjusts mitigation scope and provides available mitigation
-feedback (e.g. mitigation efficacy) at the direction of its local administrator.
-Such direction may involve manual or automated adjustments in response to
-updates from the DOTS server.
+feedback (e.g., mitigation efficacy) at the direction of its local
+administrator. Such direction may involve manual or automated adjustments in
+response to updates from the DOTS server.
 
 To provide a metric of signal health and distinguish an idle signal channel
 from a disconnected or defunct session, the DOTS client sends a heartbeat over
@@ -1083,19 +1088,46 @@ externally routable information.
 
 When directly provisioning the address mappings, operators must ensure the
 mappings remain up to date, or risk losing the ability to request accurate
-mitigation scopes. This document does not prescribe the method by which mappings
-are maintained once they are provisioned on the DOTS client.
+mitigation scopes. To that aim, the DOTS client can rely on mechanisms, such as
+[I-D.ietf-opsawg-nat-yang] to retrieve static explicit mappings. This document
+does not prescribe the method by which mappings are maintained once they are
+provisioned on the DOTS client.
+
+
+#### Resolving Public Mitigation Scope with Port Control Protocol (PCP)
+
+Port Control Protocol (PCP) [RFC6887] may be used to retrieve the external
+addresses/prefixes and/or port numbers if the NAT function embeds a PCP server.
+
+A DOTS client can use the information retrieved by means of PCP to feed the DOTS
+protocol(s) messages that will be sent to a DOTS server. These messages will
+convey the external addresses/prefixes as set by the NAT.
+
+PCP also enables discovery and configuration of the lifetime of port mappings
+instantiated in intermediate NAT devices. Discovery of port mapping lifetimes
+can reduce the dependency on heartbeat messages to maintain mappings, and
+therefore reduce the load on DOTS servers and the network.
 
 
 #### Resolving Public Mitigation Scope with Session Traversal Utilities (STUN)
 
-Internal resources may discover their external address through a STUN Binding
-request/response transaction, as described in [RFC5389]. After learning its
-reflexive transport address from the STUN server, the internal service can
-export its external/internal address pair to the DOTS client, allowing the DOTS
-client to request mitigation with the correct external scope, as depicted in
-{{fig-nat-stun}}. The mechanism for provisioning the DOTS client with the
-address pair is unspecified.
+An internal resource, e.g., a Web server, can discover its reflexive transport
+address through a STUN Binding request/response transaction, as described in
+[RFC5389]. After learning its reflexive transport address from the STUN server,
+the internal resource can export its reflexive transport address and internal
+transport address to the DOTS client, thereby enabling the DOTS client to
+request mitigation with the correct external scope, as depicted in
+{{fig-nat-stun}}. The mechanism for providing the DOTS client with the reflexive
+transport address and internal transport address is unspecified in this
+document.
+
+In order to prevent an attacker from modifying the STUN messages in transit, the
+STUN client and server MUST use the message-integrity mechanism discussed in
+Section 10 of [RFC5389]  or use STUN over DTLS [RFC7350] or use STUN over TLS.
+If the STUN client is behind a NAT that performs Endpoint-Dependent Mapping, the
+internal service cannot provide the DOTS client with the reflexive transport
+address discovered using STUN. The behavior of a NAT between the STUN client and
+the STUN server could be discovered using the techniques discussed in [RFC5780].
 
 
 ~~~~~
@@ -1105,10 +1137,10 @@ address pair is unspecified.
     | server |           | A |           | client |
     |        |---------->| T |---------->|        |
     +--------+  Binding  +---+  Binding  +--------+
-                response        response     |
-                                             | external/internal
-                                             | address pair
-                                             v
+                response        response    |
+                                            | reflexive transport address
+                                            | & internal transport address
+                                            v
                                          +--------+
                                          |  DOTS  |
                                          | client |
@@ -1125,7 +1157,9 @@ translation problem, as long as the name is internally and externally
 resolvable by the same name. For example, a detected attack's internal target
 address can be mapped to a DNS name through a reverse lookup. The DNS name
 returned by the reverse lookup can then be provided to the DOTS client as the
-external scope for mitigation.
+external scope for mitigation. For the reverse DNS lookup, DNS Security
+Extensions (DNSSEC) [RFC4033] must be used  where the authenticity of response
+is critical.
 
 
 Triggering Requests for Mitigation {#mit-request-triggers}
