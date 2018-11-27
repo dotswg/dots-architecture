@@ -415,9 +415,9 @@
   <meta name="generator" content="xml2rfc version 2.5.0 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Mortensen, A., Andreasen, F., Reddy, T., Gray, C., Compton, R., and N. Teague" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-architecture-07" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-7-20" />
+  <meta name="dct.creator" content="Mortensen, A., Andreasen, F., Reddy, T., Teague, N., Compton, R., and C. Gray" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-architecture-08" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-11-27" />
   <meta name="dct.abstract" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
   <meta name="description" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
 
@@ -441,7 +441,7 @@
   <td class="right">F. Andreasen</td>
 </tr>
 <tr>
-  <td class="left">Expires: January 21, 2019</td>
+  <td class="left">Expires: May 31, 2019</td>
   <td class="right">Cisco</td>
 </tr>
 <tr>
@@ -454,11 +454,11 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">C. Gray</td>
+  <td class="right">N. Teague</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right"></td>
+  <td class="right">Verisign</td>
 </tr>
 <tr>
   <td class="left"></td>
@@ -470,15 +470,11 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">N. Teague</td>
+  <td class="right">C. Gray</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">Verisign</td>
-</tr>
-<tr>
-  <td class="left"></td>
-  <td class="right">July 20, 2018</td>
+  <td class="right">November 27, 2018</td>
 </tr>
 
     	
@@ -486,7 +482,7 @@
   </table>
 
   <p class="title">Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture<br />
-  <span class="filename">draft-ietf-dots-architecture-07</span></p>
+  <span class="filename">draft-ietf-dots-architecture-08</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -498,7 +494,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 21, 2019.</p>
+<p>This Internet-Draft will expire on May 31, 2019.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -651,7 +647,7 @@
 <h3 id="rfc.section.2.2.1"><a href="#rfc.section.2.2.1">2.2.1.</a> <a href="#dots-client" id="dots-client">DOTS Client</a></h3>
 <p id="rfc.section.2.2.1.p.1">A DOTS client is a DOTS agent from which requests for help coordinating attack response originate. The requests may be in response to an active, ongoing attack against a target in the DOTS client's domain, but no active attack is required for a DOTS client to request help. Operators may wish to have upstream mitigators in the network path for an indefinite period, and are restricted only by business relationships when it comes to duration and scope of requested mitigation.</p>
 <p id="rfc.section.2.2.1.p.2">The DOTS client requests attack response coordination from a DOTS server over the signal channel, including in the request the DOTS client's desired mitigation scoping, as described in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>. The actual mitigation scope and countermeasures used in response to the attack are up to the DOTS server and mitigator operators, as the DOTS client may have a narrow perspective on the ongoing attack. As such, the DOTS client's request for mitigation should be considered advisory: guarantees of DOTS server availability or mitigation capacity constitute service level agreements and are out of scope for this document.</p>
-<p id="rfc.section.2.2.1.p.3">The DOTS client adjusts mitigation scope and provides available mitigation feedback (e.g. mitigation efficacy) at the direction of its local administrator.  Such direction may involve manual or automated adjustments in response to updates from the DOTS server.</p>
+<p id="rfc.section.2.2.1.p.3">The DOTS client adjusts mitigation scope and provides available mitigation feedback (e.g., mitigation efficacy) at the direction of its local administrator. Such direction may involve manual or automated adjustments in response to updates from the DOTS server.</p>
 <p id="rfc.section.2.2.1.p.4">To provide a metric of signal health and distinguish an idle signal channel from a disconnected or defunct session, the DOTS client sends a heartbeat over the signal channel to maintain its half of the channel. The DOTS client similarly expects a heartbeat from the DOTS server, and may consider a session terminated in the extended absence of a DOTS server heartbeat.</p>
 <h3 id="rfc.section.2.2.2"><a href="#rfc.section.2.2.2">2.2.2.</a> <a href="#dots-server" id="dots-server">DOTS Server</a></h3>
 <p id="rfc.section.2.2.2.p.1">A DOTS server is a DOTS agent capable of receiving, processing and possibly acting on requests for help coordinating attack response from DOTS clients.  The DOTS server authenticates and authorizes DOTS clients as described in <a href="#dots-sessions">Section 3.1</a>, and maintains session state, tracking requests for mitigation, reporting on the status of active mitigations, and terminating sessions in the extended absence of a client heartbeat or when a session times out.</p>
@@ -939,9 +935,14 @@
 <p id="rfc.section.3.2.5.p.3">The following considerations do not cover all possible scenarios, but are meant rather to highlight anticipated common issues when signaling through NATs.</p>
 <h4 id="rfc.section.3.2.5.1"><a href="#rfc.section.3.2.5.1">3.2.5.1.</a> <a href="#direct-provisioning-of-internal-to-external-address-mappings" id="direct-provisioning-of-internal-to-external-address-mappings">Direct Provisioning of Internal-to-External Address Mappings</a></h4>
 <p id="rfc.section.3.2.5.1.p.1">Operators may circumvent the problem of translating internal addresses or prefixes to externally routable mitigation scopes by directly provisioning the mappings of external addresses to internal protected resources on the DOTS client. When the operator requests mitigation scoped for internal addresses, directly or through automated means, the DOTS client looks up the matching external addresses or prefixes, and issues a mitigation request scoped to that externally routable information.</p>
-<p id="rfc.section.3.2.5.1.p.2">When directly provisioning the address mappings, operators must ensure the mappings remain up to date, or risk losing the ability to request accurate mitigation scopes. This document does not prescribe the method by which mappings are maintained once they are provisioned on the DOTS client.</p>
-<h4 id="rfc.section.3.2.5.2"><a href="#rfc.section.3.2.5.2">3.2.5.2.</a> <a href="#resolving-public-mitigation-scope-with-session-traversal-utilities-stun" id="resolving-public-mitigation-scope-with-session-traversal-utilities-stun">Resolving Public Mitigation Scope with Session Traversal Utilities (STUN)</a></h4>
-<p id="rfc.section.3.2.5.2.p.1">Internal resources may discover their external address through a STUN Binding request/response transaction, as described in <a href="#RFC5389">[RFC5389]</a>. After learning its reflexive transport address from the STUN server, the internal service can export its external/internal address pair to the DOTS client, allowing the DOTS client to request mitigation with the correct external scope, as depicted in <a href="#fig-nat-stun">Figure 14</a>. The mechanism for provisioning the DOTS client with the address pair is unspecified.</p>
+<p id="rfc.section.3.2.5.1.p.2">When directly provisioning the address mappings, operators must ensure the mappings remain up to date, or risk losing the ability to request accurate mitigation scopes. To that aim, the DOTS client can rely on mechanisms, such as <a href="#I-D.ietf-opsawg-nat-yang">[I-D.ietf-opsawg-nat-yang]</a> to retrieve static explicit mappings. This document does not prescribe the method by which mappings are maintained once they are provisioned on the DOTS client.</p>
+<h4 id="rfc.section.3.2.5.2"><a href="#rfc.section.3.2.5.2">3.2.5.2.</a> <a href="#resolving-public-mitigation-scope-with-port-control-protocol-pcp" id="resolving-public-mitigation-scope-with-port-control-protocol-pcp">Resolving Public Mitigation Scope with Port Control Protocol (PCP)</a></h4>
+<p id="rfc.section.3.2.5.2.p.1">Port Control Protocol (PCP) <a href="#RFC6887">[RFC6887]</a> may be used to retrieve the external addresses/prefixes and/or port numbers if the NAT function embeds a PCP server.</p>
+<p id="rfc.section.3.2.5.2.p.2">A DOTS client can use the information retrieved by means of PCP to feed the DOTS protocol(s) messages that will be sent to a DOTS server. These messages will convey the external addresses/prefixes as set by the NAT.</p>
+<p id="rfc.section.3.2.5.2.p.3">PCP also enables discovery and configuration of the lifetime of port mappings instantiated in intermediate NAT devices. Discovery of port mapping lifetimes can reduce the dependency on heartbeat messages to maintain mappings, and therefore reduce the load on DOTS servers and the network.</p>
+<h4 id="rfc.section.3.2.5.3"><a href="#rfc.section.3.2.5.3">3.2.5.3.</a> <a href="#resolving-public-mitigation-scope-with-session-traversal-utilities-stun" id="resolving-public-mitigation-scope-with-session-traversal-utilities-stun">Resolving Public Mitigation Scope with Session Traversal Utilities (STUN)</a></h4>
+<p id="rfc.section.3.2.5.3.p.1">An internal resource, e.g., a Web server, can discover its reflexive transport address through a STUN Binding request/response transaction, as described in <a href="#RFC5389">[RFC5389]</a>. After learning its reflexive transport address from the STUN server, the internal resource can export its reflexive transport address and internal transport address to the DOTS client, thereby enabling the DOTS client to request mitigation with the correct external scope, as depicted in <a href="#fig-nat-stun">Figure 14</a>. The mechanism for providing the DOTS client with the reflexive transport address and internal transport address is unspecified in this document.</p>
+<p id="rfc.section.3.2.5.3.p.2">In order to prevent an attacker from modifying the STUN messages in transit, the STUN client and server MUST use the message-integrity mechanism discussed in Section 10 of <a href="#RFC5389">[RFC5389]</a>  or use STUN over DTLS <a href="#RFC7350">[RFC7350]</a> or use STUN over TLS.  If the STUN client is behind a NAT that performs Endpoint-Dependent Mapping, the internal service cannot provide the DOTS client with the reflexive transport address discovered using STUN. The behavior of a NAT between the STUN client and the STUN server could be discovered using the techniques discussed in <a href="#RFC5780">[RFC5780]</a>.</p>
 <div id="rfc.figure.14"/>
 <div id="fig-nat-stun"/>
 <pre>
@@ -951,18 +952,18 @@
     | server |           | A |           | client |
     |        |----------&gt;| T |----------&gt;|        |
     +--------+  Binding  +---+  Binding  +--------+
-                response        response     |
-                                             | external/internal
-                                             | address pair
-                                             v
+                response        response    |
+                                            | reflexive transport address
+                                            | &amp; internal transport address
+                                            v
                                          +--------+
                                          |  DOTS  |
                                          | client |
                                          +--------+
 </pre>
 <p class="figure">Figure 14: Resolving mitigation scope with STUN</p>
-<h4 id="rfc.section.3.2.5.3"><a href="#rfc.section.3.2.5.3">3.2.5.3.</a> <a href="#resolving-requested-mitigation-scope-with-dns" id="resolving-requested-mitigation-scope-with-dns">Resolving Requested Mitigation Scope with DNS</a></h4>
-<p id="rfc.section.3.2.5.3.p.1">DOTS supports mitigation scoped to DNS names. As discussed in <a href="#RFC3235">[RFC3235]</a>, using DNS names instead of IP addresses potentially avoids the address translation problem, as long as the name is internally and externally resolvable by the same name. For example, a detected attack's internal target address can be mapped to a DNS name through a reverse lookup. The DNS name returned by the reverse lookup can then be provided to the DOTS client as the external scope for mitigation.</p>
+<h4 id="rfc.section.3.2.5.4"><a href="#rfc.section.3.2.5.4">3.2.5.4.</a> <a href="#resolving-requested-mitigation-scope-with-dns" id="resolving-requested-mitigation-scope-with-dns">Resolving Requested Mitigation Scope with DNS</a></h4>
+<p id="rfc.section.3.2.5.4.p.1">DOTS supports mitigation scoped to DNS names. As discussed in <a href="#RFC3235">[RFC3235]</a>, using DNS names instead of IP addresses potentially avoids the address translation problem, as long as the name is internally and externally resolvable by the same name. For example, a detected attack's internal target address can be mapped to a DNS name through a reverse lookup. The DNS name returned by the reverse lookup can then be provided to the DOTS client as the external scope for mitigation. For the reverse DNS lookup, DNS Security Extensions (DNSSEC) <a href="#RFC4033">[RFC4033]</a> must be used  where the authenticity of response is critical.</p>
 <h2 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#mit-request-triggers" id="mit-request-triggers">Triggering Requests for Mitigation</a></h2>
 <p><a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a> places no limitation on the circumstances in which a DOTS client operator may request mitigation, nor does it demand justification for any mitigation request, thereby reserving operational control over DDoS defense for the domain requesting mitigation. This architecture likewise does not prescribe the network conditions and mechanisms triggering a mitigation request from a DOTS client.</p>
 <p id="rfc.section.3.3.p.2">However, considering selected possible mitigation triggers from an architectural perspective offers a model for alternative or unanticipated triggers for DOTS deployments. In all cases, what network conditions merit a mitigation request are at the discretion of the DOTS client operator.</p>
@@ -1038,13 +1039,19 @@
       <td class="reference">
         <b id="I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</b>
       </td>
-      <td class="top"><a>Mortensen, A.</a>, <a>Moskowitz, R.</a> and <a>T. Reddy</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dots-requirements-14">Distributed Denial of Service (DDoS) Open Threat Signaling Requirements</a>", Internet-Draft draft-ietf-dots-requirements-14, February 2018.</td>
+      <td class="top"><a>Mortensen, A.</a>, <a>Moskowitz, R.</a> and <a>R. K</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dots-requirements-16">Distributed Denial of Service (DDoS) Open Threat Signaling Requirements</a>", Internet-Draft draft-ietf-dots-requirements-16, October 2018.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="I-D.ietf-dots-use-cases">[I-D.ietf-dots-use-cases]</b>
       </td>
       <td class="top"><a>Dobbins, R.</a>, <a>Migault, D.</a>, <a>Fouant, S.</a>, <a>Moskowitz, R.</a>, <a>Teague, N.</a>, <a>Xia, L.</a> and <a>K. Nishizuka</a>, "<a href="http://tools.ietf.org/html/draft-ietf-dots-use-cases-16">Use cases for DDoS Open Threat Signaling</a>", Internet-Draft draft-ietf-dots-use-cases-16, July 2018.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-opsawg-nat-yang">[I-D.ietf-opsawg-nat-yang]</b>
+      </td>
+      <td class="top"><a>Boucadair, M.</a>, <a>Sivakumar, S.</a>, <a>Jacquenet, C.</a>, <a>Vinapamula, S.</a> and <a>Q. Wu</a>, "<a href="http://tools.ietf.org/html/draft-ietf-opsawg-nat-yang-17">A YANG Module for Network Address Translation (NAT) and Network Prefix Translation (NPT)</a>", Internet-Draft draft-ietf-opsawg-nat-yang-17, September 2018.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1084,6 +1091,12 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC4033">[RFC4033]</b>
+      </td>
+      <td class="top"><a>Arends, R.</a>, <a>Austein, R.</a>, <a>Larson, M.</a>, <a>Massey, D.</a> and <a>S. Rose</a>, "<a href="http://tools.ietf.org/html/rfc4033">DNS Security Introduction and Requirements</a>", RFC 4033, DOI 10.17487/RFC4033, March 2005.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC4271">[RFC4271]</b>
       </td>
       <td class="top"><a>Rekhter, Y.</a>, <a>Li, T.</a> and <a>S. Hares</a>, "<a href="http://tools.ietf.org/html/rfc4271">A Border Gateway Protocol 4 (BGP-4)</a>", RFC 4271, DOI 10.17487/RFC4271, January 2006.</td>
@@ -1114,6 +1127,12 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC5780">[RFC5780]</b>
+      </td>
+      <td class="top"><a>MacDonald, D.</a> and <a>B. Lowekamp</a>, "<a href="http://tools.ietf.org/html/rfc5780">NAT Behavior Discovery Using Session Traversal Utilities for NAT (STUN)</a>", RFC 5780, DOI 10.17487/RFC5780, May 2010.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC6347">[RFC6347]</b>
       </td>
       <td class="top"><a>Rescorla, E.</a> and <a>N. Modadugu</a>, "<a href="http://tools.ietf.org/html/rfc6347">Datagram Transport Layer Security Version 1.2</a>", RFC 6347, DOI 10.17487/RFC6347, January 2012.</td>
@@ -1126,6 +1145,12 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC6887">[RFC6887]</b>
+      </td>
+      <td class="top"><a>Wing, D.</a>, <a>Cheshire, S.</a>, <a>Boucadair, M.</a>, <a>Penno, R.</a> and <a>P. Selkirk</a>, "<a href="http://tools.ietf.org/html/rfc6887">Port Control Protocol (PCP)</a>", RFC 6887, DOI 10.17487/RFC6887, April 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC7092">[RFC7092]</b>
       </td>
       <td class="top"><a>Kaplan, H.</a> and <a>V. Pascual</a>, "<a href="http://tools.ietf.org/html/rfc7092">A Taxonomy of Session Initiation Protocol (SIP) Back-to-Back User Agents</a>", RFC 7092, DOI 10.17487/RFC7092, December 2013.</td>
@@ -1135,6 +1160,12 @@
         <b id="RFC7094">[RFC7094]</b>
       </td>
       <td class="top"><a>McPherson, D.</a>, <a>Oran, D.</a>, <a>Thaler, D.</a> and <a>E. Osterweil</a>, "<a href="http://tools.ietf.org/html/rfc7094">Architectural Considerations of IP Anycast</a>", RFC 7094, DOI 10.17487/RFC7094, January 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7350">[RFC7350]</b>
+      </td>
+      <td class="top"><a>Petit-Huguenin, M.</a> and <a>G. Salgueiro</a>, "<a href="http://tools.ietf.org/html/rfc7350">Datagram Transport Layer Security (DTLS) as Transport for Session Traversal Utilities for NAT (STUN)</a>", RFC 7350, DOI 10.17487/RFC7350, August 2014.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1209,18 +1240,18 @@
 	  </span>
 	  <span class="country-name vcardline">India</span>
 	</span>
-	<span class="vcardline">EMail: <a href="mailto:tireddy@cisco.com">tireddy@cisco.com</a></span>
+	<span class="vcardline">EMail: <a href="mailto:kondtir@gmail.com">kondtir@gmail.com</a></span>
 
   </address>
 </div><div class="avoidbreak">
   <address class="vcard">
 	<span class="vcardline">
-	  <span class="fn">Christopher Gray</span> 
+	  <span class="fn">Nik Teague</span> 
 	  <span class="n hidden">
-		<span class="family-name">Gray</span>
+		<span class="family-name">Teague</span>
 	  </span>
 	</span>
-	<span class="org vcardline"></span>
+	<span class="org vcardline">Verisign</span>
 	<span class="adr">
 	  
 	  <span class="vcardline">
@@ -1230,7 +1261,7 @@
 	  </span>
 	  <span class="country-name vcardline">United States</span>
 	</span>
-	<span class="vcardline">EMail: <a href="mailto:Christopher_Gray3@cable.comcast.com">Christopher_Gray3@cable.comcast.com</a></span>
+	<span class="vcardline">EMail: <a href="mailto:nteague@verisign.com">nteague@verisign.com</a></span>
 
   </address>
 </div><div class="avoidbreak">
@@ -1257,12 +1288,12 @@
 </div><div class="avoidbreak">
   <address class="vcard">
 	<span class="vcardline">
-	  <span class="fn">Nik Teague</span> 
+	  <span class="fn">Christopher Gray</span> 
 	  <span class="n hidden">
-		<span class="family-name">Teague</span>
+		<span class="family-name">Gray</span>
 	  </span>
 	</span>
-	<span class="org vcardline">Verisign</span>
+	<span class="org vcardline"></span>
 	<span class="adr">
 	  
 	  <span class="vcardline">
@@ -1272,7 +1303,7 @@
 	  </span>
 	  <span class="country-name vcardline">United States</span>
 	</span>
-	<span class="vcardline">EMail: <a href="mailto:nteague@verisign.com">nteague@verisign.com</a></span>
+	<span class="vcardline">EMail: <a href="mailto:Christopher_Gray3@cable.comcast.com">Christopher_Gray3@cable.comcast.com</a></span>
 
   </address>
 </div>
