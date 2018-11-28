@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-08
+docname: draft-ietf-dots-architecture-09
 date: @DATE@
 
 area: Security
@@ -30,7 +30,7 @@ author:
         city: Ann Arbor, MI
         code: 48104
         country: United States
-        email: amortensen@arbor.net
+        email: andrewmortensen@gmail.com
       -
         ins: F. Andreasen
         name: Flemming Andreasen
@@ -92,6 +92,7 @@ author:
 
 normative:
   RFC2119:
+  RFC8174:
 
 informative:
   I-D.ietf-dots-requirements:
@@ -107,6 +108,7 @@ informative:
   RFC4271:
   RFC4732:
   RFC4786:
+  RFC5128:
   RFC5246:
   RFC5389:
   RFC5780:
@@ -154,7 +156,8 @@ Terminology     {#terminology}
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in {{RFC2119}}.
+document are to be interpreted as described in BCP14 {{RFC2119}} {{RFC8174}},
+when, and only when, they appear in all capitals.
 
 
 ### Definition of Terms ###
@@ -351,10 +354,10 @@ DOTS server. Examples of such information include, but are not limited to:
 ~~~~~
 {: #fig-resource-identifiers title="Protected resource identifiers"}
 
-* Black-list management, which enables a DOTS client to inform the DOTS server
+* Drop-list management, which enables a DOTS client to inform the DOTS server
   about sources to suppress.
 
-* White-list management, which enables a DOTS client to inform the DOTS server
+* Accept-list management, which enables a DOTS client to inform the DOTS server
   about sources from which traffic is always accepted.
 
 * Filter management, which enables a DOTS client to install or remove traffic
@@ -795,7 +798,7 @@ process defined by the protocol.
 
 Once the DOTS client begins receiving DOTS server signals, the DOTS session
 is active. At any time during the DOTS session, the DOTS client may use the
-data channel to manage aliases, manage black- and white-listed
+data channel to manage aliases, manage drop- and accept-listed
 prefixes or addresses, leverage vendor-specific extensions, and so on. Note that
 unlike the signal channel, there is no requirement that the data channel remains
 operational in attack conditions (See Data Channel Requirements,
@@ -1123,11 +1126,14 @@ document.
 
 In order to prevent an attacker from modifying the STUN messages in transit, the
 STUN client and server MUST use the message-integrity mechanism discussed in
-Section 10 of [RFC5389]  or use STUN over DTLS [RFC7350] or use STUN over TLS.
-If the STUN client is behind a NAT that performs Endpoint-Dependent Mapping, the
-internal service cannot provide the DOTS client with the reflexive transport
-address discovered using STUN. The behavior of a NAT between the STUN client and
-the STUN server could be discovered using the techniques discussed in [RFC5780].
+Section 10 of [RFC5389] or use STUN over DTLS [RFC7350] or use STUN over TLS.
+If the STUN client is behind a NAT that performs Endpoint-Dependent Mapping
+[RFC5128], the internal service cannot provide the DOTS client with the
+reflexive transport address discovered using STUN. The behavior of a NAT between
+the STUN client and the STUN server could be discovered using the experimental
+techniques discussed in [RFC5780], but note that there is currently no
+standardized way for a STUN client to reliably determine if it is behind a NAT
+that performs Endpoint-Dependent Mapping.
 
 
 ~~~~~
@@ -1303,7 +1309,7 @@ from, or otherwise inhibit DOTS agents.
 Any attacker with the ability to impersonate a legitimate DOTS client or server
 or, indeed, inject false messages into the stream may potentially
 trigger/withdraw traffic redirection, trigger/cancel mitigation activities or
-subvert black/whitelists.  From an architectural standpoint, operators SHOULD
+subvert drop-/accept-lists.  From an architectural standpoint, operators SHOULD
 ensure best current practices for secure communication are observed for data and
 signal channel confidentiality, integrity and authenticity.  Care must be taken
 to ensure transmission is protected by appropriately secure means, reducing
@@ -1335,4 +1341,5 @@ Mohamed Boucadair
 Acknowledgments                 {#acknowledgments}
 ===============
 
-Thanks to Matt Richardson and Med Boucadair for their comments and suggestions.
+Thanks to Matt Richardson and Mohamed Boucadair for their comments and
+suggestions.
