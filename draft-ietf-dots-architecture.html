@@ -416,8 +416,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Mortensen, A., Andreasen, F., Reddy, T., Teague, N., Compton, R., and C. Gray" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-architecture-08" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-11-27" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-dots-architecture-09" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-11-28" />
   <meta name="dct.abstract" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
   <meta name="description" content="This document describes an architecture for establishing and maintaining Distributed Denial of Service (DDoS) Open Threat Signaling (DOTS) within and between domains. The document does not specify protocols or protocol extensions, instead focusing on defining architectural relationships, components and concepts used in a DOTS deployment." />
 
@@ -441,7 +441,7 @@
   <td class="right">F. Andreasen</td>
 </tr>
 <tr>
-  <td class="left">Expires: May 31, 2019</td>
+  <td class="left">Expires: June 1, 2019</td>
   <td class="right">Cisco</td>
 </tr>
 <tr>
@@ -474,7 +474,7 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 27, 2018</td>
+  <td class="right">November 28, 2018</td>
 </tr>
 
     	
@@ -482,7 +482,7 @@
   </table>
 
   <p class="title">Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture<br />
-  <span class="filename">draft-ietf-dots-architecture-08</span></p>
+  <span class="filename">draft-ietf-dots-architecture-09</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -494,7 +494,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 31, 2019.</p>
+<p>This Internet-Draft will expire on June 1, 2019.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -551,7 +551,7 @@
 <p id="rfc.section.1.p.2">This document describes an architecture used in establishing, maintaining or terminating a DOTS relationship within a domain or between domains.</p>
 <h2 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#terminology" id="terminology">Terminology</a></h2>
 <h3 id="rfc.section.1.1.1"><a href="#rfc.section.1.1.1">1.1.1.</a> <a href="#key-words" id="key-words">Key Words</a></h3>
-<p id="rfc.section.1.1.1.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
+<p id="rfc.section.1.1.1.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP14 <a href="#RFC2119">[RFC2119]</a> <a href="#RFC8174">[RFC8174]</a>, when, and only when, they appear in all capitals.</p>
 <h3 id="rfc.section.1.1.2"><a href="#rfc.section.1.1.2">1.1.2.</a> <a href="#definition-of-terms" id="definition-of-terms">Definition of Terms</a></h3>
 <p id="rfc.section.1.1.2.p.1">This document uses the terms defined in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>.</p>
 <h2 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#scope" id="scope">Scope</a></h2>
@@ -629,8 +629,8 @@
 <p/>
 
 <ul>
-  <li>Black-list management, which enables a DOTS client to inform the DOTS server about sources to suppress.</li>
-  <li>White-list management, which enables a DOTS client to inform the DOTS server about sources from which traffic is always accepted.</li>
+  <li>Drop-list management, which enables a DOTS client to inform the DOTS server about sources to suppress.</li>
+  <li>Accept-list management, which enables a DOTS client to inform the DOTS server about sources from which traffic is always accepted.</li>
   <li>Filter management, which enables a DOTS client to install or remove traffic filters dropping or rate-limiting unwanted traffic.</li>
   <li>DOTS client provisioning.</li>
 </ul>
@@ -816,7 +816,7 @@
 <p id="rfc.section.3.1.2.p.3">At the other extreme, the architecture in this document allows for a form of DOTS client auto-provisioning. For example, the domain operating the DOTS server or servers might provide the client domain only with symmetric or asymmetric keys to authenticate the provisioned DOTS clients. Only the keys would then be directly configured on DOTS clients, but the remaining configuration required to provision the DOTS clients could be learned through mechanisms similar to DNS SRV <a href="#RFC2782">[RFC2782]</a> or DNS Service Discovery <a href="#RFC6763">[RFC6763]</a>.</p>
 <p id="rfc.section.3.1.2.p.4">The DOTS client SHOULD successfully authenticate and exchange messages with the DOTS server over both signal and (if used) data channel as soon as possible to confirm that both channels are operational.</p>
 <p id="rfc.section.3.1.2.p.5">As described in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>, the DOTS client can configure preferred values for acceptable signal loss, mitigation lifetime, and heartbeat intervals when establishing the DOTS session. A DOTS session is not active until DOTS agents have agreed on the values for these DOTS session parameters, a process defined by the protocol.</p>
-<p id="rfc.section.3.1.2.p.6">Once the DOTS client begins receiving DOTS server signals, the DOTS session is active. At any time during the DOTS session, the DOTS client may use the data channel to manage aliases, manage black- and white-listed prefixes or addresses, leverage vendor-specific extensions, and so on. Note that unlike the signal channel, there is no requirement that the data channel remains operational in attack conditions (See Data Channel Requirements, <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>).</p>
+<p id="rfc.section.3.1.2.p.6">Once the DOTS client begins receiving DOTS server signals, the DOTS session is active. At any time during the DOTS session, the DOTS client may use the data channel to manage aliases, manage drop- and accept-listed prefixes or addresses, leverage vendor-specific extensions, and so on. Note that unlike the signal channel, there is no requirement that the data channel remains operational in attack conditions (See Data Channel Requirements, <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>).</p>
 <h3 id="rfc.section.3.1.3"><a href="#rfc.section.3.1.3">3.1.3.</a> <a href="#maintaining-dots-session" id="maintaining-dots-session">Maintaining the DOTS Session</a></h3>
 <p id="rfc.section.3.1.3.p.1">DOTS clients and servers periodically send heartbeats to each other over the signal channel, per Operational Requirements discussed in <a href="#I-D.ietf-dots-requirements">[I-D.ietf-dots-requirements]</a>. DOTS agent operators SHOULD configure the heartbeat interval such that the frequency does not lead to accidental denials of service due to the overwhelming number of heartbeats a DOTS agent must field.</p>
 <p id="rfc.section.3.1.3.p.2">Either DOTS agent may consider a DOTS session terminated in the extended absence of a heartbeat from its peer agent. The period of that absence will be established in the protocol definition.</p>
@@ -942,7 +942,7 @@
 <p id="rfc.section.3.2.5.2.p.3">PCP also enables discovery and configuration of the lifetime of port mappings instantiated in intermediate NAT devices. Discovery of port mapping lifetimes can reduce the dependency on heartbeat messages to maintain mappings, and therefore reduce the load on DOTS servers and the network.</p>
 <h4 id="rfc.section.3.2.5.3"><a href="#rfc.section.3.2.5.3">3.2.5.3.</a> <a href="#resolving-public-mitigation-scope-with-session-traversal-utilities-stun" id="resolving-public-mitigation-scope-with-session-traversal-utilities-stun">Resolving Public Mitigation Scope with Session Traversal Utilities (STUN)</a></h4>
 <p id="rfc.section.3.2.5.3.p.1">An internal resource, e.g., a Web server, can discover its reflexive transport address through a STUN Binding request/response transaction, as described in <a href="#RFC5389">[RFC5389]</a>. After learning its reflexive transport address from the STUN server, the internal resource can export its reflexive transport address and internal transport address to the DOTS client, thereby enabling the DOTS client to request mitigation with the correct external scope, as depicted in <a href="#fig-nat-stun">Figure 14</a>. The mechanism for providing the DOTS client with the reflexive transport address and internal transport address is unspecified in this document.</p>
-<p id="rfc.section.3.2.5.3.p.2">In order to prevent an attacker from modifying the STUN messages in transit, the STUN client and server MUST use the message-integrity mechanism discussed in Section 10 of <a href="#RFC5389">[RFC5389]</a>  or use STUN over DTLS <a href="#RFC7350">[RFC7350]</a> or use STUN over TLS.  If the STUN client is behind a NAT that performs Endpoint-Dependent Mapping, the internal service cannot provide the DOTS client with the reflexive transport address discovered using STUN. The behavior of a NAT between the STUN client and the STUN server could be discovered using the techniques discussed in <a href="#RFC5780">[RFC5780]</a>.</p>
+<p id="rfc.section.3.2.5.3.p.2">In order to prevent an attacker from modifying the STUN messages in transit, the STUN client and server MUST use the message-integrity mechanism discussed in Section 10 of <a href="#RFC5389">[RFC5389]</a> or use STUN over DTLS <a href="#RFC7350">[RFC7350]</a> or use STUN over TLS.  If the STUN client is behind a NAT that performs Endpoint-Dependent Mapping <a href="#RFC5128">[RFC5128]</a>, the internal service cannot provide the DOTS client with the reflexive transport address discovered using STUN. The behavior of a NAT between the STUN client and the STUN server could be discovered using the experimental techniques discussed in <a href="#RFC5780">[RFC5780]</a>, but note that there is currently no standardized way for a STUN client to reliably determine if it is behind a NAT that performs Endpoint-Dependent Mapping.</p>
 <div id="rfc.figure.14"/>
 <div id="fig-nat-stun"/>
 <pre>
@@ -1006,7 +1006,7 @@
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.4.p.1">This section describes identified security considerations for the DOTS architecture.</p>
 <p id="rfc.section.4.p.2">DOTS is at risk from three primary attack vectors:  agent impersonation, traffic injection and signal blocking.  These vectors may be exploited individually or in concert by an attacker to confuse, disable, take information from, or otherwise inhibit DOTS agents.</p>
-<p id="rfc.section.4.p.3">Any attacker with the ability to impersonate a legitimate DOTS client or server or, indeed, inject false messages into the stream may potentially trigger/withdraw traffic redirection, trigger/cancel mitigation activities or subvert black/whitelists.  From an architectural standpoint, operators SHOULD ensure best current practices for secure communication are observed for data and signal channel confidentiality, integrity and authenticity.  Care must be taken to ensure transmission is protected by appropriately secure means, reducing attack surface by exposing only the minimal required services or interfaces.  Similarly, received data at rest SHOULD be stored with a satisfactory degree of security.</p>
+<p id="rfc.section.4.p.3">Any attacker with the ability to impersonate a legitimate DOTS client or server or, indeed, inject false messages into the stream may potentially trigger/withdraw traffic redirection, trigger/cancel mitigation activities or subvert drop-/accept-lists.  From an architectural standpoint, operators SHOULD ensure best current practices for secure communication are observed for data and signal channel confidentiality, integrity and authenticity.  Care must be taken to ensure transmission is protected by appropriately secure means, reducing attack surface by exposing only the minimal required services or interfaces.  Similarly, received data at rest SHOULD be stored with a satisfactory degree of security.</p>
 <p id="rfc.section.4.p.4">As many mitigation systems employ diversion to scrub attack traffic, operators of DOTS agents SHOULD ensure DOTS sessions are resistant to Man-in-the-Middle (MitM) attacks. An attacker with control of a DOTS client may negatively influence network traffic by requesting and withdrawing requests for mitigation for particular prefixes, leading to route or DNS flapping.</p>
 <p id="rfc.section.4.p.5">Any attack targeting the availability of DOTS servers may disrupt the ability of the system to receive and process DOTS signals resulting in failure to fulfill a mitigation request.  DOTS agents SHOULD be given adequate protections, again in accordance with best current practices for network and host security.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#contributors" id="contributors">Contributors</a></h1>
@@ -1019,7 +1019,7 @@
   <dd style="margin-left: 8">mohamed.boucadair@orange.com</dd>
 </dl>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a></h1>
-<p id="rfc.section.6.p.1">Thanks to Matt Richardson and Med Boucadair for their comments and suggestions.</p>
+<p id="rfc.section.6.p.1">Thanks to Matt Richardson and Mohamed Boucadair for their comments and suggestions.</p>
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> References</h1>
 <h2 id="rfc.references.1"><a href="#rfc.references.1">7.1.</a> Normative References</h2>
 <table>
@@ -1029,6 +1029,12 @@
         <b id="RFC2119">[RFC2119]</b>
       </td>
       <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC8174">[RFC8174]</b>
+      </td>
+      <td class="top"><a>Leiba, B.</a>, "<a href="http://tools.ietf.org/html/rfc8174">Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a>", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017.</td>
     </tr>
   </tbody>
 </table>
@@ -1115,6 +1121,12 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC5128">[RFC5128]</b>
+      </td>
+      <td class="top"><a>Srisuresh, P.</a>, <a>Ford, B.</a> and <a>D. Kegel</a>, "<a href="http://tools.ietf.org/html/rfc5128">State of Peer-to-Peer (P2P) Communication across Network Address Translators (NATs)</a>", RFC 5128, DOI 10.17487/RFC5128, March 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC5246">[RFC5246]</b>
       </td>
       <td class="top"><a>Dierks, T.</a> and <a>E. Rescorla</a>, "<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>", RFC 5246, DOI 10.17487/RFC5246, August 2008.</td>
@@ -1197,7 +1209,7 @@
 	  </span>
 	  <span class="country-name vcardline">United States</span>
 	</span>
-	<span class="vcardline">EMail: <a href="mailto:amortensen@arbor.net">amortensen@arbor.net</a></span>
+	<span class="vcardline">EMail: <a href="mailto:andrewmortensen@gmail.com">andrewmortensen@gmail.com</a></span>
 
   </address>
 </div><div class="avoidbreak">
