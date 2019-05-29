@@ -1,7 +1,7 @@
 ---
 title: Distributed-Denial-of-Service Open Threat Signaling (DOTS) Architecture
 abbrev: DOTS Architecture
-docname: draft-ietf-dots-architecture-09
+docname: draft-ietf-dots-architecture-14
 date: @DATE@
 
 area: Security
@@ -25,12 +25,27 @@ author:
       -
         ins: A. Mortensen
         name: Andrew Mortensen
-        org: Arbor Networks
-        street: 2727 S. State St
-        city: Ann Arbor, MI
-        code: 48104
+	role: editor
+        org: Forcepoint
+        street:
+	-
+        city:
+	-
+        code:
+	-
         country: United States
         email: andrewmortensen@gmail.com
+      -
+        ins: T. Reddy
+        name: Tirumaleswar Reddy
+	role: editor
+        org: McAfee, Inc.
+        street:
+        - Embassy Golf Link Business Park
+        city: Bangalore, Karnataka
+        code: 560071
+        country: India
+        email: kondtir@gmail.com
       -
         ins: F. Andreasen
         name: Flemming Andreasen
@@ -44,19 +59,9 @@ author:
         country: United States
         email: fandreas@cisco.com
       -
-        ins: T. Reddy
-        name: Tirumaleswar Reddy
-        org: McAfee, Inc.
-        street:
-        - Embassy Golf Link Business Park
-        city: Bangalore, Karnataka
-        code: 560071
-        country: India
-        email: kondtir@gmail.com
-      -
         ins: N. Teague
         name: Nik Teague
-        org: Verisign
+        org: Iron Mountain
         street:
         -
         city:
@@ -64,7 +69,7 @@ author:
         code:
         -
         country: United States
-        email: nteague@verisign.com
+        email: nteague@ironmountain.co.uk
       -
         ins: R. Compton
         name: Rich Compton
@@ -76,28 +81,14 @@ author:
         code:
         -
         email: Rich.Compton@charter.com
-      -
-        ins: C. Gray
-        name: Christopher Gray
-        org:
-        -
-        street:
-        -
-        city:
-        -
-        code:
-        -
-        country: United States
-        email: Christopher_Gray3@cable.comcast.com
 
 normative:
   RFC2119:
   RFC8174:
 
 informative:
-  I-D.ietf-dots-requirements:
   I-D.ietf-dots-use-cases:
-  I-D.ietf-opsawg-nat-yang:
+  I-D.ietf-tls-dtls13:
   RFC0768:
   RFC0793:
   RFC1035:
@@ -119,6 +110,9 @@ informative:
   RFC7094:
   RFC7350:
   RFC8085:
+  RFC8446:
+  RFC8512:
+  RFC8612:
 
 
 --- abstract
@@ -162,7 +156,7 @@ when, and only when, they appear in all capitals.
 
 ### Definition of Terms ###
 
-This document uses the terms defined in [I-D.ietf-dots-requirements].
+This document uses the terms defined in [RFC8612].
 
 
 Scope           {#scope}
@@ -189,10 +183,9 @@ of scope. Regardless, this document assumes necessary authentication and
 authorization mechanisms are put in place so that only authorized clients can
 invoke the DOTS service.
 
-A detailed set of DOTS requirements are discussed in
-[I-D.ietf-dots-requirements], and the DOTS architecture is designed to follow
-those requirements. Only new behavioral requirements are described in this
-document.
+A detailed set of DOTS requirements are discussed in [RFC8612], and the DOTS
+architecture is designed to follow those requirements. Only new behavioral
+requirements are described in this document.
 
 
 Assumptions     {#assumptions}
@@ -441,13 +434,13 @@ mitigation.
 
 The DOTS client requests attack response coordination from a DOTS server over
 the signal channel, including in the request the DOTS client's desired
-mitigation scoping, as described in [I-D.ietf-dots-requirements]. The actual
-mitigation scope and countermeasures used in response to the attack are up to
-the DOTS server and mitigator operators, as the DOTS client may have a narrow
+mitigation scoping, as described in [RFC8612]  (SIG-008). The actual mitigation
+scope and countermeasures used in response to the attack are up to the DOTS
+server and mitigator operators, as the DOTS client may have a narrow
 perspective on the ongoing attack. As such, the DOTS client's request for
-mitigation should be considered advisory: guarantees of DOTS server availability
-or mitigation capacity constitute service level agreements and are out of scope
-for this document.
+mitigation should be considered advisory: guarantees of DOTS server
+availability or mitigation capacity constitute service level agreements and are
+out of scope for this document.
 
 The DOTS client adjusts mitigation scope and provides available mitigation
 feedback (e.g., mitigation efficacy) at the direction of its local
@@ -475,18 +468,21 @@ Assuming the preconditions discussed below exist, a DOTS client maintaining an
 active session with a DOTS server may reasonably expect some level of mitigation
 in response to a request for coordinated attack response.
 
-The DOTS server enforces authorization of DOTS clients' signals for mitigation.
-The mechanism of enforcement is not in scope for this document, but is expected
-to restrict requested mitigation scope to addresses, prefixes, and/or services
-owned by the DOTS client's administrative domain, such that a DOTS client from
-one domain is not able to influence the network path to another domain. A DOTS
-server MUST reject requests for mitigation of resources not owned by the
-requesting DOTS client's administrative domain. A DOTS server MAY also refuse a
-DOTS client's mitigation request for arbitrary reasons, within any limits
-imposed by business or service level agreements between client and server
-domains. If a DOTS server refuses a DOTS client's request for mitigation, the
-DOTS server MUST include the refusal reason in the server signal sent to the
-client.
+For a given DOTS client (administrative) domain, the DOTS server needs to be
+able to determine whether a given target resource is in that domain. For
+example, this could take the form of associating a set of IP addresses and/or
+prefixes per domain.  The DOTS server enforces authorization of DOTS clients'
+signals for mitigation.  The mechanism of enforcement is not in scope for this
+document, but is expected to restrict requested mitigation scope to addresses,
+prefixes, and/or services owned by the DOTS client domain, such that a DOTS
+client from one domain is not able to influence the network path to another
+domain. A DOTS server MUST reject requests for mitigation of resources not
+owned by the requesting DOTS client's administrative domain. A DOTS server MAY
+also refuse a DOTS client's mitigation request for arbitrary reasons, within
+any limits imposed by business or service level agreements between client and
+server domains. If a DOTS server refuses a DOTS client's request for
+mitigation, the DOTS server MUST include the refusal reason in the server
+signal sent to the client.
 
 A DOTS server is in regular contact with one or more mitigators. If a DOTS
 server accepts a DOTS client's request for help, the DOTS server forwards a
@@ -736,12 +732,20 @@ considerations are out of scope for this document.
 
 A DOTS session is established to support bilateral exchange of data between an
 associated DOTS client and a DOTS server. In the DOTS architecture, data is
-exchanged between DOTS agents over signal and data channels. Regardless, a DOTS
-session is characterized by the presence of an established signal channel. A
-data channel may be established as well, however it is not a prerequisite.
-Conversely, a DOTS session cannot exist without an established signal channel:
-when an established signal channel is terminated for any reason, the DOTS
-session is also said to be terminated.
+exchanged between DOTS agents over signal and data channels. As such, a DOTS
+session can be a DOTS signal channel session, a DOTS data channel session, or
+both.
+
+A DOTS agent can maintain one or more DOTS sessions.
+
+A DOTS signal channel session is associated with a single transport connection
+(TCP or UDP session) and an ephemeral security association (a TLS or DTLS
+session). Similarly, a DOTS data channel session is associated with a single
+TCP connection and an ephemeral TLS security association.
+
+Mitigation requests created using DOTS signal channel are not bound to the DOTS
+signal channel session. Instead, mitigation requests are associated with a DOTS
+client and can be managed using different DOTS signal channel sessions.
 
 
 ### Preconditions {#dots-session-preconditions}
@@ -755,7 +759,7 @@ It is assumed that as part of any DOTS service agreement, the DOTS client is
 provided with all data and metadata required to establish communication with the
 DOTS server. Such data and metadata would include any cryptographic information
 necessary to meet the message confidentiality, integrity and authenticity
-requirement in [I-D.ietf-dots-requirements], and might also include the pool of
+requirement (SEC-002) in [RFC8612], and might also include the pool of
 DOTS server addresses and ports the DOTS client should use for signal and data
 channel messaging.
 
@@ -763,7 +767,7 @@ channel messaging.
 ### Establishing the DOTS Session {#establishing-dots-session}
 
 With the required business agreements in place, the DOTS client
-initiates a signal session by contacting its DOTS server(s) over the signal
+initiates a DOTS session by contacting its DOTS server(s) over the signal
 channel and (possibly) the data channel. To allow for DOTS service flexibility,
 neither the order of contact nor the time interval between channel creations is
 specified. A DOTS client MAY establish signal channel first, and then data
@@ -773,9 +777,9 @@ The methods by which a DOTS client receives the address and associated service
 details of the DOTS server are not prescribed by this document. For example, a
 DOTS client may be directly configured to use a specific DOTS server IP address
 and port, and directly provided with any data necessary to satisfy the Peer
-Mutual Authentication requirement in [I-D.ietf-dots-requirements], such as
-symmetric or asymmetric keys, usernames and passwords, etc. All configuration
-and authentication information in this scenario is provided out-of-band by the
+Mutual Authentication requirement (SEC-001) in [RFC8612], such as symmetric or
+asymmetric keys, usernames and passwords, etc. All configuration and
+authentication information in this scenario is provided out-of-band by the
 domain operating the DOTS server.
 
 At the other extreme, the architecture in this document allows for a form of
@@ -790,32 +794,32 @@ The DOTS client SHOULD successfully authenticate and exchange messages with the
 DOTS server over both signal and (if used) data channel as soon as possible to
 confirm that both channels are operational.
 
-As described in [I-D.ietf-dots-requirements], the DOTS client can configure
+As described in [RFC8612]  (DM-008), the DOTS client can configure
 preferred values for acceptable signal loss, mitigation lifetime, and heartbeat
-intervals when establishing the DOTS session. A DOTS session is not active until
-DOTS agents have agreed on the values for these DOTS session parameters, a
-process defined by the protocol.
+intervals when establishing the DOTS signal channel session. A DOTS signal
+channel session is not active until DOTS agents have agreed on the values for
+these DOTS session parameters, a process defined by the protocol.
 
 Once the DOTS client begins receiving DOTS server signals, the DOTS session
 is active. At any time during the DOTS session, the DOTS client may use the
 data channel to manage aliases, manage drop- and accept-listed
 prefixes or addresses, leverage vendor-specific extensions, and so on. Note that
 unlike the signal channel, there is no requirement that the data channel remains
-operational in attack conditions (See Data Channel Requirements,
-[I-D.ietf-dots-requirements]).
+operational in attack conditions (See Data Channel Requirements, Section 2.3 of
+[RFC8612]).
 
 
 ### Maintaining the DOTS Session {#maintaining-dots-session}
 
 DOTS clients and servers periodically send heartbeats to each other over the
-signal channel, per Operational Requirements discussed in
-[I-D.ietf-dots-requirements]. DOTS agent operators SHOULD configure the
-heartbeat interval such that the frequency does not lead to accidental denials
-of service due to the overwhelming number of heartbeats a DOTS agent must field.
+signal channel, discussed in [RFC8612]  (SIG-004).  DOTS agent operators SHOULD
+configure the heartbeat interval such that the frequency does not lead to
+accidental denials of service due to the overwhelming number of heartbeats a
+DOTS agent must field.
 
-Either DOTS agent may consider a DOTS session terminated in the extended
-absence of a heartbeat from its peer agent. The period of that absence will be
-established in the protocol definition.
+Either DOTS agent may consider a DOTS signal channel session terminated in the
+extended absence of a heartbeat from its peer agent. The period of that absence
+will be established in the protocol definition.
 
 
 Modes of Signaling
@@ -847,10 +851,10 @@ adjacent.
 ### Redirected Signaling {#redirected-signaling}
 
 In certain circumstances, a DOTS server may want to redirect a DOTS client to
-an alternative DOTS server for a DOTS session. Such circumstances include but
-are not limited to:
+an alternative DOTS server for a DOTS signal channel session. Such
+circumstances include but are not limited to:
 
-* Maximum number of DOTS sessions with clients has been reached;
+* Maximum number of DOTS signal channel sessions with clients has been reached;
 
 * Mitigation capacity exhaustion in the mitigator with which the
   specific DOTS server is communicating;
@@ -862,23 +866,23 @@ are not limited to:
 * Scheduled modifications to the network path between DOTS server and DOTS
   client.
 
-A basic redirected DOTS session resembles the following, as shown in
-{{fig-redirected-signaling}}.
+A basic redirected DOTS signal channel session resembles the following, as
+shown in {{fig-redirected-signaling}}.
 
 ~~~~~
         +-------------+                            +---------------+
-        |             |<-(1)--- DOTS session 1 --->|               |
-        |             |                            |               |
+        |             |<-(1)--- DOTS signal ------>|               |
+        |             |      channel session 1     |               |
         |             |<=(2)== redirect to B ======|               |
         | DOTS client |                            | DOTS server A |
-        |             |X-(4)--- DOTS session 1 ---X|               |
-        |             |                            |               |
+        |             |X-(4)--- DOTS signal ------X|               |
+        |             |      channel session 1     |               |
         |             |                            |               |
         +-------------+                            +---------------+
                ^
                |
-              (3) DOTS session 2
-               |
+              (3) DOTS signal channel
+               |      session 2
                v
         +---------------+
         | DOTS server B |
@@ -886,18 +890,18 @@ A basic redirected DOTS session resembles the following, as shown in
 ~~~~~
 {: #fig-redirected-signaling title="Redirected Signaling"}
 
-1. Previously established DOTS session 1 exists between a DOTS client and
-   DOTS server A.
+1. Previously established DOTS signal channel session 1 exists between a DOTS
+   client and DOTS server A.
 
 1. DOTS server A sends a server signal redirecting the client to DOTS server B.
 
-1. If the DOTS client does not already have a separate DOTS session with
-   the redirection target, the DOTS client initiates and establishes DOTS
-   session 2 with DOTS server B.
+1. If the DOTS client does not already have a separate DOTS signal channel
+   session with the redirection target, the DOTS client initiates and
+   establishes DOTS signal channel session 2 with DOTS server B.
 
 1. Having redirected the DOTS client, DOTS server A ceases sending server
    signals. The DOTS client likewise stops sending client signals to DOTS server
-   A. DOTS session 1 is terminated.
+   A. DOTS signal channel session 1 is terminated.
 
 
 ### Recursive Signaling {#recursive-signaling}
@@ -979,14 +983,12 @@ into mitigation status messages available metrics such as dropped packet or byte
 counts from the recursed mitigation.
 
 DOTS clients involved in recursive signaling must be able to withdraw requests
-for mitigation without warning or justification, per
-[I-D.ietf-dots-requirements].
+for mitigation without warning or justification, per SIG-006 in [RFC8612].
 
 Operators recursing mitigation requests MAY maintain the recursed mitigation for
 a brief, protocol-defined period in the event the DOTS client originating the
 mitigation withdraws its request for help, as per the discussion of managing
-mitigation toggling in the operational requirements
-([I-D.ietf-dots-requirements]).
+mitigation toggling in SIG-006 of [RFC8612].
 
 Deployment of recursive signaling may result in traffic redirection, examination
 and mitigation extending beyond the initial bilateral relationship between DOTS
@@ -1029,9 +1031,9 @@ operational challenges inherent in anycast signaling are anything but
 negligible, and DOTS server operators must carefully weigh the risks against the
 benefits before deploying.
 
-While the DOTS signal channel primarily operates over UDP per
-[I-D.ietf-dots-requirements], the signal channel also requires mutual
-authentication between DOTS agents, with associated security state on both ends.
+While the DOTS signal channel primarily operates over UDP per SIG-001 in
+[RFC8612], the signal channel also requires mutual authentication between DOTS
+agents, with associated security state on both ends.
 
 Network instability is of particular concern with anycast signaling, as DOTS
 signal channels are expected to be long-lived, and potentially operating under
@@ -1042,9 +1044,10 @@ during active anycast signaling may cause the DOTS client to send messages to a
 DOTS server other than the one with which it initially established a signaling
 session. That second DOTS server may not have the security state of the
 existing session, forcing the DOTS client to initialize a new DOTS session.
-This challenge might in part be mitigated by use of pre-shared keys and session
-resumption [RFC5246]{{RFC6347}}, but keying material must be available to all
-DOTS servers sharing the anycast Service Address in that case.
+This challenge might in part be mitigated by use of resumption via a PSK in TLS
+1.3 [RFC8446] and DTLS 1.3 [I-D.ietf-tls-dtls13]  (session resumption in TLS
+1.2 [RFC5246] and DTLS 1.2 [RFC6347]), but keying material must be available to
+all DOTS servers sharing the anycast Service Address in that case.
 
 While the DOTS client will try to establish a new DOTS session with the
 DOTS server now acting as the anycast DOTS Service Address, the link between
@@ -1092,9 +1095,9 @@ externally routable information.
 When directly provisioning the address mappings, operators must ensure the
 mappings remain up to date, or risk losing the ability to request accurate
 mitigation scopes. To that aim, the DOTS client can rely on mechanisms, such as
-[I-D.ietf-opsawg-nat-yang] to retrieve static explicit mappings. This document
-does not prescribe the method by which mappings are maintained once they are
-provisioned on the DOTS client.
+[RFC8512] to retrieve static explicit mappings. This document does not
+prescribe the method by which mappings are maintained once they are provisioned
+on the DOTS client.
 
 
 #### Resolving Public Mitigation Scope with Port Control Protocol (PCP)
@@ -1171,12 +1174,12 @@ is critical.
 Triggering Requests for Mitigation {#mit-request-triggers}
 ----------------------------------
 
-[I-D.ietf-dots-requirements] places no limitation on the circumstances in which
-a DOTS client operator may request mitigation, nor does it demand justification
-for any mitigation request, thereby reserving operational control over DDoS
-defense for the domain requesting mitigation. This architecture likewise does
-not prescribe the network conditions and mechanisms triggering a mitigation
-request from a DOTS client.
+[RFC8612] places no limitation on the circumstances in which a DOTS client
+operator may request mitigation, nor does it demand justification for any
+mitigation request, thereby reserving operational control over DDoS defense for
+the domain requesting mitigation. This architecture likewise does not prescribe
+the network conditions and mechanisms triggering a mitigation request from a
+DOTS client.
 
 However, considering selected possible mitigation triggers from an architectural
 perspective offers a model for alternative or unanticipated triggers for DOTS
@@ -1275,24 +1278,31 @@ DOTS client are implementation-specific.
 
 ### Automated Mitigation on Loss of Signal {#auto-mit-signal-loss}
 
-To maintain a DOTS session, the DOTS client and the DOTS server exchange
-regular but infrequent messages across the signal channel. In the absence of
-an attack, the probability of message loss in the signaling channel should be
-extremely low. Under attack conditions, however, some signal loss may be
-anticipated as attack traffic congests the link, depending on the attack type.
+To maintain a DOTS signal channel session, the DOTS client and the DOTS server
+exchange regular but infrequent messages across the signal channel. In the
+absence of an attack, the probability of message loss in the signaling channel
+should be extremely low. Under attack conditions, however, some signal loss may
+be anticipated as attack traffic congests the link, depending on the attack
+type.
 
-While [I-D.ietf-dots-requirements] specifies the DOTS protocol be robust when
-signaling under attack conditions, there are nevertheless scenarios in which the
-DOTS signal is lost in spite of protocol best efforts. To handle such scenarios,
-a DOTS operator may request one or more mitigations which are triggered only
-when the DOTS server ceases receiving DOTS client heartbeats beyond the miss
-count or interval permitted by the protocol.
+While [RFC8612] specifies the DOTS protocol be robust when signaling under
+attack conditions, there are nevertheless scenarios in which the DOTS signal is
+lost in spite of protocol best efforts. To handle such scenarios, a DOTS
+operator may request one or more mitigations which are triggered only when the
+DOTS server ceases receiving DOTS client heartbeats beyond the miss count or
+interval permitted by the protocol.
 
 The impact of mitigating due to loss of signal in either direction must be
 considered carefully before enabling it. Signal loss is not caused by links
 congested with attack traffic alone, and as such mitigation requests triggered
 by signal channel degradation in either direction may incur unnecessary costs,
 in network performance and operational expense alike.
+
+
+IANA Considerations		{#iana-considerations}
+===================
+
+This document has no actions for IANA.
 
 
 Security Considerations         {#security-considerations}
@@ -1337,9 +1347,14 @@ Mohamed Boucadair
 : mohamed.boucadair@orange.com
 {: vspace="0"}
 
+Christopher Gray
+: Christopher_Gray3@cable.comcast.com
+
 
 Acknowledgments                 {#acknowledgments}
 ===============
 
-Thanks to Matt Richardson and Mohamed Boucadair for their comments and
+Thanks to Matt Richardson, Roman Danyliw, Frank Xialiang, Roland Dobbins, Wei
+Pan, Kaname Nishizuka, Jon Shallow, and Mohamed Boucadair for their comments
+and
 suggestions.
